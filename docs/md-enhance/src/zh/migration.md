@@ -9,19 +9,13 @@ icon: code-compare
 
 ## 新功能
 
-- Markdown 链接检查
-
-  该插件现在检查你的 Markdown 链接，并在检测到损坏的链接时警告你。
-
-  你可以通过 `checkLinks` 选项控制此行为
-
 - 图像标记支持
 
   通过 `imgMark` 选项使用 `#light` 和 `#dark` 后缀标记图像以在日间模式或夜间模式下显示它们。
 
 - `v-pre` 支持
 
-  VuePress 2 从 `@vuepress/core` 中删除了以下容器支持，因此添加了 `vPre` 选项
+  VuePress 2 删除了以下容器支持，因此添加了 `vPre` 选项
 
   ```md
   ::: v-pre
@@ -203,7 +197,7 @@ icon: code-compare
   ::: code-group-item npm:active
 
   ```bash
-  npm init vuepress-theme-hope [dir]
+  npm init vuepress-theme-hope@latest [dir]
   ```
 
   :::
@@ -225,7 +219,7 @@ icon: code-compare
   @tab:active npm
 
   ```bash
-  npm init vuepress-theme-hope [dir]
+  npm init vuepress-theme-hope@latest [dir]
   ```
 
   :::
@@ -266,8 +260,6 @@ icon: code-compare
 - `imageTitle` 被重命名为 `figure`
 
 - `revealjs` 被重命名为 `revealJS`
-
-- `linkCheck` 由 `checkLinks` 替代
 
 - `card` 由 `components` 替代
 

@@ -42,7 +42,7 @@ Some of the behavior might be different, for example to support Vue syntax, we a
 - Type: `boolean`
 - Default: `false`
 - Details:
-  - [Hint box](../../guide/markdown/hint.md)
+  - [Hint box](../../guide/markdown/stylize/hint.md)
 
 Whether to enable hint box including
 
@@ -52,32 +52,6 @@ Whether to enable hint box including
 - warning
 - caution
 - details
-
-### checkLinks
-
-- Type: `LinksCheckOptions`
-
-  ```ts
-  type LinksCheckStatus = "always" | "dev" | "build" | "never";
-
-  interface LinksCheckOptions {
-    /**
-     * Whether check dead links in markdown
-     *
-     * @default "dev"
-     */
-    status?: LinksCheckStatus;
-
-    /**
-     * Dead links to ignore
-     */
-    ignore?: (string | RegExp)[] | ((link: string, isDev: boolean) => boolean);
-  }
-  ```
-
-- Default: `{ status: "dev" }`
-
-Whether to enable links check.
 
 ### vPre
 
@@ -109,7 +83,7 @@ Whether convert URL-like text into links
 - Type: `boolean`
 - Default: `false`
 - Details:
-  - [GFM Alerts](../../guide/markdown/alert.md)
+  - [GFM Alerts](../../guide/markdown/stylize/alert.md)
 
 Whether to enable gfm alerts.
 
@@ -118,7 +92,7 @@ Whether to enable gfm alerts.
 - Type: `boolean`
 - Default: `false`
 - Details:
-  - [Tabs](../../guide/markdown/tabs.md)
+  - [Tabs](../../guide/markdown/content/tabs.md)
 
 Whether to enable tabs.
 
@@ -127,7 +101,7 @@ Whether to enable tabs.
 - Type: `boolean`
 - Default: `false`
 - Details:
-  - [Code Tabs](../../guide/markdown/code-tabs.md)
+  - [Code Tabs](../../guide/markdown/code/code-tabs.md)
 
 Whether to enable codetabs.
 
@@ -136,7 +110,7 @@ Whether to enable codetabs.
 - Type: `boolean`
 - Default: `false`
 - Details:
-  - [Align](../../guide/markdown/align.md)
+  - [Align](../../guide/markdown/stylize/align.md)
 
 Whether to enable custom align.
 
@@ -173,7 +147,7 @@ Whether to enable custom align.
 
 - Default: `false`
 - Details:
-  - [Attrs](../../guide/markdown/attrs.md)
+  - [Attrs](../../guide/markdown/stylize/attrs.md)
 
 Whether to enable attribute customize support.
 
@@ -181,6 +155,8 @@ Whether to enable attribute customize support.
 
 - Type: `boolean`
 - Default: `false`
+- Details:
+  - [Superscript](../../guide/markdown/grammar/sup-sub.md)
 
 Whether to enable the upper format support.
 
@@ -188,6 +164,8 @@ Whether to enable the upper format support.
 
 - Type: `boolean`
 - Default: `false`
+- Details:
+  - [Subscript](../../guide/markdown/grammar/sup-sub.md)
 
 Whether to enable the lower corner format support.
 
@@ -195,6 +173,8 @@ Whether to enable the lower corner format support.
 
 - Type: `boolean`
 - Default: `false`
+- Details:
+  - [Footnote](../../guide/markdown/content/footnote.md)
 
 Whether to enable footnote format support.
 
@@ -202,6 +182,8 @@ Whether to enable footnote format support.
 
 - Type: `boolean`
 - Default: `false`
+- Details:
+  - [Mark](../../guide/markdown/stylize/mark.md)
 
 Whether to enable mark support.
 
@@ -354,6 +336,20 @@ Whether to enable flowchart support
 - Default: `false`
 
 Whether to enable [Mermaid](https://mermaid.js.org/) support, you can pass in a config object to customize the behavior of Mermaid.
+
+### plantuml
+
+- Type: `MarkdownItPlantumlOptions[] | boolean`
+- Default: `false`
+
+Whether to enable [plantuml](https://plantuml.com/) support.
+
+### spoiler
+
+- Type: `boolean`
+- Default: `false`
+
+Whether to enable spoiler support.
 
 ### stylize
 
@@ -526,77 +522,7 @@ Playground options.
 
 ### vuePlayground
 
-- Type: `VuePlaygroundOptions | boolean`
-
-  ```ts
-  interface VuePlaygroundOptions {
-    /**
-     * specify the version of vue
-     */
-    vueVersion?: string;
-
-    /**
-     * specify default URL to import Vue runtime from in the sandbox
-     *
-     * @default "https://unpkg.com/@vue/runtime-dom@${version}/dist/runtime-dom.esm-browser.js"
-     */
-    defaultVueRuntimeURL?: string;
-
-    /**
-     * Specify default URL to import Vue Server Renderer from in the sandbox
-     *
-     * @default "https://unpkg.com/@vue/server-renderer@${version}/dist/server-renderer.esm-browser.js"
-     */
-    defaultVueServerRendererURL?: string;
-
-    /**
-     * Whether to enable repl's editor resizable
-     *
-     * @default true
-     */
-    autoResize?: boolean;
-
-    /**
-     * Whether to show JS, CSS, SSR panel
-     *
-     * @default false
-     */
-    showCompileOutput?: boolean;
-
-    /**
-     * Whether to show import map
-     *
-     * @default true
-     */
-    showImportMap?: boolean;
-
-    /**
-     * Whether to clear console
-     *
-     * @default false
-     */
-    clearConsole?: boolean;
-
-    /**
-     * Layout
-     *
-     * @default 'horizontal'
-     */
-    layout?: "horizontal" | "vertical";
-
-    /**
-     * Options to configure the `vue/compiler-sfc`
-     */
-    sfcOptions?: SFCOptions;
-
-    /**
-     * Whether to enable SSR
-     *
-     * @default true
-     */
-    ssr?: boolean;
-  }
-  ```
+- Type: `boolean`
 
 - Default: `false`
 
@@ -621,18 +547,18 @@ Whether to enable code demo support.
 - Type: `string[]`
 - Required: No
 
-CodePen, JsFiddle requires an external JS library for dating.
+External JS libraries for CodePen, JsFiddle only.
 
 #### demo.cssLib
 
 - Type: `string[]`
 - Required: No
 
-CodePen, JsFiddle need an external CSS library for dating.
+External JS libraries for CodePen, JsFiddle only.
 
 ::: warning
 
-The above two options are only used by third-party code demo service, you need to import these libraries in `head`.
+The above two options are only used by third-party code demo service, you need to import these libraries in `head` to get it work..
 
 :::
 
@@ -683,6 +609,6 @@ Whether to enable slides support. You can pass an option to control plugins and 
 
 ::: info
 
-Check <ProjectLink name="md-enhance" path="/config/">md-enhance plugin documentation</ProjectLink> for all available options.
+Check <ProjectLink name="md-enhance" path="/config.html">md-enhance plugin documentation</ProjectLink> for all available options.
 
 :::

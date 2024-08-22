@@ -17,7 +17,7 @@ jobs:
           name: build-result
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -29,6 +29,8 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Linter test
+        env:
+          NODE_OPTIONS: --max_old_space_size=8192
         run: |
           pnpm run lint:check
           pnpm run lint:md
@@ -40,4 +42,4 @@ jobs:
 
       - name: Upload coverage
         if: github.ref == 'refs/heads/main'
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4

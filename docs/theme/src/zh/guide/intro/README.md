@@ -1,9 +1,9 @@
 ---
 title: 主题介绍
-icon: lightbulb
+icon: circle-info
 index: false
 dir:
   order: 1
 ---
 
-<AutoCatalog />
+<Catalog />

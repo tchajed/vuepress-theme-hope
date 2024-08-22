@@ -1,9 +1,9 @@
-import { defineUserConfig } from "@vuepress/cli";
 import { defaultTheme } from "@vuepress/theme-default";
 import { cut } from "nodejs-jieba";
+import { defineUserConfig } from "vuepress/cli";
 import { searchProPlugin } from "vuepress-plugin-search-pro";
 
-const base = <"/" | `/${string}/`>process.env["BASE"] || "/";
+const base = (process.env["BASE"] as "/" | `/${string}/`) || "/";
 
 export default defineUserConfig({
   base,
@@ -26,7 +26,7 @@ export default defineUserConfig({
       hotReload: true,
       customFields: [
         {
-          getter: ({ frontmatter }) => frontmatter.tag as string[],
+          getter: ({ frontmatter }): string[] => frontmatter["tag"] as string[],
           formatter: `Tag: $content`,
         },
       ],

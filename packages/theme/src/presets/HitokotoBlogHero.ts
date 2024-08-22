@@ -9,7 +9,7 @@ import {
   watch,
 } from "vue";
 
-import DropTransition from "@theme-hope/components/transitions/DropTransition";
+import { DropTransition } from "@theme-hope/components/transitions/index";
 
 import "./hitokoto-blog-hero.scss";
 
@@ -54,7 +54,7 @@ export default defineComponent({
     alt: { type: String, required: true },
 
     /** Hero image style */
-    heroStyle: {
+    imageStyle: {
       type: [String, Object] as PropType<string | Record<string, string>>,
       default: null,
     },
@@ -68,7 +68,7 @@ export default defineComponent({
 
     const getHitokoto = (): Promise<void> =>
       fetch("https://v1.hitokoto.cn")
-        .then((res) => <Promise<HitokotoResult>>res.json())
+        .then((res) => res.json() as Promise<HitokotoResult>)
         .then(({ from, hitokoto }) => {
           text.value = hitokoto;
           author.value = from;
@@ -83,7 +83,7 @@ export default defineComponent({
 
         const renderNextWord = (): Promise<void> => {
           display.value += text.value[index];
-          index++;
+          index += 1;
 
           return nextTick().then(() => {
             if (index < text.value.length)
@@ -113,7 +113,7 @@ export default defineComponent({
           ? h("img", {
               key: "light",
               class: ["vp-blog-hero-image", { light: props.imageDark }],
-              style: props.heroStyle,
+              style: props.imageStyle,
               src: props.image,
               alt: props.alt,
             })
@@ -122,7 +122,7 @@ export default defineComponent({
           ? h("img", {
               key: "dark",
               class: "vp-blog-hero-image dark",
-              style: props.heroStyle,
+              style: props.imageStyle,
               src: props.imageDark,
               alt: props.alt,
             })

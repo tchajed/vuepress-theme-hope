@@ -45,12 +45,7 @@ npm i -D sandpack-vue3
 
 <!-- #endregion before -->
 
-::: code-tabs#config
-
-@tab TS
-
-```ts {8}
-// .vuepress/config.ts
+```js {7} title=".vuepress/config.js"
 import { mdEnhance } from "vuepress-plugin-md-enhance";
 
 export default {
@@ -62,24 +57,6 @@ export default {
   ],
 };
 ```
-
-@tab JS
-
-```js {8}
-// .vuepress/config.js
-import { mdEnhance } from "vuepress-plugin-md-enhance";
-
-export default {
-  plugins: [
-    mdEnhance({
-      // 启用 Sandpack 交互演示
-      sandpack: true,
-    }),
-  ],
-};
-```
-
-:::
 
 <!-- #region after -->
 
@@ -97,9 +74,8 @@ export default {
 
 你可以在客户端配置文件中引入并调用 `defineSandpackConfig` 来自定义 `sandpack-vue3` ：
 
-```ts
-// .vuepress/client.ts
-import { defineClientConfig } from "@vuepress/client";
+```ts title=".vuepress/client.ts"
+import { defineClientConfig } from "vuepress/client";
 import { defineSandpackConfig } from "vuepress-plugin-md-enhance/client";
 
 defineSandpackConfig({

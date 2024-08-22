@@ -1,12 +1,12 @@
-import { usePageData, usePageFrontmatter } from "@vuepress/client";
-import type { VNode } from "vue";
-import { defineComponent, h } from "vue";
 import type {
   BlogCategoryFrontmatterOptions,
   BlogPluginFrontmatter,
-} from "vuepress-plugin-blog2";
+} from "@vuepress/plugin-blog";
+import type { VNode } from "vue";
+import { defineComponent, h } from "vue";
+import { usePageData, usePageFrontmatter } from "vuepress/client";
 
-import DropTransition from "@theme-hope/components/transitions/DropTransition";
+import { DropTransition } from "@theme-hope/components/transitions/index";
 import ArticleList from "@theme-hope/modules/blog/components/ArticleList";
 import BlogWrapper from "@theme-hope/modules/blog/components/BlogWrapper";
 import CategoryList from "@theme-hope/modules/blog/components/CategoryList";
@@ -30,7 +30,7 @@ export default defineComponent({
 
     return (): VNode => {
       const { key = "", name = "" } =
-        <BlogCategoryFrontmatterOptions>frontmatter.value.blog || {};
+        (frontmatter.value.blog as BlogCategoryFrontmatterOptions) || {};
 
       const items = name
         ? key === "category"

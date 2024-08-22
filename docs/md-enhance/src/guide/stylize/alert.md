@@ -9,12 +9,7 @@ The plugin can enable GFM alert support for you.
 
 ## Settings
 
-::: code-tabs#language
-
-@tab TS
-
-```ts {8}
-// .vuepress/config.ts
+```js {7} title=".vuepress/config.js"
 import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
 
 export default {
@@ -26,24 +21,6 @@ export default {
   ],
 };
 ```
-
-@tab JS
-
-```js {8}
-// .vuepress/config.js
-import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
-
-export default {
-  plugins: [
-    mdEnhancePlugin({
-      // enable GFM alerts
-      alert: true,
-    }),
-  ],
-};
-```
-
-:::
 
 <!-- #region after -->
 

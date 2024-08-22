@@ -1,10 +1,13 @@
-import { usePageFrontmatter } from "@vuepress/client";
+import { entries } from "@vuepress/helper/client";
+import type { BlogPluginCategoryFrontmatter } from "@vuepress/plugin-blog";
 import type { VNode } from "vue";
 import { defineComponent, h } from "vue";
-import type { BlogPluginCategoryFrontmatter } from "vuepress-plugin-blog2";
-import { VPLink, entries, generateIndexFromHash } from "vuepress-shared/client";
+import { RouteLink, usePageFrontmatter } from "vuepress/client";
+import { generateIndexFromHash } from "vuepress-shared/client";
 
 import { useTagMap } from "@theme-hope/modules/blog/composables/index";
+
+import cssVariables from "../../../styles/variables.module.scss";
 
 import "../styles/tag-list.scss";
 
@@ -23,7 +26,7 @@ export default defineComponent({
         "ul",
         { class: "tag-list-wrapper" },
         entries(tagMap.value.map)
-          // sort from more to less
+          // Sort from more to less
           .sort(([, a], [, b]) => b.items.length - a.items.length)
           .map(([tag, { path, items }]) =>
             h(
@@ -31,12 +34,11 @@ export default defineComponent({
               {
                 class: [
                   "tag",
-                  // TODO: magic number 9 is tricky here
-                  `tag${generateIndexFromHash(tag, 9)}`,
+                  `color${generateIndexFromHash(tag, Number(cssVariables["colorNumber"]))}`,
                   { active: isActive(tag) },
                 ],
               },
-              h(VPLink, { to: path }, () => [
+              h(RouteLink, { to: path }, () => [
                 tag,
                 h("span", { class: "tag-num" }, items.length),
               ]),

@@ -1,8 +1,7 @@
-import { withBase } from "@vuepress/client";
-import { isLinkExternal } from "@vuepress/shared";
+import { isLinkExternal } from "@vuepress/helper/client";
 import type { FunctionalComponent, VNode } from "vue";
 import { h } from "vue";
-import { VPLink } from "vuepress-shared/client";
+import { RouteLink, withBase } from "vuepress/client";
 
 import HopeIcon from "@theme-hope/components/HopeIcon";
 
@@ -61,10 +60,10 @@ const FeaturePanel: FunctionalComponent<
         "div",
         {
           class: "vp-feature",
-          style: color ? { color: color } : {},
+          style: color ? { color } : {},
         },
         [
-          slots.image?.(props) || [
+          slots.image?.(props) ?? [
             image
               ? h("img", {
                   class: ["vp-feature-image", { light: imageDark }],
@@ -81,7 +80,7 @@ const FeaturePanel: FunctionalComponent<
               : null,
           ],
 
-          slots.info?.(props) || [
+          slots.info?.(props) ?? [
             header ? h("h2", { class: "vp-feature-header" }, header) : null,
             description
               ? h("p", {
@@ -119,7 +118,7 @@ const FeaturePanel: FunctionalComponent<
                           children,
                         )
                       : h(
-                          VPLink,
+                          RouteLink,
                           {
                             class: "vp-feature-item link",
                             to: link,

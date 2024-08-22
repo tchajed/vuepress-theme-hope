@@ -1,14 +1,14 @@
 import { container } from "@mdit/plugin-container";
-import type { MarkdownEnv } from "@vuepress/markdown";
-import { load } from "js-yaml";
-import type { Options, PluginSimple } from "markdown-it";
-import type Token from "markdown-it/lib/token.js";
 import {
   entries,
   fromEntries,
   isPlainObject,
   isString,
-} from "vuepress-shared/node";
+} from "@vuepress/helper";
+import { load } from "js-yaml";
+import type { Options, PluginSimple } from "markdown-it";
+import type Token from "markdown-it/lib/token.mjs";
+import type { MarkdownEnv } from "vuepress/markdown";
 
 import { stringifyProp } from "../markdown-it/utils.js";
 import { logger } from "../utils.js";
@@ -48,9 +48,9 @@ const cardRender = (
 
   if (content.trim().startsWith("{"))
     try {
-      config = <unknown>JSON.parse(content);
+      config = JSON.parse(content) as unknown;
     } catch (err) {
-      // do nothing
+      // Do nothing
       logger.error(`Parsing card as JSON config failed:`, err);
     }
   else
@@ -77,7 +77,7 @@ ${content}
 
 /** @deprecated */
 export const legacyCard: PluginSimple = (md) => {
-  // add card container
+  // Add card container
   md.use(container, {
     name: "card",
     openRender: () =>
@@ -87,7 +87,7 @@ export const legacyCard: PluginSimple = (md) => {
   });
 
   // Handle ```card  blocks
-  const fence = md.renderer.rules.fence;
+  const { fence } = md.renderer.rules;
 
   md.renderer.rules.fence = (...args): string => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -95,16 +95,16 @@ export const legacyCard: PluginSimple = (md) => {
     const { info } = tokens[index];
 
     if (info === "card")
-      return cardRender(tokens, index, options, <MarkdownEnv>env);
+      return cardRender(tokens, index, options, env as MarkdownEnv);
 
-    const realInfo = info.split(":", 2)[0];
+    const [realInfo] = info.split(":", 2);
 
     if (realInfo === "card") {
       logger.warn(
         "Language declaration for card is deprecated, please remove them.",
       );
 
-      return cardRender(tokens, index, options, <MarkdownEnv>env);
+      return cardRender(tokens, index, options, env as MarkdownEnv);
     }
 
     return fence!(...args);

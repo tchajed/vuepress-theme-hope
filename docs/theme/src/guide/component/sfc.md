@@ -20,7 +20,7 @@ Every Markdown file is first compiled to HTML and then converted to a Vue Single
 - `<script>` and `<style>` tags are directly treated as tags in Vue SFC. In other words, they are promoted from the `<template>` tag to the top level of the SFC.
 - All content other than `<script>` and `<style>` tags will be compiled to HTML and then treated as `<template>` tags in Vue SFC.
 
-The converted Vue SFC will be cached in the `.vuepress/.temp/pages` directory, and will be rendered as `<Content />` component in layouts.
+The converted Vue SFC will be cached in the `.vuepress/.temp/pages` directory, and will be rendered by the internal `<Content />` component.
 
 ## Using Vue syntax in Markdown
 
@@ -42,7 +42,7 @@ Since Markdown will be converted to Vue single-file components in the cache dire
 
 - You can use `@source` alias to reference the source directory of the current project
 
-  ```structure:no-line-numbers
+  ```:no-line-numbers
   .
   ├── src → project folder
   │    ├── example
@@ -56,14 +56,14 @@ Since Markdown will be converted to Vue single-file components in the cache dire
   ```md
   <MyComponent />
 
-  <script setup lang="ts">
+  <script setup>
   import MyComponent from "@source/example/MyComponent.vue";
   </script>
   ```
 
 - You can also use `alias` option:
 
-  ```structure:no-line-numbers
+  ```:no-line-numbers
   .
   ├── src → project folder
   │    ├── .vuepress
@@ -76,9 +76,8 @@ Since Markdown will be converted to Vue single-file components in the cache dire
   └── ...
   ```
 
-  ```ts
-  // .vuepress/config.ts
-  import { getDirname, path } from "@vuepress/utils";
+  ```js title=".vuepress/config.js"
+  import { getDirname, path } from "vuepress/utils";
 
   const __dirname = getDirname(import.meta.url);
 
@@ -92,7 +91,7 @@ Since Markdown will be converted to Vue single-file components in the cache dire
   ```md
   <MyComponent />
 
-  <script setup lang="ts">
+  <script setup>
   import MyComponent from "@MyComponent";
   </script>
   ```

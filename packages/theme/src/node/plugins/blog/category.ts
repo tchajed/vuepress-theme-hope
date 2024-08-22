@@ -1,35 +1,29 @@
+import { isArray } from "@vuepress/helper";
+import type { BlogCategoryOptions } from "@vuepress/plugin-blog";
 import type { GitData } from "@vuepress/plugin-git";
-import type { BlogCategoryOptions } from "vuepress-plugin-blog2";
-import { isArray } from "vuepress-shared/node";
 
 import { defaultPageSorter } from "./utils.js";
 import type {
-  ArticleInfo,
-  BlogPluginOptions,
+  ArticleInfoData,
+  BlogOptions,
   ThemeData,
   ThemeNormalPageFrontmatter,
 } from "../../../shared/index.js";
-import { ArticleInfoType } from "../../../shared/index.js";
+import { ArticleInfo } from "../../../shared/index.js";
 
 /** @private */
 export const getBlogCategoryCategory = (
-  options: BlogPluginOptions,
+  options: BlogOptions,
   themeData: ThemeData,
 ): BlogCategoryOptions<
   { git: GitData },
   ThemeNormalPageFrontmatter,
-  { routeMeta: ArticleInfo }
+  { routeMeta: ArticleInfoData }
 > =>
-  <
-    BlogCategoryOptions<
-      { git: GitData },
-      ThemeNormalPageFrontmatter,
-      { routeMeta: ArticleInfo }
-    >
-  >{
+  ({
     key: "category",
     getter: ({ routeMeta }) => {
-      const category = routeMeta[ArticleInfoType.category];
+      const category = routeMeta[ArticleInfo.category];
 
       return isArray(category) ? category : category ? [category] : [];
     },
@@ -52,27 +46,25 @@ export const getBlogCategoryCategory = (
       sitemap: false,
     }),
     itemLayout: "BlogCategory",
-  };
+  }) as BlogCategoryOptions<
+    { git: GitData },
+    ThemeNormalPageFrontmatter,
+    { routeMeta: ArticleInfoData }
+  >;
 
 /** @private */
 export const getBlogTagCategory = (
-  options: BlogPluginOptions,
+  options: BlogOptions,
   themeData: ThemeData,
 ): BlogCategoryOptions<
   { git: GitData },
   ThemeNormalPageFrontmatter,
-  { routeMeta: ArticleInfo }
+  { routeMeta: ArticleInfoData }
 > =>
-  <
-    BlogCategoryOptions<
-      { git: GitData },
-      ThemeNormalPageFrontmatter,
-      { routeMeta: ArticleInfo }
-    >
-  >{
+  ({
     key: "tag",
     getter: ({ routeMeta }) => {
-      const tag = routeMeta[ArticleInfoType.tag];
+      const tag = routeMeta[ArticleInfo.tag];
 
       return isArray(tag) ? tag : tag ? [tag] : [];
     },
@@ -95,4 +87,8 @@ export const getBlogTagCategory = (
       feed: false,
       sitemap: false,
     }),
-  };
+  }) as BlogCategoryOptions<
+    { git: GitData },
+    ThemeNormalPageFrontmatter,
+    { routeMeta: ArticleInfoData }
+  >;

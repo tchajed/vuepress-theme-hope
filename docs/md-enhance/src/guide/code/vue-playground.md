@@ -47,12 +47,7 @@ Then enabling via:
 
 <!-- #endregion settings -->
 
-::: code-tabs#language
-
-@tab TS
-
-```ts {8}
-// .vuepress/config.ts
+```js {7} title=".vuepress/config.js"
 import { mdEnhance } from "vuepress-plugin-md-enhance";
 
 export default {
@@ -64,24 +59,6 @@ export default {
   ],
 };
 ```
-
-@tab JS
-
-```js {8}
-// .vuepress/config.js
-import { mdEnhance } from "vuepress-plugin-md-enhance";
-
-export default {
-  plugins: [
-    mdEnhance({
-      // enable vue playground
-      vuePlayground: true,
-    }),
-  ],
-};
-```
-
-:::
 
 <!-- #region after -->
 
@@ -99,9 +76,8 @@ You can see the below demos to see more details.
 
 You can import and call `defineVuePlaygroundConfig` in [client config file][client-config] to customize `@vue/repl`:
 
-```ts
-// .vuepress/client.ts
-import { defineClientConfig } from "@vuepress/client";
+```ts title=".vuepress/client.ts"
+import { defineClientConfig } from "vuepress/client";
 import { defineVuePlaygroundConfig } from "vuepress-plugin-md-enhance/client";
 
 defineVuePlaygroundConfig({

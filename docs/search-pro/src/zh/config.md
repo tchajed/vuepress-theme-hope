@@ -165,7 +165,7 @@ export default defineUserConfig({
 
 ::: note
 
-有大量内容时，进行客户端搜素可能会很慢，在这种情况下你可能需要增加此值来确保开始搜索时用户已完成输入。
+有大量内容时，进行客户端搜索可能会很慢，在这种情况下你可能需要增加此值来确保开始搜索时用户已完成输入。
 
 :::
 
@@ -268,12 +268,12 @@ export default defineUserConfig({
     placeholder: string;
 
     /**
-     * 搜素文字
+     * 搜索文字
      */
     search: string;
 
     /**
-     * 搜素中文字
+     * 搜索中文字
      */
     searching: string;
 
@@ -348,8 +348,47 @@ export default defineUserConfig({
 
 自定义 [搜索选项](https://mister-hope.github.io/slimsearch/interfaces/SearchOptions.html)。
 
+我们还额外支持以下选项：
+
 ```ts
-// .vuepress/client.ts
+interface SearchLocaleOptions
+  extends Omit<
+    SearchOptions,
+    // These are handled internally
+    | "fields"
+    // These can not pass to worker
+    | "filter"
+    | "boostDocument"
+    | "tokenize"
+    | "processTerm"
+  > {
+  /** 一个过滤建议的函数 */
+  suggestionsFilter?: (
+    suggestions: string[],
+    query: string,
+    locale: string,
+    pageData: PageData,
+  ) => string[];
+
+  /** 一个过滤搜索结果的函数 */
+  searchFilter?: (
+    results: SearchResult[],
+    query: string,
+    locale: string,
+    pageData: PageData,
+  ) => SearchResult[];
+
+  /** 分词器 */
+  splitWord?: (query: string) => Promise<string[]>;
+}
+
+interface SearchOptions extends SearchLocaleOptions {
+  /** 基于每个语言来设置选项 */
+  locales?: Record<string, SearchLocaleOptions>;
+}
+```
+
+```ts title=".vuepress/client.ts"
 import { defineSearchConfig } from "vuepress-plugin-search-pro/client";
 
 defineSearchConfig({
@@ -404,11 +443,48 @@ interface SearchResult {
 }
 
 interface SearchWorker {
+  /**
+   * 同时获取建议和结果
+   *
+   * @param query - 搜索词
+   * @param localePath - 语言路径
+   * @param options - 搜索选项
+   */
+  all: (
+    query: string,
+    localePath?: string,
+    options?: SearchOptions<string, IndexItem>,
+  ) => Promise<QueryResult>;
+
+  /**
+   * 获取建议
+   *
+   * @param query - 搜索词
+   * @param localePath - 语言路径
+   * @param options - 搜索选项
+   */
+  suggest: (
+    query: string,
+    localePath?: string,
+    options?: SearchOptions<string, IndexItem>,
+  ) => Promise<string[]>;
+
+  /**
+   * 获取搜索结果
+   *
+   * @param query - 搜索词
+   * @param localePath - 语言路径
+   * @param options - 搜索选项
+   */
   search: (
     query: string,
-    locale: string,
-    searchOptions?: SearchOptions,
+    localePath?: string,
+    options?: SearchOptions<string, IndexItem>,
   ) => Promise<SearchResult[]>;
+
+  /**
+   * 终止当前 worker
+   */
   terminate: () => void;
 }
 

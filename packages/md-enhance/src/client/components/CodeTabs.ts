@@ -46,7 +46,7 @@ export default defineComponent({
     },
 
     /**
-     * tab id
+     * Tab id
      *
      * 标签页 id
      */
@@ -68,32 +68,31 @@ export default defineComponent({
   }>,
 
   setup(props, { slots }) {
-    // index of current active item
-    // eslint-disable-next-line vue/no-setup-props-destructure
+    // Index of current active item
     const activeIndex = ref(props.active);
 
-    // refs of the tab buttons
+    // Refs of the tab buttons
     const tabRefs = shallowRef<HTMLUListElement[]>([]);
 
-    // update store
+    // Update store
     const updateStore = (): void => {
       if (props.tabId)
         codeTabStore.value[props.tabId] = props.data[activeIndex.value].id;
     };
 
-    // activate next tab
+    // Activate next tab
     const activateNext = (index = activeIndex.value): void => {
       activeIndex.value = index < tabRefs.value.length - 1 ? index + 1 : 0;
       tabRefs.value[activeIndex.value].focus();
     };
 
-    // activate previous tab
+    // Activate previous tab
     const activatePrev = (index = activeIndex.value): void => {
       activeIndex.value = index > 0 ? index - 1 : tabRefs.value.length - 1;
       tabRefs.value[activeIndex.value].focus();
     };
 
-    // handle keyboard event
+    // Handle keyboard event
     const keyboardHandler = (event: KeyboardEvent, index: number): void => {
       if (event.key === " " || event.key === "Enter") {
         event.preventDefault();
@@ -152,7 +151,7 @@ export default defineComponent({
                     type: "button",
                     ref: (element) => {
                       if (element)
-                        tabRefs.value[index] = <HTMLUListElement>element;
+                        tabRefs.value[index] = element as HTMLUListElement;
                     },
                     class: ["vp-code-tab-nav", { active: isActive }],
                     role: "tab",

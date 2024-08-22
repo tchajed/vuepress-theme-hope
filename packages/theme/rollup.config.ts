@@ -1,4 +1,4 @@
-import { getDirname, path } from "@vuepress/utils";
+import { getDirname, path } from "vuepress/utils";
 
 import { rollupBundle } from "../../scripts/rollup.js";
 
@@ -23,16 +23,13 @@ export default [
         },
       ],
       external: [
-        "@vuepress/plugin-external-link-icon/client",
+        "@vuepress/helper/noopComponent",
+        "@vuepress/plugin-blog/client",
+        "@vuepress/plugin-comment/pageview",
+        "@vuepress/plugin-reading-time/client",
         "@vuepress/plugin-theme-data/client",
         "bcrypt-ts/browser",
-        "body-scroll-lock",
-        "vuepress-plugin-blog2/client",
-        "vuepress-plugin-comment2/pageview",
         "vuepress-plugin-md-enhance/SlidePage",
-        "vuepress-plugin-reading-time2/client",
-        "vuepress-shared/noopModule",
-        /\.jpg$/,
       ],
       dts: false,
       moduleSideEffects: (id) =>

@@ -24,13 +24,6 @@ For related guide, please see [Layout → Navbar](../../guide/layout/navbar.md).
 
 Navbar config
 
-### navbarIcon
-
-- Type: `boolean`
-- Default: `true`
-
-Whether display icons in navbar.
-
 ### navbarLayout
 
 - Type: `NavbarLayoutOptions`
@@ -75,12 +68,12 @@ Navbar logo, should be absolute path relative to `.vuepress/public` folder.
 
 Navbar logo in darkmode, should be absolute path relative to `.vuepress/public` folder.
 
-### navTitle
+### navbarTitle
 
-- Type: `string | false`
+- Type: `string`
 - Default: `$siteLocale.title`
 
-Navbar title
+Navbar title, you can set it to an empty string to hide it.
 
 ### repo
 
@@ -129,17 +122,10 @@ For guide, see [Layout → Sidebar](../../guide/layout/sidebar.md).
 
 ### sidebar <Badge text="Recommended" type="tip" />
 
-- Type: `SidebarConfig | "structure" | "heading" | false`
+- Type: `SidebarConfig | "structure" | false`
 - Default: `"structure"`
 
 Sidebar Config.
-
-### sidebarIcon
-
-- Type: `boolean`
-- Default: `true`
-
-Whether show icons in the sidebar
 
 ### sidebarSorter <Badge text="Root only" type="warning" />
 
@@ -222,7 +208,7 @@ Available keywords are:
 - Type: `number`
 - Default: `2`
 
-Nested headings depth in sidebar
+Nested headings depth
 
 ## Route Navigation
 
@@ -381,4 +367,4 @@ Whether to use RTL layout.
 - Type: `boolean`
 - Default: `true`
 
-Whether show toc list in desktop mode.
+Whether show toc list.

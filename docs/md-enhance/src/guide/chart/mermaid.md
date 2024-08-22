@@ -39,12 +39,7 @@ Then enabling via:
 
 <!-- #endregion before -->
 
-::: code-tabs#language
-
-@tab TS
-
-```ts {8}
-// .vuepress/config.ts
+```js {7} title=".vuepress/config.js"
 import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
 
 export default {
@@ -56,24 +51,6 @@ export default {
   ],
 };
 ```
-
-@tab JS
-
-```js {8}
-// .vuepress/config.js
-import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
-
-export default {
-  plugins: [
-    mdEnhancePlugin({
-      // Enable mermaid
-      mermaid: true,
-    }),
-  ],
-};
-```
-
-:::
 
 <!-- #region after -->
 
@@ -124,9 +101,8 @@ Please see [mermaid](https://mermaid.js.org/).
 
 You can import and call `defineMermaidConfig` in [client config file][client-config] to customize mermaid:
 
-```ts
-// .vuepress/client.ts
-import { defineClientConfig } from "@vuepress/client";
+```ts title=".vuepress/client.ts"
+import { defineClientConfig } from "vuepress/client";
 import { defineMermaidConfig } from "vuepress-plugin-md-enhance/client";
 
 defineMermaidConfig({
@@ -406,12 +382,6 @@ root((VuePress))
     Plugins
       (components)
       (md-enhance)
-      (photo-swipe)
-      (copy-code2)
-      (copyright2)
-      (feed2)
-      (sitemap2)
-      (seo2)
 ```
 
 :::
@@ -553,6 +523,22 @@ x-axis [jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec]
 y-axis "Revenue (in $)" 4000 --> 11000
 bar [5000, 6000, 7500, 8200, 9500, 10500, 11000, 10200, 9200, 8500, 7000, 6000]
 line [5000, 6000, 7500, 8200, 9500, 10500, 11000, 10200, 9200, 8500, 7000, 6000]
+```
+
+:::
+
+::: md-demo Block Chart
+
+```block
+columns 3
+Frontend blockArrowId6<[" "]>(right) Backend
+space:2 down<[" "]>(down)
+Disk left<[" "]>(left) Database[("Database")]
+
+classDef front fill:#696,stroke:#333;
+classDef back fill:#969,stroke:#333;
+class Frontend front
+class Backend,Database back
 ```
 
 :::

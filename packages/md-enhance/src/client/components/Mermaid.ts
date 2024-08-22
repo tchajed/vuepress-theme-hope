@@ -1,3 +1,4 @@
+import { decodeData, isFunction } from "@vuepress/helper/client";
 import { useMutationObserver } from "@vueuse/core";
 import type { VNode } from "vue";
 import {
@@ -9,7 +10,7 @@ import {
   shallowRef,
   watch,
 } from "vue";
-import { LoadingIcon, atou, isFunction } from "vuepress-shared/client";
+import { LoadingIcon } from "vuepress-shared/client";
 
 import { useMermaidOptions } from "../helpers/index.js";
 import type { MermaidThemeVariables } from "../typings/index.js";
@@ -37,7 +38,7 @@ const getThemeVariables = (isDarkmode: boolean): MermaidThemeVariables => ({
   tertiaryBorderColor: isDarkmode ? "#bbb" : "#242424",
   tertiaryTextColor: isDarkmode ? "#ddd" : "#333",
 
-  // note
+  // Note
   noteBkgColor: isDarkmode ? "#f6d365" : "#fff5ad",
   noteTextColor: "#242424",
   noteBorderColor: isDarkmode ? "#f6d365" : "#333",
@@ -49,23 +50,23 @@ const getThemeVariables = (isDarkmode: boolean): MermaidThemeVariables => ({
   errorBkgColor: "#eb4d5d",
   errorTextColor: "#fff",
 
-  // flowchart
+  // Flowchart
   nodeBorder: isDarkmode ? "#389d70" : "#4abf8a",
   nodeTextColor: isDarkmode ? "#fff" : "#242424",
 
-  // sequence
+  // Sequence
   signalTextColor: isDarkmode ? "#9e9e9e" : "#242424",
 
-  // class
+  // Class
   classText: "#fff",
 
-  // state
+  // State
   labelColor: "#fff",
 
   attributeBackgroundColorEven: isDarkmode ? "#0d1117" : "#fff",
   attributeBackgroundColorOdd: isDarkmode ? "#161b22" : "#f8f8f8",
 
-  // colors
+  // Colors
   fillType0: isDarkmode ? "#cf1322" : "#f1636e",
   fillType1: "#f39c12",
   fillType2: "#2ecc71",
@@ -105,7 +106,7 @@ export default defineComponent({
     const { themeVariables, ...mermaidOptions } = useMermaidOptions();
     const mermaidElement = shallowRef<HTMLElement>();
 
-    const code = computed(() => atou(props.code));
+    const code = computed(() => decodeData(props.code));
 
     const svgCode = ref("");
     const isDarkmode = ref(false);
@@ -123,7 +124,6 @@ export default defineComponent({
       ]);
 
       mermaid.initialize({
-        // @ts-ignore
         theme: "base",
         themeVariables: {
           ...getThemeVariables(isDarkmode.value),
@@ -141,7 +141,6 @@ export default defineComponent({
         startOnLoad: false,
       });
 
-      // eslint-disable-next-line
       svgCode.value = (await mermaid.render(props.id, code.value)).svg;
     };
 
@@ -177,7 +176,7 @@ export default defineComponent({
       a.setAttribute("href", dataURI);
       a.setAttribute(
         "download",
-        `${props.title ? atou(props.title) : props.id}.svg`,
+        `${props.title ? decodeData(props.title) : props.id}.svg`,
       );
       a.click();
     };
@@ -187,7 +186,7 @@ export default defineComponent({
 
       void renderMermaid();
 
-      // watch darkmode change
+      // Watch darkmode change
       useMutationObserver(
         document.documentElement,
         () => {
@@ -226,9 +225,9 @@ export default defineComponent({
           class: "mermaid-wrapper",
         },
         svgCode.value
-          ? // mermaid
+          ? // Mermaid
             h("div", { class: "mermaid-content", innerHTML: svgCode.value })
-          : // loading
+          : // Loading
             h(LoadingIcon, { class: "mermaid-loading", height: 96 }),
       ),
     ];

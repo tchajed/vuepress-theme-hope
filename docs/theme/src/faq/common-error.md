@@ -8,7 +8,7 @@ category:
 
 ## `useXXX() is called without provider`
 
-Such errors are usually caused by incorrectly containing multiple versions of `@vue/xxx`, `@vuepress/xxx`, `vue` or `vue-router` in the project.
+Such errors are usually caused by incorrectly containing multiple versions of `vue` in project.
 
 Make sure you are using the latest `vuepress` and `vuepress-theme-hope` versions and all related packages. You can use `vp-update` helper for that
 
@@ -34,26 +34,41 @@ npx vp-update
 
 :::
 
-::: warning
+## `Issues with peer dependencies found`
 
-Any official packages starting with `@vuepress/` should be upgrade to the same version as VuePress.
+This means you have wrong deps installed in your project.
 
-I.E.: if you are using `@vuepress/plugin-search` and `@vuepress/utils`, you should ensure they have the same version number as `vuepress`.
+Here is a example:
 
-Besides, any plugin inside `vuepress-theme-hope` should be the same version as vuepress-theme-hope.
+```shell
+ WARN  Issues with peer dependencies found
+.
+├─┬ @vuepress/plugin-docsearch 2.0.0-rc.7
+│ └── ✕ unmet peer vuepress@2.0.0-rc.2: found 2.0.0-rc.5
+├─┬ @vuepress/plugin-git 2.0.0-rc.7
+│ └── ✕ unmet peer vuepress@2.0.0-rc.2: found 2.0.0-rc.5
+├─┬ vuepress 2.0.0-rc.5
+│ └── ✕ unmet peer @vuepress/bundler-vite@2.0.0-rc.5: found 2.0.0-rc.4
+└─┬ vuepress-theme-hope 2.0.0-rc.21
+  └── ✕ unmet peer @vuepress/plugin-docsearch@2.0.0-rc.10: found 2.0.0-rc.7
+```
 
-Furthermore, if you're using another third-party plugin, make sure it's compatible with the version of VuePress you're upgrading to.
+The example shows that:
 
-:::
+- `vuepress` requires a same version of `@vuepress/bundler-vite` as itself, but you have `rc.4` bundler and `rc.5` vuepress.
 
-## `You are not allowed to use plugin XXX yourself in vuepress config file.`
+- Some of the plugin requires `vuepress@2.0.0-rc.2`, while you have `vuepress@2.0.0-rc.5`.
+
+You can always edit your deps version to let them fit each other. Usually you are trying to upgrade vuepress, vuepress bundler and plugins to latest version, but there could be chances where a plugin is not compatible with the latest version of vuepress. In this case, you should downgrade vuepress to the version that is compatible with the plugin or temporarily removing the plugin till it supports latest vuepress.
+
+## You are not allowed to use plugin XXX yourself in vuepress config file
 
 This means you are calling a theme-bundled plugin yourself in VuePress config file.
 
 - In most cases, when you use some plugins with theme, the theme automatically handles some plugin options for you,
 - Some plugins are required by the theme. If you do not enable the features used by theme, the theme will throw errors.
 
-So when you want to customize these plugins, you should set their options in `plugin.PLUGIN_NAME` under theme options and let the theme call these plugins for you.
+So when you want to customize these plugins, you should set their options in `plugins.PLUGIN_NAME` under theme options and let the theme call these plugins for you.
 
 For details on all plugins of the theme, please see [Theme Plugins](../config/plugins/intro.md).
 
@@ -73,24 +88,24 @@ This value can be greater than the actual memory size of your machine.
 
 With GitHub workflow, set `env` in your workflow file.
 
-```diff
-  - name: Build project
-+   env:
-+     NODE_OPTIONS: --max_old_space_size=8192
-    run: pnpm run build
+```yml
+- name: Build project
+  env: // [!code ++]
+    NODE_OPTIONS: --max_old_space_size=8192 // [!code ++]
+  run: pnpm run build
 ```
 
 On windows, you can follow [this guide](https://www.technewstoday.com/how-to-set-windows-environment-variables/).
 
 :::
 
-## `xxx isn't assign with a lang, and will return 'en-US' instead.`
+## xxx isn't assign with a lang, and will return 'en-US' instead
 
 If you see `xxx isn't assign with a lang, and will return 'en-US' instead.` while the dev process is starting up, please check whether you set lang for every language.
 
 Even if you only have one language, you still need to [set language](../config/i18n.md#setting-language).
 
-## `xxx is missing sidebar config.`
+## xxx is missing sidebar config
 
 Using object format sidebar config means you want to set different sidebar based on routes.
 
@@ -137,7 +152,7 @@ To remove them, run theme with `--debug` flag, and you will get warning logs tel
 
 To use them anyway, check [here](https://vuejs.press/guide/markdown.html#non-standard-html-tags) to get a workaround.
 
-## `Hydration completed but contains mismatches.`
+## Hydration completed but contains mismatches
 
 This error indicates that you have an SSR mismatch, and it should not be a problem with theme.
 
@@ -151,9 +166,10 @@ Auto Minify in CloudFlare incorrectly handle HTML spaces and line breaks, which 
 
 To debug this, set `__VUE_PROD_HYDRATION_MISMATCH_DETAILS__` to `true` so that you can see the details of the mismatch in browser console.
 
-If a component is likely to have different render results between SSR[^ssr] and CSR[^csr]. You can wrap your components with the `<ClientOnly />` component provided by `@vuepress/client`.
+If a component is likely to have different render results between SSR[^ssr] and CSR[^csr]. You can wrap your components with the `<ClientOnly />` component provided by `vuepress/client`.
 
 [^ssr]: **SSR**: **S**erver **S**ide **R**endering
+
 [^csr]: **CSR**: **C**lient **S**ide **R**endering
 
 ## HotReload not working in DevServer
@@ -191,15 +207,14 @@ If you need to support older browsers, you can use `postcss-preset-env` to be co
 
 @tab Vite
 
-```ts
-// .vuepress/config.ts
-import { defineUserConfig } from "vuepress";
-import { addViteConfig } from "vuepress-shared/node";
+```ts title=".vuepress/config.ts"
+import { addViteConfig } from "@vuepress/helper";
 import postcssPresetEnv from "postcss-preset-env";
+import { defineUserConfig } from "vuepress";
 
 export default defineUserConfig({
   extendsBundlerOptions: (config, app) => {
-    addViteConfig(bundlerOptions, app, {
+    addViteConfig(config, app, {
       css: {
         postcss: {
           plugins: [postcssPresetEnv()],
@@ -212,15 +227,14 @@ export default defineUserConfig({
 
 @tab Webpack
 
-```ts
-// .vuepress/config.ts
-import { defineUserConfig } from "vuepress";
-import { configWebpack } from "vuepress-shared/node";
+```ts title=".vuepress/config.ts"
+import { configWebpack } from "@vuepress/helper";
 import postcssPresetEnv from "postcss-preset-env";
+import { defineUserConfig } from "vuepress";
 
 export default defineUserConfig({
   extendsBundlerOptions: (config, app) => {
-    configWebpack(bundlerOptions, app, (config) => {
+    configWebpack(config, app, (config) => {
       (((config.postcss ??= {}).postcssOptions ??= {}).plugins ??= []).push(
         postcssPresetEnv(),
       );

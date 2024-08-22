@@ -1,7 +1,11 @@
-import { useRouteLocale, useSiteLocaleData, withBase } from "@vuepress/client";
 import type { VNode } from "vue";
 import { computed, defineComponent, h } from "vue";
-import { VPLink } from "vuepress-shared/client";
+import {
+  RouteLink,
+  useRouteLocale,
+  useSiteLocaleData,
+  withBase,
+} from "vuepress/client";
 
 import { useThemeLocaleData } from "@theme-hope/composables/index";
 
@@ -16,12 +20,12 @@ export default defineComponent({
     const themeLocale = useThemeLocaleData();
 
     const siteBrandLink = computed(
-      () => themeLocale.value.home || routeLocale.value,
+      () => themeLocale.value.home ?? routeLocale.value,
     );
 
     const siteTitle = computed(() => siteLocale.value.title);
     const siteBrandTitle = computed(
-      () => themeLocale.value.navTitle ?? siteTitle.value,
+      () => themeLocale.value.navbarTitle ?? siteTitle.value,
     );
 
     const siteBrandLogo = computed(() =>
@@ -33,7 +37,7 @@ export default defineComponent({
     );
 
     return (): VNode =>
-      h(VPLink, { to: siteBrandLink.value, class: "vp-brand" }, () => [
+      h(RouteLink, { to: siteBrandLink.value, class: "vp-brand" }, () => [
         siteBrandLogo.value
           ? h("img", {
               class: [
@@ -60,7 +64,7 @@ export default defineComponent({
                   {
                     "hide-in-pad":
                       siteBrandLogo.value &&
-                      themeLocale.value.hideSiteNameOnMobile !== false,
+                      (themeLocale.value.hideSiteNameOnMobile ?? true),
                   },
                 ],
               },

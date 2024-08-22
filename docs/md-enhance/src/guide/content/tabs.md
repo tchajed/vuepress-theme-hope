@@ -9,12 +9,7 @@ Let the Markdown file in your VuePress site support tabs.
 
 ## Settings
 
-::: code-tabs#language
-
-@tab TS
-
-```ts {8}
-// .vuepress/config.ts
+```js {7} title=".vuepress/config.js"
 import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
 
 export default {
@@ -26,24 +21,6 @@ export default {
   ],
 };
 ```
-
-@tab JS
-
-```js {8}
-// .vuepress/config.js
-import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
-
-export default {
-  plugins: [
-    mdEnhancePlugin({
-      // adds tabs support
-      tabs: true,
-    }),
-  ],
-};
-```
-
-:::
 
 <!-- #region after -->
 
@@ -128,7 +105,8 @@ npm should be installed with Node.js.
 @tab pnpm
 
 ```bash
-corepack prepare pnpm@latest --activated
+corepack enable
+corepack use pnpm@latest
 ```
 
 :::

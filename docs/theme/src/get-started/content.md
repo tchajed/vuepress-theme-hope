@@ -24,25 +24,22 @@ Since you are generating the project from create helper, you will have the follo
 
 ```
 └─ src
-   ├─ guide
+   ├─ demo
    │  ├─ ...
    │  └─ page.md
    │  └─ markdown.md
    │  └─ README.md
    ├─ ...
-   ├─ slide.md
    └─ README.md
 ```
 
 The route path of your Markdown files are:
 
-| Relative Path      | Route Path          |
-| ------------------ | ------------------- |
-| `/README.md`       | `/`                 |
-| `/slide.md`        | `/slide.html`       |
-| `/guide/README.md` | `/guide/`           |
-| `/guide/slide.md`  | `/guide/slide.html` |
-| `/guide/page.md`   | `/guide/page.html`  |
+| Relative Path     | Route Path        |
+| ----------------- | ----------------- |
+| `/README.md`      | `/`               |
+| `/demo/README.md` | `/demo/`          |
+| `/demo/page.md`   | `/demo/page.html` |
 
 ::: tip README.md
 
@@ -76,7 +73,7 @@ In about fifteen minutes, you can learn how to write Markdown, remember to come 
 
 ## Frontmatter
 
-Frontmatter is a very important concept in VuePress, it is used to carry config of Markdown files. Markdown files can contain a [YAML](https://yaml.org/) Frontmatter.
+Frontmatter is an important concept in VuePress, it is used to carry config of Markdown files. Markdown files can contain a [YAML](https://yaml.org/) Frontmatter.
 
 Frontmatter must be at the top of the Markdown file, surrounded by a pair of triple dashes. Here is a basic example:
 

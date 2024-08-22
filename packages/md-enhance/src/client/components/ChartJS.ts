@@ -1,3 +1,4 @@
+import { decodeData } from "@vuepress/helper/client";
 import { useMutationObserver } from "@vueuse/core";
 import type { Chart, ChartConfiguration } from "chart.js";
 import type { PropType, VNode } from "vue";
@@ -10,7 +11,7 @@ import {
   shallowRef,
   watch,
 } from "vue";
-import { LoadingIcon, atou } from "vuepress-shared/client";
+import { LoadingIcon } from "vuepress-shared/client";
 
 import { getDarkmodeStatus } from "../utils/index.js";
 
@@ -22,7 +23,7 @@ const parseChartConfig = (
   config: string,
   type: "js" | "json",
 ): ChartConfiguration => {
-  if (type === "json") return <ChartConfiguration>JSON.parse(config);
+  if (type === "json") return JSON.parse(config) as ChartConfiguration;
 
   // eslint-disable-next-line @typescript-eslint/no-implied-eval
   const runner = new Function(
@@ -36,7 +37,7 @@ return __chart_js_config__;\
 `,
   );
 
-  return <ChartConfiguration>runner();
+  return runner() as ChartConfiguration;
 };
 
 export default defineComponent({
@@ -91,7 +92,7 @@ export default defineComponent({
     const isDarkmode = ref(false);
     const loading = ref(true);
 
-    const config = computed(() => atou(props.config));
+    const config = computed(() => decodeData(props.config));
 
     let loaded = false;
 
@@ -124,7 +125,7 @@ export default defineComponent({
     onMounted(() => {
       isDarkmode.value = getDarkmodeStatus();
 
-      // watch darkmode change
+      // Watch darkmode change
       useMutationObserver(
         document.documentElement,
         () => {

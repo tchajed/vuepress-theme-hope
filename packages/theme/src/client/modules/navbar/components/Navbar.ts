@@ -1,3 +1,5 @@
+import { hasGlobalComponent } from "@vuepress/helper/client";
+import noopComponent from "@vuepress/helper/noopComponent";
 import type {
   Component,
   ComponentOptions,
@@ -6,8 +8,6 @@ import type {
   VNode,
 } from "vue";
 import { computed, defineComponent, h, ref, resolveComponent } from "vue";
-import { hasGlobalComponent } from "vuepress-shared/client";
-import noopModule from "vuepress-shared/noopModule";
 
 import {
   useThemeLocaleData,
@@ -26,7 +26,7 @@ import type { NavbarLayoutOptions } from "../../../../shared/index.js";
 
 import "../styles/navbar.scss";
 
-declare const HAS_MULTIPLE_LANGUAGES: boolean;
+declare const __VP_MULTI_LANGUAGES__: boolean;
 
 export default defineComponent({
   name: "NavBar",
@@ -36,7 +36,7 @@ export default defineComponent({
   slots: Object as SlotsType<{
     default: () => VNode[] | VNode | null;
 
-    // navbar
+    // Navbar
     startBefore?: () => VNode[] | VNode | null;
     startAfter?: () => VNode[] | VNode | null;
     centerBefore?: () => VNode[] | VNode | null;
@@ -64,17 +64,17 @@ export default defineComponent({
 
     const navbarLayout = computed(
       () =>
-        themeLocale.value.navbarLayout ||
-        <NavbarLayoutOptions>{
+        themeLocale.value.navbarLayout ??
+        ({
           start: ["Brand"],
           center: ["Links"],
           end: ["Language", "Repo", "Outlook", "Search"],
-        },
+        } as NavbarLayoutOptions),
     );
 
     const navbarComponentMap: Record<string, Component | string> = {
       Brand: NavbarBrand,
-      Language: HAS_MULTIPLE_LANGUAGES ? LanguageDropdown : noopModule,
+      Language: __VP_MULTI_LANGUAGES__ ? LanguageDropdown : noopComponent,
       Links: NavbarLinks,
       Repo: RepoLink,
       Outlook: OutlookButton,
@@ -82,27 +82,22 @@ export default defineComponent({
         ? resolveComponent("Docsearch")
         : hasGlobalComponent("SearchBox")
           ? resolveComponent("SearchBox")
-          : noopModule,
+          : noopComponent,
     };
 
     const getNavbarComponent = (component: string): Component | string =>
       navbarComponentMap[component] ??
       (hasGlobalComponent(component)
         ? resolveComponent(component)
-        : noopModule);
+        : noopComponent);
 
     return (): VNode[] => [
       h(
         "header",
         {
+          key: "navbar",
           id: "navbar",
-          class: [
-            "vp-navbar",
-            {
-              "auto-hide": autoHide.value,
-              "hide-icon": themeLocale.value.navbarIcon === false,
-            },
-          ],
+          class: ["vp-navbar", { "auto-hide": autoHide.value }],
         },
         [
           h("div", { class: "vp-navbar-start" }, [
@@ -113,11 +108,11 @@ export default defineComponent({
               },
             }),
             slots.startBefore?.(),
-            (navbarLayout.value.start || []).map((item) =>
+            navbarLayout.value.start?.map((item) =>
               h(
-                <ComponentOptions | FunctionalComponent>(
-                  getNavbarComponent(item)
-                ),
+                getNavbarComponent(item) as
+                  | ComponentOptions
+                  | FunctionalComponent,
               ),
             ),
             slots.startAfter?.(),
@@ -125,11 +120,11 @@ export default defineComponent({
 
           h("div", { class: "vp-navbar-center" }, [
             slots.centerBefore?.(),
-            (navbarLayout.value.center || []).map((item) =>
+            navbarLayout.value.center?.map((item) =>
               h(
-                <ComponentOptions | FunctionalComponent>(
-                  getNavbarComponent(item)
-                ),
+                getNavbarComponent(item) as
+                  | ComponentOptions
+                  | FunctionalComponent,
               ),
             ),
             slots.centerAfter?.(),
@@ -137,11 +132,11 @@ export default defineComponent({
 
           h("div", { class: "vp-navbar-end" }, [
             slots.endBefore?.(),
-            (navbarLayout.value.end || []).map((item) =>
+            navbarLayout.value.end?.map((item) =>
               h(
-                <ComponentOptions | FunctionalComponent>(
-                  getNavbarComponent(item)
-                ),
+                getNavbarComponent(item) as
+                  | ComponentOptions
+                  | FunctionalComponent,
               ),
             ),
             slots.endAfter?.(),
@@ -164,8 +159,12 @@ export default defineComponent({
           },
         },
         {
-          before: () => slots.screenTop?.(),
-          after: () => slots.screenBottom?.(),
+          before: slots.screenTop
+            ? (): VNode | VNode[] | null => slots.screenTop!()
+            : null,
+          after: slots.screenBottom
+            ? (): VNode | VNode[] | null => slots.screenBottom!()
+            : null,
         },
       ),
     ];

@@ -1,9 +1,9 @@
-import { defineUserConfig } from "@vuepress/cli";
+import { addViteSsrNoExternal } from "@vuepress/helper";
 import { defaultTheme } from "@vuepress/theme-default";
+import { defineUserConfig } from "vuepress/cli";
 import { componentsPlugin } from "vuepress-plugin-components";
-import { addViteSsrNoExternal } from "vuepress-shared";
 
-const base = <"/" | `/${string}/`>process.env["BASE"] || "/";
+const base = (process.env["BASE"] as "/" | `/${string}/`) || "/";
 
 export default defineUserConfig({
   base,
@@ -21,7 +21,6 @@ export default defineUserConfig({
     sidebar: [
       "/demo/",
       "/demo/art-player",
-      "/demo/audio-player",
       "/demo/badge",
       "/demo/bili-bili",
       "/demo/code-pen",
@@ -33,15 +32,12 @@ export default defineUserConfig({
       "/demo/stack-blitz",
       "/demo/vp-banner",
       "/demo/vp-card",
-      "/demo/video-player",
       "/demo/vid-stack",
       "/demo/xi-gua",
+      "/demo/audio-player",
+      "/demo/video-player",
       "/demo/you-tube",
     ],
-
-    themePlugins: {
-      backToTop: false,
-    },
   }),
 
   extendsBundlerOptions: (bundlerOptions, app) => {
@@ -74,29 +70,6 @@ export default defineUserConfig({
         fontIcon: {
           assets: "fontawesome",
         },
-        pdf: {
-          pdfjs: "/assets/lib/pdfjs/",
-        },
-      },
-
-      rootComponents: {
-        backToTop: true,
-        notice: [
-          {
-            match: /^\/$/,
-            title: "Notice Title",
-            content: "Notice Content",
-            actions: [
-              {
-                text: "Primary Action",
-                link: "https://theme-hope.vuejs.press/",
-                type: "primary",
-              },
-              { text: "Default Action" },
-            ],
-            fullscreen: true,
-          },
-        ],
       },
     }),
   ],

@@ -9,7 +9,7 @@ export default {
     },
     MD013: false,
     MD024: {
-      allow_different_nesting: true,
+      siblings_only: true,
     },
     MD033: {
       allowed_elements: [
@@ -22,7 +22,6 @@ export default {
         "iframe",
         "ArtPlayer",
         "AudioPlayer",
-        "AutoCatalog",
         "Badge",
         "BiliBili",
         "Catalog",
@@ -43,7 +42,7 @@ export default {
         "VideoPlayer",
         "YouTube",
         "MyComponent",
-        "AppearanceSwitch",
+        "ColorModeSwitch",
         "HopeIcon",
         "FlowChartPlayground",
         "IconDisplay",
@@ -64,9 +63,8 @@ export default {
   ignores: [
     "**/node_modules/**",
     "**/__tests__/**",
-    "CHANGELOG.md",
-    "LICENSE",
     // markdown import demo
     "**/*.snippet.md",
+    "**/CHANGELOG.md",
   ],
 };

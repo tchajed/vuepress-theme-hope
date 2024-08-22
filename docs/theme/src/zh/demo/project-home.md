@@ -75,11 +75,6 @@ features:
     details: 支持 docsearch 和基于客户端的搜索
     link: /zh/guide/feature/search.html
 
-  - title: 代码复制
-    icon: copy
-    details: 一键复制代码块中的代码
-    link: /zh/guide/feature/copy-code.html
-
   - title: 图片预览
     icon: image
     details: 像相册一样允许你浏览、缩放并分享你的页面图片
@@ -129,7 +124,7 @@ pnpm create vuepress-theme-hope [dir]
 @tab npm
 
 ```bash
-npm init vuepress-theme-hope [dir]
+npm init vuepress-theme-hope@latest [dir]
 ```
 
 :::
@@ -147,7 +142,7 @@ pnpm create vuepress-theme-hope add [dir]
 @tab npm
 
 ```bash
-npm init vuepress-theme-hope add [dir]
+npm init vuepress-theme-hope@latest add [dir]
 ```
 
 :::
@@ -158,8 +153,7 @@ npm init vuepress-theme-hope add [dir]
 
 @tab TS
 
-```ts
-// .vuepress/config.ts
+```ts title=".vuepress/config.ts"
 import { defineUserConfig } from "vuepress";
 import { hopeTheme } from "vuepress-theme-hope";
 
@@ -176,8 +170,7 @@ export default defineUserConfig({
 
 @tab JS
 
-```js
-// .vuepress/config.js
+```js title=".vuepress/config.js"
 import { hopeTheme } from "vuepress-theme-hope";
 
 export default {

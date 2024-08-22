@@ -1,18 +1,12 @@
-import type { BackToTopOptions } from "./backToTop.js";
-import type { NoticeOptions } from "../../shared/index.js";
-
+// TODO: Remove in v2 stable
 export interface RootComponentOptions {
   /**
-   * Back to top button config
-   *
-   * 返回顶部按钮配置
+   * @deprecated Please use "@vuepress/plugin-back-to-top instead"
    */
-  backToTop?: BackToTopOptions | boolean;
+  backToTop?: never;
 
   /**
-   * Global notice config
-   *
-   * 全局通知配置
+   * @deprecated Please use "@vuepress/plugin-notice instead"
    */
-  notice?: NoticeOptions[];
+  notice?: never;
 }

@@ -1,12 +1,12 @@
+import { encodeData, entries, keys } from "@vuepress/helper";
 import type { PluginSimple } from "markdown-it";
-import type { RuleBlock } from "markdown-it/lib/parser_block.js";
+import type { RuleBlock } from "markdown-it/lib/parser_block.mjs";
 import type {
   SandpackFile,
   SandpackOptions,
   SandpackPredefinedTemplate,
   SandpackSetup,
 } from "sandpack-vue3";
-import { entries, utoa } from "vuepress-shared/node";
 
 import { encodeFiles, getAttrs } from "./utils.js";
 import type { SandpackData } from "../../typings/index.js";
@@ -16,11 +16,11 @@ const AT_MARKER = `@`;
 const VALID_MARKERS = ["file", "options", "setup"] as const;
 
 const propsGetter = (sandpackData: SandpackData): Record<string, string> => ({
-  title: sandpackData.title || "",
-  template: sandpackData.template || "",
-  files: utoa(encodeFiles(sandpackData.files || {})),
-  options: utoa(JSON.stringify(sandpackData.options || {})),
-  customSetup: utoa(JSON.stringify(sandpackData.customSetup || {})),
+  title: sandpackData.title ?? "",
+  template: sandpackData.template ?? "",
+  files: encodeData(encodeFiles(sandpackData.files ?? {})),
+  options: encodeData(JSON.stringify(sandpackData.options ?? {})),
+  customSetup: encodeData(JSON.stringify(sandpackData.customSetup ?? {})),
 });
 
 const jsRunner = (jsCode: string): unknown =>
@@ -33,8 +33,10 @@ const getSandpackRule =
     let start = state.bMarks[startLine] + state.tShift[startLine];
     let max = state.eMarks[startLine];
 
-    // Check out the first character quickly,
-    // this should filter out most of non-containers
+    /*
+     * Check out the first character quickly,
+     * this should filter out most of non-containers
+     */
     if (state.src[start] !== ":") return false;
 
     let pos = start + 1;
@@ -59,7 +61,7 @@ const getSandpackRule =
 
     if (firstSpace > 0) {
       containerName = content.substring(0, firstSpace);
-      // remove attrs
+      // Remove attrs
       title = content
         .substring(firstSpace + 1)
         .replace(/(?<!\\)\[([^}]*)\]/g, "");
@@ -67,7 +69,7 @@ const getSandpackRule =
       containerName = content;
     }
 
-    // if (containerName !== name) return false;
+    // If (containerName !== name) return false;
     if (!containerName.includes(name)) return false;
 
     // Since start is found, we can report success here in validation mode
@@ -79,8 +81,10 @@ const getSandpackRule =
 
     // Search for the end of the block
     while (
-      // unclosed block should be auto closed by end of document.
-      // also block seems to be auto closed by end of parent
+      /*
+       * Unclosed block should be auto closed by end of document.
+       * also block seems to be auto closed by end of parent
+       */
       nextLine < endLine
     ) {
       nextLine += 1;
@@ -88,29 +92,31 @@ const getSandpackRule =
       max = state.eMarks[nextLine];
 
       if (start < max && state.sCount[nextLine] < state.blkIndent)
-        // non-empty line with negative indent should stop the list:
-        // - ```
-        //  test
+        /*
+         * Non-empty line with negative indent should stop the list:
+         * - ```
+         *  test
+         */
         break;
 
       if (
-        // match start
+        // Match start
 
         state.src[start] === ":" &&
-        // closing fence should be indented less than 4 spaces
+        // Closing fence should be indented less than 4 spaces
         state.sCount[nextLine] - state.blkIndent < 4
       ) {
-        // check rest of marker
+        // Check rest of marker
         for (pos = start + 1; pos <= max; pos++)
           if (state.src[pos] !== ":") break;
 
-        // closing code fence must be at least as long as the opening one
+        // Closing code fence must be at least as long as the opening one
         if (pos - start >= markerCount) {
-          // make sure tail has spaces only
+          // Make sure tail has spaces only
           pos = state.skipSpaces(pos);
 
           if (pos >= max) {
-            // found!
+            // Found!
             autoClosed = true;
             break;
           }
@@ -121,10 +127,10 @@ const getSandpackRule =
     const oldParent = state.parentType;
     const oldLineMax = state.lineMax;
 
-    // @ts-expect-error
-    state.parentType = `${name}`;
+    // @ts-expect-error: name is an unknown type to markdown-it
+    state.parentType = name;
 
-    // this will prevent lazy continuations from ever going past our end marker
+    // This will prevent lazy continuations from ever going past our end marker
     state.lineMax = nextLine - (autoClosed ? 1 : 0);
 
     const openToken = state.push(`${name}_open`, "template", 1);
@@ -184,8 +190,10 @@ const atMarkerRule =
 
     // Search for the end of the block
     while (
-      // unclosed block should be auto closed by end of document.
-      // also block seems to be auto closed by end of parent
+      /*
+       * Unclosed block should be auto closed by end of document.
+       * also block seems to be auto closed by end of parent
+       */
       nextLine < endLine
     ) {
       nextLine += 1;
@@ -193,15 +201,17 @@ const atMarkerRule =
       max = state.eMarks[nextLine];
 
       if (start < max && state.sCount[nextLine] < state.blkIndent)
-        // non-empty line with negative indent should stop the list:
-        // - ```
-        //  test
+        /*
+         * Non-empty line with negative indent should stop the list:
+         * - ```
+         *  test
+         */
         break;
 
       if (
-        // match start
+        // Match start
         state.src[start] === AT_MARKER &&
-        // marker should not be indented with respect of opening fence
+        // Marker should not be indented with respect of opening fence
         state.sCount[nextLine] <= state.sCount[startLine]
       ) {
         let openMakerMatched = true;
@@ -213,7 +223,7 @@ const atMarkerRule =
           }
 
         if (openMakerMatched) {
-          // found!
+          // Found!
           autoClosed = true;
           nextLine -= 1;
           break;
@@ -224,10 +234,10 @@ const atMarkerRule =
     const oldParent = state.parentType;
     const oldLineMax = state.lineMax;
 
-    // @ts-expect-error
-    state.parentType = `${markerName}`;
+    // @ts-expect-error: unknown type to markdown-it
+    state.parentType = markerName;
 
-    // this will prevent lazy continuations from ever going past our end marker
+    // This will prevent lazy continuations from ever going past our end marker
     state.lineMax = nextLine;
 
     const openToken = state.push(`${markerName}_open`, "template", 1);
@@ -258,9 +268,8 @@ export const sandpack: PluginSimple = (md) => {
   });
 
   VALID_MARKERS.forEach((marker) => {
-    // WARNING:  Here we use an internal variable to make sure tab rule is not registered
-
-    // @ts-ignore
+    // Note: Here we use an internal variable to make sure tab rule is not registered
+    // @ts-expect-error: __rules__ is a private property
     // eslint-disable-next-line
     if (!md.block.ruler.__rules__.find(({ name }) => name === `at-${marker}`))
       md.block.ruler.before("fence", `at-${marker}`, atMarkerRule(marker), {
@@ -284,7 +293,7 @@ export const sandpack: PluginSimple = (md) => {
     const arr = containerName.split("#");
 
     if (arr.length > 1)
-      sandpackData.template = <SandpackPredefinedTemplate>arr[1];
+      sandpackData.template = arr[1] as SandpackPredefinedTemplate;
 
     let currentKey: string | null = null;
     let foundOptions = false;
@@ -305,9 +314,9 @@ export const sandpack: PluginSimple = (md) => {
 
           sandpackData.files[currentKey] = {
             code: "",
-            active: !!fileAttrs["active"],
-            hidden: !!fileAttrs["hidden"],
-            readOnly: !!fileAttrs["readOnly"],
+            active: "active" in fileAttrs,
+            hidden: "hidden" in fileAttrs,
+            readOnly: "readOnly" in fileAttrs,
           };
         } else if (
           type === "file_close" ||
@@ -333,23 +342,25 @@ export const sandpack: PluginSimple = (md) => {
           continue;
         }
 
-        // parse options
+        // Parse options
         if (foundOptions) {
           if (type === "fence" && (info === "js" || info === "javascript"))
-            sandpackData.options = <SandpackOptions>jsRunner(content.trim());
+            sandpackData.options = jsRunner(content.trim()) as SandpackOptions;
 
           foundOptions = false;
         }
 
-        // parse setup
+        // Parse setup
         if (foundSetup) {
           if (type === "fence" && (info === "js" || info === "javascript"))
-            sandpackData.customSetup = <SandpackSetup>jsRunner(content.trim());
+            sandpackData.customSetup = jsRunner(
+              content.trim(),
+            ) as SandpackSetup;
 
           foundSetup = false;
         }
 
-        // add code block content
+        // Add code block content
         if (type === "fence" && currentKey)
           (sandpackData.files[currentKey] as SandpackFile).code = content;
 
@@ -360,13 +371,17 @@ export const sandpack: PluginSimple = (md) => {
 
     const props = propsGetter(sandpackData);
 
-    // merge
-    entries(attrs)?.forEach((attr) => {
-      if (!props[attr[0]] && attr[1]) props[attr[0]] = attr[1];
-    });
-
-    return `<SandPack ${entries(props)
-      .map(([attr, value]) => `${attr}="${escapeHtml(value || "")}"`)
+    return `<SandPack ${
+      keys(attrs).length
+        ? `${entries(attrs)
+            .map(([attr, value]) =>
+              value ? `${attr}="${escapeHtml(value)}"` : attr,
+            )
+            .join(" ")} `
+        : ""
+    }${entries(props)
+      .map(([attr, value]) => (value ? `${attr}="${escapeHtml(value)}"` : null))
+      .filter(Boolean)
       .join(" ")}>\n`;
   };
 

@@ -46,7 +46,7 @@ features:
     link: ./guide.html#query-and-search-history
 
 footer: MIT Licensed | Copyright © 2022-present Mr.Hope
-copyrightText: false
+copyright: false
 ---
 
 ## How to use
@@ -81,8 +81,7 @@ npm i -D vuepress-plugin-search-pro
 
 @tab TS
 
-```ts
-// .vuepress/config.ts
+```ts title=".vuepress/config.ts"
 import { searchProPlugin } from "vuepress-plugin-search-pro";
 
 export default {
@@ -96,8 +95,7 @@ export default {
 
 @tab JS
 
-```js
-// .vuepress/config.js
+```js title=".vuepress/config.js"
 import { searchProPlugin } from "vuepress-plugin-search-pro";
 
 export default {

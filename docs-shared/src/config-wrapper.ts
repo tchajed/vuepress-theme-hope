@@ -1,8 +1,7 @@
-import type { UserConfig } from "@vuepress/cli";
-import { defineUserConfig } from "@vuepress/cli";
-import { getDirname, path } from "@vuepress/utils";
-import { redirectPlugin } from "vuepress-plugin-redirect";
-import { addViteOptimizeDepsInclude } from "vuepress-shared/node";
+import { addViteOptimizeDepsInclude } from "@vuepress/helper";
+import type { UserConfig } from "vuepress/cli";
+import { defineUserConfig } from "vuepress/cli";
+import { getDirname, path } from "vuepress/utils";
 
 import { pwaHead } from "./head.js";
 
@@ -20,7 +19,7 @@ export const config = (
   const docsBase = IS_NETLIFY
     ? "/"
     : base
-      ? <`/${string}/`>`/v2/${base}/`
+      ? (`/v2/${base}/` as `/${string}/`)
       : "/v2/";
 
   return defineUserConfig({
@@ -30,13 +29,7 @@ export const config = (
 
     head: pwaHead,
 
-    markdown: {
-      code: {
-        lineNumbers: 10,
-      },
-    },
-
-    plugins: [redirectPlugin({ switchLocale: "modal" }), ...plugins],
+    plugins,
 
     alias: {
       "@theme-hope/components/HeroInfo": path.resolve(
@@ -77,7 +70,7 @@ Theme by <a href="https://theme-hope.vuejs.press" target="_blank">VuePress Theme
   <img src="https://www.netlify.com/img/global/badges/netlify-dark.svg" alt="由 Netlify 部署" data-mode="darkmode-only">
 </a>
 <br/>
-使用 <a href="https://theme-hope.vuejs.press/zh/" target="_blank">VuePress Theme Hope</a> 主题 | MIT 协议, 版权所有 © 2019-present Mr.Hope
+使用 <a href="https://theme-hope.vuejs.press/zh/" target="_blank">VuePress Theme Hope</a> 主题 | MIT 协议, 版权所有 © 2019-至今 Mr.Hope
 `;
       }
     },

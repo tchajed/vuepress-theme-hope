@@ -14,7 +14,7 @@ actions:
     icon: tools
     link: ./config.html
 
-footer: 使用 <a href="https://theme-hope.vuejs.press/zh/" target="_blank">VuePress Theme Hope</a> 主题 | MIT 协议, 版权所有 © 2019-present Mr.Hope
+footer: 使用 <a href="https://theme-hope.vuejs.press/zh/" target="_blank">VuePress Theme Hope</a> 主题 | MIT 协议, 版权所有 © 2019-至今 Mr.Hope
 
 copyright: false
 ---
@@ -49,8 +49,7 @@ npm i -D vuepress-plugin-components
 
 @tab TS
 
-```ts
-// .vuepress/config.ts
+```ts title=".vuepress/config.ts"
 import { componentsPlugin } from "vuepress-plugin-components";
 
 export default {
@@ -64,8 +63,7 @@ export default {
 
 @tab JS
 
-```js
-// .vuepress/config.js
+```js title=".vuepress/config.js"
 import { componentsPlugin } from "vuepress-plugin-components";
 
 export default {

@@ -1,6 +1,6 @@
-import { useRouteLocale } from "@vuepress/client";
 import type { VNode } from "vue";
 import { computed, defineComponent, h } from "vue";
+import { useRouteLocale } from "vuepress/client";
 
 export default defineComponent({
   name: "SocialLink",
@@ -25,9 +25,9 @@ export default defineComponent({
     return (): VNode =>
       h(
         "div",
-        { class: "nav-item vp-repo" },
+        { class: "vp-nav-item vp-action" },
         h("a", {
-          class: "vp-repo-link",
+          class: "vp-action-link",
           href: link.value,
           target: "_blank",
           rel: "noopener noreferrer",

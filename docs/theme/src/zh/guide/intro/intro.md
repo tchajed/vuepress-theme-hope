@@ -12,9 +12,7 @@ tag:
 
 ## 主题初衷
 
-VuePress 默认主题只是一个提供基础文档布局的主题。 例如：它不会注入元标记或生成用于 SEO 优化的站点地图。此外，虽然 VuePress 在一定程度上扩展了 Markdown 语法，但仍然缺少一些常用的功能，例如文本对齐、标记、流程图、公式、演示等，同时默认主题提供的一些功能较弱或缺失，如图片预览、代码块复制、目录页等。
-
-在这种情况下，`vuepress-theme-hope` 和一些系列插件就应运诞生。
+VuePress 在一定程度上扩展了 Markdown 语法，但仍然缺少一些常用的功能，例如文本对齐、标记、流程图、公式、演示等，同时默认主题提供的一些功能较弱或缺失，如图片预览、代码块复制、目录页等。同时 VuePress 默认主题太简陋，功能不够强大。在这种情况下，`vuepress-theme-hope` 和一些系列插件就应运诞生。
 
 与默认主题相比，我们不仅**大大改进了美观度**，而且**通过主题插件为 VuePress** 提供了全方位的增强功能。
 
@@ -54,19 +52,19 @@ VuePress 默认主题只是一个提供基础文档布局的主题。 例如：�
 
 主题为 Markdown 提供了大量的扩展语法支持，让你在正文插入更多的内容。
 
-- 如果你是一名文学爱好者想放置一些随笔，主题提供了 [自定义对齐](../markdown/align.md) 与 [脚注](../markdown/footnote.md)。
+- 如果你是一名文学爱好者想放置一些随笔，主题提供了 [自定义对齐](../markdown/stylize/align.md) 与 [脚注](../markdown/content/footnote.md)。
 
-- 我们对 [图片进行了一些内置增强](../markdown/image.md)。
+- 我们对 [图片进行了一些内置增强](../markdown/grammar/image.md)。
 
-- 如果你希望存放一些知识笔记，主题提供了 [自定义容器](../markdown/hint.md)、[标记](../markdown/mark.md)、[任务列表](../markdown/tasklist.md) 与 [公式](../markdown/tex.md) 支持。
+- 如果你希望存放一些知识笔记，主题提供了 [自定义容器](../markdown/stylize/hint.md)、[标记](../markdown/stylize/mark.md)、[任务列表](../markdown/grammar/tasklist.md)、[思维导图](../markdown/chart/markmap.md) 与 [公式](../markdown/grammar/tex.md) 支持。
 
-- 如果你是一名程序员需要大量展示代码与 demo，本主题为代码块提供了浅色与深色两种主题，[代码组](../markdown/code-tabs.md) 与 ["一键复制" 按钮](../feature/copy-code.md)。同时我们还提供 [代码演示](../markdown/demo.md)，[Playground](../markdown/playground.md) [Kotlin Playground](../markdown/kotlin-playground.md) 和 [Vue Playground](../markdown/vue-playground.md) 功能，方便你展示自己的 Vue、React 组件或者其他 demo。
+- 如果你是一名程序员需要大量展示代码与 demo，本主题为代码块提供了浅色与深色两种主题，[代码组](../markdown/code/code-tabs.md) 与 [代码块复制按钮](../feature/code-block.md)。同时我们还提供 [代码演示](../markdown/code/demo.md)，[Playground](../markdown/code/playground.md) [Kotlin Playground](../markdown/code/kotlin-playground.md) 和 [Vue Playground](../markdown/code/vue-playground.md) 功能，方便你展示自己的 Vue、React 组件或者其他 demo。
 
-- 如果你需要提供产品文档与展示，主题提供了 [选项卡](../markdown/tabs.md)、[幻灯片](../markdown/revealjs.md)、[图表](../markdown/chartjs.md)、[echarts](../markdown/echarts.md)、[流程图](../markdown/flowchart.md) 与 [Mermaid 图表](../markdown/mermaid.md) 功能。
+- 如果你需要提供产品文档与展示，主题提供了 [选项卡](../markdown/content/tabs.md)、[幻灯片](../markdown/content/revealjs.md)、[图表](../markdown/chart/chartjs.md)、[echarts](../markdown/chart/echarts.md)、[流程图](../markdown/chart/flowchart.md)、 [Mermaid 图表](../markdown/chart/mermaid.md) 与 [Plant UML](../markdown/chart/plantuml.md) 功能。
 
-- 为了重新组织您的内容，主题提供了[文件包含](../markdown/include.md)功能。
+- 为了重新组织你的内容，主题提供了[文件包含](../markdown/content/include.md)功能。
 
-- 为了设置内容的样式，主题提供了[下标和上标](../markdown/sup-sub.md)、[属性设置](../markdown/attrs.md)和 [样式化](../markdown/stylize. md) 功能，并为您提供了很多[有用的组件](../component/built-in.md)。
+- 为了设置内容的样式，主题提供了[下标和上标](../markdown/grammar/sup-sub.md)、[属性设置](../markdown/stylize/attrs.md)和 [样式化](../markdown/stylize/stylize.md) 功能，并为你提供了很多[有用的组件](../component/built-in.md)。
 
 总之，任何人都可以享受 Markdown 增强语法带来的便利。
 
@@ -76,9 +74,7 @@ VuePress 默认主题只是一个提供基础文档布局的主题。 例如：�
 
 - [图标支持](../interface/icon.md)
 
-- [自定义代码块主题](../interface/code-theme.md)
-
-- [主题颜色](../interface/theme-color.md): 允许您在浏览过程中动态切换
+- [主题颜色](../interface/theme-color.md): 允许你在浏览过程中动态切换
 
 - 更多:
 
@@ -96,7 +92,9 @@ VuePress 默认主题只是一个提供基础文档布局的主题。 例如：�
   - 支持图标和路径前缀。
   - 从 [页面标题](../layout/sidebar.md#通过标题自动生成) 和 [文件结构](../layout/sidebar.md#通过文件结构自动生成) 自动生成。
 
-- [全新主页外观，支持特性与亮点](../layout/home.md)
+- [全新主页，支持特性与亮点](../layout/home.md)
+
+- [档案主页](../layout/portfolio.md)
 
 - 更多:
 
@@ -118,6 +116,8 @@ VuePress 默认主题只是一个提供基础文档布局的主题。 例如：�
 
 ### 功能
 
+- [自定义代码块](../feature/code-block.md)
+
 - [图片预览](../feature/photo-swipe.md) 支持缩放、拖动、幻灯片浏览、分享和下载
 
 - [自动生成目录页](../feature/catalog.md)
@@ -129,7 +129,10 @@ VuePress 默认主题只是一个提供基础文档布局的主题。 例如：�
 
 - [页面加密](../feature/encrypt.md) 功能来限制访问。
 
-- 复制时 [附加版权信息](../feature/copyright.md)，或直接禁用页面复制和选择
+- 版权
+
+  - 复制时 [附加版权信息](../feature/copyright.md)，或直接禁用页面复制和选择
+  - 为站点 [添加水印](../feature/watermark.md)
 
 - 搜索引擎优化
 
@@ -155,43 +158,15 @@ VuePress 默认主题只是一个提供基础文档布局的主题。 例如：�
 
 本主题包含了以下内建插件，如果有需要，你也可以单独进行使用或搭配其他主题。
 
-- <ProjectLink name="auto-catalog" path="/zh/">vuepress-plugin-auto-catalog</ProjectLink>: VuePress2 的目录自动生成插件
-
-- <ProjectLink name="blog2" path="/zh/">vuepress-plugin-blog2</ProjectLink>: VuePress2 的博客插件
-
-- <ProjectLink name="comment2" path="/zh/">vuepress-plugin-comment2</ProjectLink>: 评论与浏览量功能
-
 - <ProjectLink name="components" path="/zh/">vuepress-plugin-components</ProjectLink>: 提供一些开箱即用的插件
 
-- <ProjectLink name="copy-code2" path="/zh/">vuepress-plugin-copy-code2</ProjectLink>: 提供一键复制代码块功能。
-
-- <ProjectLink name="copyright2" path="/zh/">vuepress-plugin-copyright2</ProjectLink>: 在用户复制时追加版权信息，或禁用站点的复制与选择。
-
-- <ProjectLink name="feed2" path="/zh/">vuepress-plugin-feed2</ProjectLink>: Feed 支持
-
 - <ProjectLink name="md-enhance" path="/zh/">vuepress-plugin-md-enhance</ProjectLink>: 提供更多 Markdown 语法
-
-- <ProjectLink name="photo-swipe" path="/zh/">vuepress-plugin-photo-swipe</ProjectLink>: 基于 Photo Swipe 的图片浏览插件
-
-- <ProjectLink name="pwa2" path="/zh/">vuepress-plugin-pwa2</ProjectLink>: 增强的 PWA 支持
-
-- <ProjectLink name="reading-time2" path="/zh/">vuepress-plugin-reading-time2</ProjectLink>: 阅读时间与字数统计
-
-- <ProjectLink name="sass-palette" path="/zh/">vuepress-plugin-sass-palette</ProjectLink>: 面向全部插件和主题的 Sass 配置插件
-
-- <ProjectLink name="seo2" path="/zh/">vuepress-plugin-seo2</ProjectLink>: SEO 增强插件
-
-- <ProjectLink name="sitemap2" path="/zh/">vuepress-plugin-sitemap2</ProjectLink>: Sitemap 插件
 
 ::: tip
 
 这里还有一些其他没有被主题捆绑的插件，你可以根据自己的需求自行启用。
 
 - <ProjectLink name="lightgallery" path="/zh/">vuepress-plugin-lightgallery</ProjectLink>: 基于 lightgallery 图片浏览插件
-
-- <ProjectLink name="redirect" path="/zh/">vuepress-plugin-redirect</ProjectLink>: 重定向插件
-
-- <ProjectLink name="remove-pwa" path="/zh/">vuepress-plugin-remove-pwa</ProjectLink>: 移除 PWA 插件
 
 - <ProjectLink name="search-pro" path="/zh/">vuepress-plugin-search-pro</ProjectLink>: 客户端搜索插件
 

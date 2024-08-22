@@ -75,11 +75,6 @@ features:
     details: Support docsearch and client search
     link: /guide/feature/search.html
 
-  - title: Copy Code Blocks
-    icon: copy
-    details: Copy codes with one click in code blocks
-    link: /guide/feature/copy-code.html
-
   - title: Image Preview
     icon: image
     details: Support viewing, zooming, sharing your page images like a gallery
@@ -135,7 +130,7 @@ yarn create vuepress-theme-hope [dir]
 @tab npm
 
 ```bash
-npm init vuepress-theme-hope [dir]
+npm init vuepress-theme-hope@latest [dir]
 ```
 
 :::
@@ -159,7 +154,7 @@ yarn create vuepress-theme-hope add [dir]
 @tab npm
 
 ```bash
-npm init vuepress-theme-hope add [dir]
+npm init vuepress-theme-hope@latest add [dir]
 ```
 
 :::
@@ -170,8 +165,7 @@ npm init vuepress-theme-hope add [dir]
 
 @tab TS
 
-```ts
-// .vuepress/config.ts
+```ts title=".vuepress/config.ts"
 import { defineUserConfig } from "vuepress";
 import { hopeTheme } from "vuepress-theme-hope";
 
@@ -184,8 +178,7 @@ export default defineUserConfig({
 
 @tab JS
 
-```js
-// .vuepress/config.js
+```js title=".vuepress/config.js"
 import { hopeTheme } from "vuepress-theme-hope";
 
 export default {

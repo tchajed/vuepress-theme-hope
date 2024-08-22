@@ -19,7 +19,7 @@ tag:
 - `vuepress dev [dir]` 会启动一个开发服务器，以便让你在本地开发你的 VuePress 站点。
 - `vuepress build [dir]` 会将你的 VuePress 站点构建成静态文件，以便你进行后续部署。
 
-::: info 使用模板
+:::: info 使用模板
 
 如果你在使用 VuePress Theme Hope 模板，你可以在 `package.json` 中发现下列三个命令:
 
@@ -35,11 +35,29 @@ tag:
 
 这意味着你可以使用:
 
+::: tabs#shell
+
+@tab pnpm
+
 - `pnpm docs:dev` 启动开发服务器
 - `pnpm docs:build` 构建项目并输出
 - `pnpm docs:clean-dev` 清除缓存并启动开发服务器
 
+@tab yarn
+
+- `yarn docs:dev` 启动开发服务器
+- `yarn docs:build` 构建项目并输出
+- `yarn docs:clean-dev` 清除缓存并启动开发服务器
+
+@tab npm
+
+- `npm run docs:dev` 启动开发服务器
+- `npm run docs:build` 构建项目并输出
+- `npm run docs:clean-dev` 清除缓存并启动开发服务器
+
 :::
+
+::::
 
 ::: tip 终止开发服务器
 
@@ -70,15 +88,5 @@ yarn dlx vp-update
 ```bash
 npx vp-update
 ```
-
-:::
-
-::: warning
-
-任何以 `@vuepress/` 开头的官方包应该和 VuePress 保持相同版本。
-
-比如，如果你正在使用 `@vuepress/plugin-search` 和 `@vuepress/utils`，你应该确保他们和 `vuepress` 版本相同。
-
-另外，如果你使用了其他第三方插件，请确保它兼容你要升级到的 VuePress 版本。
 
 :::

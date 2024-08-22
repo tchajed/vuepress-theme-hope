@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { decodeData } from "@vuepress/helper";
 import MarkdownIt from "markdown-it";
 import { describe, expect, it } from "vitest";
-import { atou } from "vuepress-shared";
 
 import { sandpack } from "../../src/node/markdown-it/sandpack/index.js";
 
 const decodeFiles = (content: string): Record<string, string> =>
-  JSON.parse(atou(content)) as Record<string, string>;
+  JSON.parse(decodeData(content)) as Record<string, string>;
 
 const getTemplate = (renderResult: string): string | null => {
-  const result = renderResult.match(/template="(.*?)"/s);
+  const result = /template="(.*?)"/s.exec(renderResult);
 
   if (!result) return null;
 
@@ -17,7 +17,7 @@ const getTemplate = (renderResult: string): string | null => {
 };
 
 const getFiles = (renderResult: string): Record<string, string> | null => {
-  const result = renderResult.match(/files="(.*?)"/s);
+  const result = /files="(.*?)"/s.exec(renderResult);
 
   if (!result) return null;
 
@@ -25,21 +25,21 @@ const getFiles = (renderResult: string): Record<string, string> | null => {
 };
 
 const getOptions = (renderResult: string): Record<string, unknown> | null => {
-  const result = renderResult.match(/options="(.*?)"/s);
+  const result = /options="(.*?)"/s.exec(renderResult);
 
   if (!result) return null;
 
-  return JSON.parse(atou(result[1])) as Record<string, unknown>;
+  return JSON.parse(decodeData(result[1])) as Record<string, unknown>;
 };
 
 const getCustomSetup = (
   renderResult: string,
 ): Record<string, unknown> | null => {
-  const result = renderResult.match(/customSetup="(.*?)"/s);
+  const result = /customSetup="(.*?)"/s.exec(renderResult);
 
   if (!result) return null;
 
-  return JSON.parse(atou(result[1])) as Record<string, unknown>;
+  return JSON.parse(decodeData(result[1])) as Record<string, unknown>;
 };
 
 describe("Sandpack", () => {
@@ -153,7 +153,7 @@ const msg = ref('Hello World!')
     const options = getOptions(result);
     const customSetup = getCustomSetup(result);
 
-    expect(template).toEqual("");
+    expect(template).toEqual(null);
 
     expect(file).toEqual({
       "App.vue": `\
@@ -298,7 +298,7 @@ const msg = ref('Hello World!')
     const options = getOptions(result);
     const customSetup = getCustomSetup(result);
 
-    expect(template).toEqual("");
+    expect(template).toEqual(null);
 
     expect(file).toEqual({
       "/src/App.vue": {
@@ -394,7 +394,7 @@ const { charging, level } = useBattery();
     );
 
     expect(result).toMatchSnapshot();
-    expect(result).includes('rtl="true"');
+    expect(result).includes("rtl");
     expect(result).includes('theme="dark"');
 
     const template = getTemplate(result);
@@ -402,7 +402,7 @@ const { charging, level } = useBattery();
     const options = getOptions(result);
     const customSetup = getCustomSetup(result);
 
-    expect(template).toEqual("");
+    expect(template).toEqual(null);
 
     expect(file).toEqual({
       "/src/App.vue": {

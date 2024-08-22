@@ -1,7 +1,7 @@
-import { usePageFrontmatter } from "@vuepress/client";
-import { isString } from "@vuepress/shared";
+import { isString } from "@vuepress/helper/client";
 import type { VNode } from "vue";
 import { computed, defineComponent, h } from "vue";
+import { usePageFrontmatter } from "vuepress/client";
 
 import {
   usePageAuthor,
@@ -27,6 +27,7 @@ export default defineComponent({
 
       return (
         footer !== false &&
+        // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
         Boolean(copyright || footer || themeLocale.value.displayFooter)
       );
     });
@@ -38,7 +39,7 @@ export default defineComponent({
         ? false
         : isString(footer)
           ? footer
-          : themeLocale.value.footer || "";
+          : (themeLocale.value.footer ?? "");
     });
 
     const authorText = computed(() =>
@@ -59,11 +60,10 @@ export default defineComponent({
         copyright ??
         (license
           ? getCopyrightText(license)
-          : isString(globalCopyright)
-            ? globalCopyright
-            : authorText.value || globalLicense
+          : (globalCopyright ??
+            (authorText.value || globalLicense
               ? getCopyrightText(globalLicense)
-              : false)
+              : false)))
       );
     });
 

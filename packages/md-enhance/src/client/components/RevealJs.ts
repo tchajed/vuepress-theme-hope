@@ -1,4 +1,4 @@
-import { usePageFrontmatter } from "@vuepress/client";
+import { decodeData } from "@vuepress/helper/client";
 import type Reveal from "reveal.js/dist/reveal.esm.js";
 import type { PropType, VNode } from "vue";
 import {
@@ -9,15 +9,16 @@ import {
   ref,
   shallowRef,
 } from "vue";
-import { LoadingIcon, atou } from "vuepress-shared/client";
+import { usePageFrontmatter } from "vuepress/client";
+import { LoadingIcon } from "vuepress-shared/client";
 
 import { useRevealJs } from "@temp/md-enhance/revealjs-plugins.js";
 
 import { useRevealJsConfig } from "../helpers/index.js";
 
 import "../styles/revealjs/index.scss";
-import "../styles/revealjs/theme/fonts/league-gothic/league-gothic.css";
-import "../styles/revealjs/theme/fonts/source-sans-pro/source-sans-pro.css";
+import "../styles/revealjs/theme/fonts/league-gothic.scss";
+import "../styles/revealjs/theme/fonts/source-sans-pro.scss";
 
 declare const MARKDOWN_ENHANCE_DELAY: number;
 
@@ -36,7 +37,6 @@ type ThemeType =
   | "moon";
 
 export default defineComponent({
-  // eslint-disable-next-line vue/multi-word-component-names
   name: "RevealJs",
 
   props: {
@@ -88,21 +88,18 @@ export default defineComponent({
         transition: "slide",
         slideNumber: true,
         ...revealOptions,
-        ...(frontmatter.value.revealJs || {}),
+        ...frontmatter.value.revealJs,
         embedded: frontmatter.value.layout !== "Slide",
         markdown: {
-          // FIXME: https://github.com/DefinitelyTyped/DefinitelyTyped/pull/67226
-          // @ts-ignore
           separator: "^\r?\\n---\r?\n$",
-          // @ts-ignore
           verticalSeparator: "^\r?\n--\r?\n$",
         },
 
         plugins: [
-          ...plugins.map(({ default: plugin }) => plugin),
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          ...(revealOptions.plugins ?? []),
-        ],
+          plugins.map(({ default: plugin }) => plugin),
+
+          revealOptions.plugins ?? [],
+        ].flat(),
       });
 
       await reveal.initialize();
@@ -114,7 +111,7 @@ export default defineComponent({
       const container = presentationContainer.value;
 
       if (container) {
-        code.value = atou(props.code);
+        code.value = decodeData(props.code);
 
         container.setAttribute("id", props.id);
         container.setAttribute("data-theme", props.theme);

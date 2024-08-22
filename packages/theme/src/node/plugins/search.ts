@@ -1,17 +1,17 @@
-import type { App, Page, Plugin } from "@vuepress/core";
-import type { DocsearchPluginOptions } from "@vuepress/plugin-docsearch";
-import type { SearchPluginOptions } from "@vuepress/plugin-search";
-import { colors } from "@vuepress/utils";
-import type { SearchProOptions } from "vuepress-plugin-search-pro";
 import {
   entries,
   fromEntries,
-  getLocales,
+  getLocaleConfig,
   getRootLangPath,
   isPlainObject,
   keys,
   startsWith,
-} from "vuepress-shared/node";
+} from "@vuepress/helper";
+import type { DocsearchPluginOptions } from "@vuepress/plugin-docsearch";
+import type { SearchPluginOptions } from "@vuepress/plugin-search";
+import type { App, Page, Plugin } from "vuepress/core";
+import { colors } from "vuepress/utils";
+import type { SearchProPluginOptions } from "vuepress-plugin-search-pro";
 
 import type {
   PluginsOptions,
@@ -23,26 +23,26 @@ import { logger } from "../utils.js";
 
 let docsearchPlugin: (options: DocsearchPluginOptions) => Plugin;
 let searchPlugin: (options: SearchPluginOptions) => Plugin;
-let searchProPlugin: (options: SearchProOptions) => Plugin;
+let searchProPlugin: (options: SearchProPluginOptions) => Plugin;
 let cut: (content: string, strict?: boolean | undefined) => string[];
 
 try {
   ({ docsearchPlugin } = await import("@vuepress/plugin-docsearch"));
-} catch (e) {
-  // do nothing
+} catch {
+  // Do nothing
 }
 
 try {
   ({ searchPlugin } = await import("@vuepress/plugin-search"));
-} catch (e) {
-  // do nothing
+} catch {
+  // Do nothing
 }
 
 try {
   ({ searchProPlugin } = await import("vuepress-plugin-search-pro"));
   ({ cut } = await import("nodejs-jieba"));
-} catch (e) {
-  // do nothing
+} catch {
+  // Do nothing
 }
 
 const DOCSEARCH_ZH_LOCALES = {
@@ -101,7 +101,7 @@ export const getSearchPlugin = (
   themeData: ThemeData,
   plugins: PluginsOptions,
 ): Plugin | null => {
-  const encryptedPaths = keys(themeData.encrypt.config || {});
+  const encryptedPaths = keys(themeData.encrypt.config ?? {});
   const isPageEncrypted = ({ path }: Page): boolean =>
     encryptedPaths.some((key) => startsWith(decodeURI(path), key));
   const { locales } = app.options;
@@ -119,8 +119,7 @@ export const getSearchPlugin = (
       locales: locales["/zh/"]
         ? { "/zh/": DOCSEARCH_ZH_LOCALES }
         : getRootLangPath(app) === "/zh/"
-          ? // eslint-disable-next-line @typescript-eslint/naming-convention
-            { "/": DOCSEARCH_ZH_LOCALES }
+          ? { "/": DOCSEARCH_ZH_LOCALES }
           : {},
       ...plugins.docsearch,
     });
@@ -137,12 +136,12 @@ export const getSearchPlugin = (
 
     return searchProPlugin({
       indexContent: true,
-      // add supports for category and tags
+      // Add supports for category and tags
       customFields: [
         {
           getter: (page: Page<Record<never, never>, ThemePageFrontmatter>) =>
             page.frontmatter.category,
-          formatter: getLocales({
+          formatter: getLocaleConfig({
             app,
             name: "vuepress-theme-hope",
             default: fromEntries(
@@ -156,7 +155,7 @@ export const getSearchPlugin = (
         {
           getter: (page: Page<Record<never, never>, ThemePageFrontmatter>) =>
             page.frontmatter.tag,
-          formatter: getLocales({
+          formatter: getLocaleConfig({
             app,
             name: "vuepress-theme-hope",
             default: fromEntries(
@@ -180,7 +179,6 @@ export const getSearchPlugin = (
                 }
               : getRootLangPath(app) === "/zh/"
                 ? {
-                    // eslint-disable-next-line @typescript-eslint/naming-convention
                     "/": {
                       tokenize: (text, fieldName) =>
                         fieldName === "id" ? [text] : cut(text, true),
@@ -207,8 +205,7 @@ export const getSearchPlugin = (
       locales: locales["/zh/"]
         ? { "/zh/": SEARCH_ZH_LOCALES }
         : getRootLangPath(app) === "/zh/"
-          ? // eslint-disable-next-line @typescript-eslint/naming-convention
-            { "/": SEARCH_ZH_LOCALES }
+          ? { "/": SEARCH_ZH_LOCALES }
           : {},
       ...(isPlainObject(plugins.search) ? plugins.search : {}),
     });

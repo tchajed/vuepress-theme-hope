@@ -28,7 +28,7 @@ export interface BundleOptions {
   inlineDynamicImports?: boolean;
   preserveShebang?: boolean;
   replace?: RollupReplaceOptions;
-  alias?: Alias[] | { [find: string]: string };
+  alias?: Alias[] | Record<string, string>;
   moduleSideEffects?: ModuleSideEffectsOption;
 }
 
@@ -68,7 +68,7 @@ export const rollupBundle = (
       {
         ...(typeof filePath === "object"
           ? {
-              dir: `./lib/${filePath.target || filePath.base}`,
+              dir: `./lib/${filePath.target ?? filePath.base}`,
               entryFileNames: "[name].js",
             }
           : { file: `./lib/${filePath}.js` }),
@@ -111,7 +111,7 @@ export const rollupBundle = (
     ],
 
     external: [
-      ...(resolve
+      resolve
         ? []
         : (
               typeof filePath === "object"
@@ -120,13 +120,13 @@ export const rollupBundle = (
             )
           ? [
               /^@temp/,
+              "@vuepress/helper/client",
               "@vueuse/core",
-              "@vuepress/client",
-              "@vuepress/shared",
               "vue",
-              "vue-router",
+              "vuepress/client",
+              "vuepress/shared",
               "vuepress-shared/client",
-              /\.s?css(?:\?module)?$/,
+              /\.s?css$/,
             ]
           : (
                 typeof filePath === "object"
@@ -136,16 +136,18 @@ export const rollupBundle = (
               )
             ? [
                 /^node:/,
-                "@vuepress/core",
-                "@vuepress/shared",
+                "@vuepress/helper",
                 /^@vuepress\/plugin-/,
-                "@vuepress/utils",
+                "vuepress/cli",
+                "vuepress/core",
+                "vuepress/shared",
+                "vuepress/utils",
                 /^vuepress-plugin-/,
                 "vuepress-shared/node",
               ]
-            : []),
-      ...external,
-    ],
+            : [],
+      external,
+    ].flat(),
 
     treeshake: {
       moduleSideEffects,
@@ -168,7 +170,7 @@ export const rollupBundle = (
             {
               ...(typeof filePath === "object"
                 ? {
-                    dir: `./lib/${filePath.target || filePath.base}`,
+                    dir: `./lib/${filePath.target ?? filePath.base}`,
                     entryFileNames: "[name].d.ts",
                   }
                 : { file: `./lib/${filePath}.d.ts` }),
@@ -189,23 +191,36 @@ export const rollupBundle = (
             }),
           ],
           external: [
-            ...(resolve
+            resolve
               ? []
               : (
                     typeof filePath === "object"
                       ? filePath.base.startsWith("client")
                       : filePath.startsWith("client/")
                   )
-                ? [/^@temp/, "vuepress-shared/client", /\.s?css$/]
+                ? [
+                    /^@temp/,
+                    "vuepress/client",
+                    "vuepress/shared",
+                    "vuepress-shared/client",
+                    /\.s?css$/,
+                  ]
                 : (
                       typeof filePath === "object"
                         ? filePath.base.startsWith("node")
                         : filePath.startsWith("node/")
                     )
-                  ? [/^node:/, "vuepress-shared/node"]
-                  : []),
-            ...dtsExternal,
-          ],
+                  ? [
+                      /^node:/,
+                      "vuepress/cli",
+                      "vuepress/core",
+                      "vuepress/shared",
+                      "vuepress/utils",
+                      "vuepress-shared/node",
+                    ]
+                  : [],
+            dtsExternal,
+          ].flat(),
         } as RollupOptions,
       ]
     : []),

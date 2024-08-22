@@ -1,13 +1,27 @@
-import type { Repl, ReplProps, ReplStore } from "@vue/repl";
-import type { VNode } from "vue";
-import { computed, defineComponent, h, onMounted, ref, shallowRef } from "vue";
-import { LoadingIcon, deepAssign } from "vuepress-shared/client";
+import type { Repl, ReplProps, Store } from "@vue/repl";
+import { deepAssign } from "@vuepress/helper/client";
+import type { Component, VNode } from "vue";
+import {
+  computed,
+  defineComponent,
+  h,
+  onMounted,
+  ref,
+  shallowRef,
+  version,
+} from "vue";
+import { LoadingIcon } from "vuepress-shared/client";
 
 import { useVuePlaygroundConfig } from "../helpers/index.js";
-import { getVuePlaygroundSettings } from "../utils/index.js";
+import type { VuePlaygroundOptions } from "../typings/index.js";
 
 import "@vue/repl/style.css";
 import "../styles/vue-playground.scss";
+
+declare const VUE_PLAYGROUND_MONACO: boolean;
+
+const getVuePlaygroundSettings = (settings: string): VuePlaygroundOptions =>
+  JSON.parse(decodeURIComponent(settings)) as VuePlaygroundOptions;
 
 export default defineComponent({
   name: "VuePlayground",
@@ -39,11 +53,17 @@ export default defineComponent({
   },
 
   setup(props) {
-    const vuePlaygroundOptions = useVuePlaygroundConfig();
+    const {
+      vueVersion = version,
+      vueRuntimeDevUrl = `https://unpkg.com/@vue/runtime-dom@${vueVersion}/dist/runtime-dom.esm-browser.js`,
+      vueRuntimeProdUrl = `https://unpkg.com/@vue/runtime-dom@${vueVersion}/dist/runtime-dom.esm-browser.prod.js`,
+      vueServerRendererUrl = `https://unpkg.com/@vue/server-renderer@${vueVersion}/dist/server-renderer.esm-browser.js`,
+      ...vuePlaygroundOptions
+    } = useVuePlaygroundConfig();
     const loading = ref(true);
     const component = shallowRef<typeof Repl>();
-    const store = shallowRef<ReplStore>();
-    const editor = shallowRef();
+    const store = shallowRef<Store>();
+    const editor = shallowRef<Component>();
 
     const playgroundOptions = computed(() =>
       deepAssign(
@@ -54,21 +74,31 @@ export default defineComponent({
     );
 
     const setupRepl = async (): Promise<void> => {
-      const [{ ReplStore, Repl }, { default: codeMirror }] = await Promise.all([
+      const [
+        { useStore, useVueImportMap, Repl },
+        { default: editorComponent },
+      ] = await Promise.all([
         import(/* webpackChunkName: "vue-repl" */ "@vue/repl"),
-        import(
-          /* webpackChunkName: "vue-repl" */ "@vue/repl/codemirror-editor"
-        ),
+        VUE_PLAYGROUND_MONACO
+          ? import(/* webpackChunkName: "vue-repl" */ "@vue/repl/monaco-editor")
+          : import(
+              /* webpackChunkName: "vue-repl" */ "@vue/repl/codemirror-editor"
+            ),
       ]);
 
       component.value = Repl;
-      editor.value = codeMirror;
-      store.value = new ReplStore({
-        serializedState: decodeURIComponent(props.files),
+      editor.value = editorComponent;
+
+      const { importMap, vueVersion } = useVueImportMap({
+        runtimeDev: vueRuntimeDevUrl,
+        runtimeProd: vueRuntimeProdUrl,
+        serverRenderer: vueServerRendererUrl,
       });
 
-      if (playgroundOptions.value.vueVersion)
-        await store.value.setVueVersion(playgroundOptions.value.vueVersion);
+      store.value = useStore(
+        { builtinImportMap: importMap, vueVersion },
+        decodeURIComponent(props.files),
+      );
     };
 
     onMounted(async () => {
@@ -86,14 +116,11 @@ export default defineComponent({
             ? h(LoadingIcon, { class: "preview-loading", height: 192 })
             : null,
           component.value
-            ? h(component.value, <ReplProps>{
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            ? h(component.value, {
+                ...playgroundOptions.value,
                 editor: editor.value,
                 store: store.value,
-                autoResize: true,
-                ...playgroundOptions.value,
-                layout: "horizontal",
-              })
+              } as ReplProps)
             : null,
         ]),
       ]),

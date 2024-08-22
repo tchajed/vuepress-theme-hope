@@ -1,8 +1,8 @@
 import { container } from "@mdit/plugin-container";
 import { demo } from "@mdit/plugin-demo";
+import { encodeData } from "@vuepress/helper";
 import type { PluginSimple } from "markdown-it";
-import type Token from "markdown-it/lib/token.js";
-import { utoa } from "vuepress-shared/node";
+import type Token from "markdown-it/lib/token.mjs";
 
 import { escapeHtml } from "./utils.js";
 import type { CodeDemoOptions } from "../../shared/index.js";
@@ -33,28 +33,24 @@ const getPlugin =
         for (let i = index; i < tokens.length; i++) {
           const { type, content, info } = tokens[i];
           const language = info
-            ? md.utils
-                .unescapeAll(info)
-                .trim()
-                .match(/^([^ :[{]+)/)?.[1] || "text"
+            ? (/^([^ :[{]+)/.exec(md.utils.unescapeAll(info).trim())?.[1] ??
+              "text")
             : "";
 
           if (type === `container_${name}_close`) break;
           if (!content) continue;
           if (type === "fence")
-            if (language === "json") config = utoa(content);
+            if (language === "json") config = encodeData(content);
             else code[language] = content;
         }
 
-        return `
-<CodeDemo id="code-demo-${index}" type="${name.split("-")[0]}"${
+        return `<CodeDemo id="code-demo-${index}" type="${name.split("-")[0]}"${
           title ? ` title="${encodeURIComponent(title)}"` : ""
-        }${config ? ` config="${config}"` : ""} code="${utoa(
+        }${config ? ` config="${config}"` : ""} code="${encodeData(
           JSON.stringify(code),
-        )}">
-`;
+        )}">\n`;
       },
-      closeRender: () => `</CodeDemo>`,
+      closeRender: () => `</CodeDemo>\n`,
     });
 
 export const normalDemo: PluginSimple = getPlugin("normal-demo");
@@ -69,30 +65,32 @@ export const mdDemo: PluginSimple = (md) => {
     openRender: (tokens, index) =>
       `<MdDemo title="${escapeHtml(
         tokens[index].info,
-      )}" id="md-demo-${index}"><template #default>\n`,
+      )}" id="md-demo-${index}">\n`,
     codeRender: (tokens, index, options, _env, self) => {
       const token = tokens[index];
 
       token.type = "fence";
       token.info = "md";
       token.markup = "```";
-      // handle include rule
+      // Handle include rule
       token.content = token.content
         .split("\n")
         .filter(
           (item) =>
-            item[0] !== "@" || !item.match(/^@include-p(?:ush\(.*\)|op)$/),
+            !item.startsWith("@") || !/^@include-p(?:ush\(.*\)|op)$/.test(item),
         )
         .join("\n");
 
-      return `</template><template #code>\n${self.rules.fence!(
+      return `<template #code>\n${self.rules.fence!(
         tokens,
         index,
         options,
         _env,
         self,
-      )}`;
+      )}</template>\n`;
     },
-    closeRender: () => "</template></MdDemo>",
+    contentOpenRender: () => `<template #default>\n`,
+    contentCloseRender: () => `</template>\n`,
+    closeRender: () => "</MdDemo>\n",
   });
 };

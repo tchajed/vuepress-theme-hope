@@ -12,7 +12,7 @@ tag:
 
 ## Requirement
 
-- Env: LTS Versions of Node.js (18, 20)
+- Env: LTS Versions of Node.js (>=18.19.0, 20.x)
 - Package Manager: npm >= 8, yarn >= 2, pnpm >= 7
 - A VuePress2 project with Vue3
 
@@ -37,7 +37,7 @@ yarn create vuepress-theme-hope [dir]
 @tab npm
 
 ```bash
-npm init vuepress-theme-hope [dir]
+npm init vuepress-theme-hope@latest [dir]
 ```
 
 :::
@@ -61,7 +61,7 @@ yarn create vuepress-theme-hope add [dir]
 @tab npm
 
 ```bash
-npm init vuepress-theme-hope add [dir]
+npm init vuepress-theme-hope@latest add [dir]
 ```
 
 :::
@@ -80,8 +80,7 @@ Please import and use `hopeTheme` to use `vuepress-theme-hope`, the first argume
 
 @tab TS
 
-```ts {7}
-// .vuepress/config.ts
+```ts {6} title=".vuepress/config.ts"
 import { defineUserConfig } from "vuepress";
 import { hopeTheme } from "vuepress-theme-hope";
 
@@ -94,8 +93,7 @@ export default defineUserConfig({
 
 @tab JS
 
-```js {7}
-// .vuepress/config.js
+```js {5} title=".vuepress/config.js"
 import { hopeTheme } from "vuepress-theme-hope";
 
 export default {

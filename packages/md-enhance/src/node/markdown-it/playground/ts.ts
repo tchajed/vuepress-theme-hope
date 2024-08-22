@@ -1,11 +1,12 @@
-import type { CompilerOptions } from "typescript";
 import {
   deepAssign,
   endsWith,
   entries,
+  isDef,
   isPlainObject,
   keys,
-} from "vuepress-shared/node";
+} from "@vuepress/helper";
+import type { CompilerOptions } from "typescript";
 
 import { compressToEncodedURIComponent } from "./ventors/lzstring.js";
 import { optionDeclarations } from "./ventors/optionDeclarations.js";
@@ -27,14 +28,14 @@ export const getURL = (
     .map(([key, value]) => {
       const item = optionDeclarations.find((option) => option.name === key)!;
 
-      if (!item || value === null || value === undefined) return "";
+      if (!item || value === null || !isDef(value)) return "";
 
       const { type } = item;
 
       if (isPlainObject(type)) {
         const result = type[value as keyof typeof type];
 
-        return result?.toString() || "";
+        return result?.toString() ?? "";
       }
 
       return `${key}=${encodeURIComponent(value as string)}`;
@@ -64,8 +65,8 @@ export const getTSPlaygroundPreset = ({
       files[tsFiles[0]].content,
       deepAssign(
         {},
-        <CompilerOptions>settings || {},
-        <CompilerOptions>compilerOptions,
+        (settings as CompilerOptions) || {},
+        compilerOptions as CompilerOptions,
       ),
     )}`;
 

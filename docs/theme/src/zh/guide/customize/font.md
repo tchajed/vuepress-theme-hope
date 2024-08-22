@@ -80,8 +80,7 @@ font-family: "Noto Serif SC", serif;
 
 那么你需要做的就是在 VuePress 配置文件中添加如下代码导入并使用它们:
 
-```ts
-// .vuepress/config.ts
+```ts title=".vuepress/config.ts"
 import { defineUserConfig } from "vuepress";
 
 export default defineUserConfig({
@@ -111,9 +110,7 @@ export default defineUserConfig({
 
 同时在调色板文件中修改 `$font-family` 变量:
 
-```scss
-// .vuepress/styles/palette.scss
-
+```scss title=".vuepress/styles/palette.scss"
 // 应用字体
 $font-family: '"Noto Serif SC", serif';
 ```
@@ -133,7 +130,9 @@ $font-family: '"Noto Serif SC", serif';
 :::
 
 [^serif]: 相关简介: <https://www.zhihu.com/topic/19559432/intro>
+
 [^sans-serif]: 相关简介: <https://www.zhihu.com/topic/19559433/intro>
+
 [^fallback-font]: 摘自维基百科
 
     后备字体 (Fallback font) 是指在当时显示的字型缺乏某些字元时，被用于显示缺失字元的字体。因为其作为显示的最后一道防线，后备字体应该尽可能包含所有 Unicode 字元。

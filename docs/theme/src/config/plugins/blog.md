@@ -12,7 +12,7 @@ tag:
 
 ## Intro
 
-The theme provides blog feature via `vuepress-plugin-blog2`, and it's **not** enabled by default.
+The theme provides blog feature via `@vuepress/plugin-blog`, and it's **not** enabled by default.
 
 You can enable blog feature by setting `plugins.blog` to `true` in theme options.
 
@@ -44,7 +44,12 @@ Length of excerpt when auto generating.
 ### filter
 
 - Type: `(page: Page) => boolean`
-- Default: `(page) => Boolean(page.filePathRelative) && !page.frontmatter.home`
+- Default:
+
+  ```js
+  ({ frontmatter, filePathRelative }) =>
+    frontmatter.article ?? (Boolean(filePathRelative) && !frontmatter.home);
+  ```
 
 Page filter, determine whether a page should be included.
 
@@ -105,6 +110,8 @@ Slugify function, used to convert key name which they are register in routes.
     layout?: string;
   }
   ```
+
+```
 
 - Default: `[]`
 - Details:
@@ -167,3 +174,4 @@ Timeline list route path.
 - Default: Whether using `--debug` flag
 
 Whether to enable hot reload in the development server.
+```

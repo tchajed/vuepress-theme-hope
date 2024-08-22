@@ -9,12 +9,7 @@ Let the Markdown file in your VuePress site support including other files.
 
 ## Settings
 
-::: code-tabs#language
-
-@tab TS
-
-```ts {8}
-// .vuepress/config.ts
+```js {7} title=".vuepress/config.js"
 import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
 
 export default {
@@ -26,24 +21,6 @@ export default {
   ],
 };
 ```
-
-@tab JS
-
-```js {8}
-// .vuepress/config.js
-import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
-
-export default {
-  plugins: [
-    mdEnhancePlugin({
-      // Enable include files
-      include: true,
-    }),
-  ],
-};
-```
-
-:::
 
 <!-- #region after -->
 
@@ -393,13 +370,8 @@ E.g.: you can use `@src` as an alias for your source directory.
 
 <!-- #endregion after -->
 
-::: code-tabs#language
-
-@tab TS
-
-```ts {10}
-// .vuepress/config.ts
-import { getDirname, path } from "@vuepress/utils";
+```js {10-17} title=".vuepress/config.js"
+import { getDirname, path } from "vuepress/utils";
 import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
 
 const __dirname = getDirname(import.meta.url);
@@ -420,34 +392,6 @@ export default {
   ],
 };
 ```
-
-@tab JS
-
-```js {10}
-// .vuepress/config.js
-import { getDirname, path } from "@vuepress/utils";
-import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
-
-const __dirname = getDirname(import.meta.url);
-
-export default {
-  plugins: [
-    mdEnhancePlugin({
-      // Add `@src` alias support
-      include: {
-        resolvePath: (file) => {
-          if (file.startsWith("@src"))
-            return file.replace("@src", path.resolve(__dirname, ".."));
-
-          return file;
-        },
-      },
-    }),
-  ],
-};
-```
-
-:::
 
 Also, to place your Markdown files directly besides your actual files, but don't want them rendered as pages, you can set `pagePatterns` options in VuePress config. See [pagePatterns](https://vuejs.press/reference/config.html#pagepatterns) for more details.
 
@@ -455,8 +399,7 @@ Also, to place your Markdown files directly besides your actual files, but don't
 
 @tab TS
 
-```ts {6-7}
-// .vuepress/config.ts
+```ts {6} title=".vuepress/config.ts"
 import { defineUserConfig } from "vuepress";
 import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
 
@@ -474,8 +417,7 @@ export default defineUserConfig({
 
 @tab JS
 
-```js {5-6}
-// .vuepress/config.js
+```js {5} title=".vuepress/config.js"
 import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
 
 export default {

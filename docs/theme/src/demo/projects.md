@@ -13,6 +13,21 @@ docs:
     repo: https://github.com/walinejs/waline
     preview: /assets/image/waline.jpg
 
+  - name: zkSync Era
+    desc: A trustless protocol that uses cryptographic validity proofs to provide scalable and low-cost transactions on Ethereum
+    logo: https://docs.zksync.io/zksync_logo_black.svg
+    url: https://docs.zksync.io/
+    repo: https://github.com/matter-labs/zksync-web-era-docs
+    preview: /assets/image/zksync.jpg
+
+  - name: SubQuery
+    desc: |-
+      SubQuery is a leading web3 data indexer that provides fast, flexible, and decentralised APIs for web3 projects
+    logo: https://static.subquery.network/icon.png
+    url: https://academy.subquery.network
+    repo: https://github.com/subquery/documentation
+    preview: /assets/image/subquery.jpg
+
   - name: mdit-plugins
     desc: Plugin collections of MarkdownIt
     logo: https://mdit-plugins.github.io/logo.svg
@@ -105,7 +120,8 @@ docs:
 
   - name: simple-admin
     desc: A powerful microservice framework for large management system
-    url: https://doc.ryansu.pro/
+    logo: https://doc.ryansu.tech/logo.svg
+    url: https://doc.ryansu.tech/
     repo: https://github.com/suyuan32/simple-admin-doc
     preview: /assets/image/simple-admin.jpg
 
@@ -130,20 +146,6 @@ docs:
     repo: https://github.com/gorse-io/docs
     preview: /assets/image/gorse.jpg
 
-  - name: zkSync Era
-    desc: A trustless protocol that uses cryptographic validity proofs to provide scalable and low-cost transactions on Ethereum
-    logo: https://era.zksync.io/docs/zk-sync-era-line-light.svg
-    url: https://era.zksync.io/docs/
-    repo: https://github.com/matter-labs/zksync-web-era-docs
-    preview: /assets/image/era.jpg
-
-  - name: CnosDB
-    desc: An open source distributed time series database with high performance, high compression rate and high ease of use
-    logo: https://www.cnosdb.com/wp-content/uploads/2022/05/CnosDB_%E7%99%BD-300x108.png
-    url: https://docs.cnosdb.com/en/latest/
-    repo: https://github.com/cnosdb/docs
-    preview: /assets/image/cnosdb.jpg
-
   - name: Suibase
     desc: Open-Source Development Tools and Community Cookbook
     logo: https://suibase.io/logo.png
@@ -152,11 +154,11 @@ docs:
     preview: /assets/image/suibase.jpg
 
   - name: TimeHelper
-    desc: a smart PHP datetime helper library ✨
-    logo: https://time.zjkal.cn/logo.svg
-    url: https://time.zjkal.cn/en/
+    desc: A smart PHP datetime helper library ✨
+    logo: https://time.0x1.site/logo.svg
+    url: https://time.0x1.site/en/
     repo: https://github.com/zjkal/time-helper
-    preview: /assets/image/bruce-fees.jpg
+    preview: /assets/image/time-helper.jpg
 
   - name: Rundeck
     desc: |-
@@ -166,15 +168,47 @@ docs:
     repo: https://github.com/rundeck/docs
     preview: /assets/image/rundeck.jpg
 
-  - name: SubQuery
-    desc: |-
-      SubQuery is a leading web3 data indexer that provides fast, flexible, and decentralised APIs for web3 projects
-    logo: https://static.subquery.network/icon.png
-    url: https://academy.subquery.network
-    repo: https://github.com/subquery/documentation
-    preview: /assets/image/subquery.jpg
+  - name: TgWebValid
+    desc: An easy way to validate Telegram users.
+    logo: https://tgwebvalid.com/logo.svg
+    url: https://tgwebvalid.com/en/
+    repo: https://github.com/CrazyTapok-bit/tgWebValid
+    preview: /assets/image/tgwebvalid.png
 
-blog:
+  - name: Korepi
+    desc: Providing high-quality and user-friendly Korepi utility tools!
+    logo: https://korepi.com/logo2.svg
+    url: https://korepi.com/en/
+    repo: https://github.com/Korepi/korepi-docs
+    preview: /assets/image/korepi.jpg
+
+  - name: Watt Toolkit
+    desc: A multi-purpose Steam toolkit
+    logo: https://xtsat.github.io/SteamTools-Guide/logo/Steam++Logo_1024.png
+    url: https://xtsat.github.io/SteamTools-Guide/en/
+    repo: https://github.com/XTsat/SteamTools-Guide
+    preview: /assets/image/watt.jpg
+
+  - name: Murex
+    desc: An intuitive, typed and content aware shell for the 2020s and beyond.
+    logo: https://murex.rocks/murex.svg
+    url: https://murex.rocks/
+    repo: https://github.com/lmorg/murex
+    preview: /assets/image/murex.jpg
+
+  - name: ShokaX
+    desc: Highly customizable Hexo theme that sets your blog apart
+    url: https://docs.kaitaku.xyz/en/
+    repo: https://github.com/theme-shoka-x/shokaX-docs
+    preview: /assets/image/shokax.jpg
+
+portfolios:
+  - name: Cheng Shang
+    url: https://cheng-shang.me
+    preview: https://cheng-shang.me/portfolio.avif
+    repo: https://github.com/Mister-Hope/cheng-shang-portfolio
+
+blogs:
   - name: Mr.Hope's Blog
     desc: Where there is light, there is hope
     logo: https://mister-hope.com/logo.svg
@@ -188,6 +222,13 @@ blog:
     url: https://blog.mo7.cc/en/
     repo: https://github.com/mo7cc/BlogSource.git
     preview: https://file.mo7.cc/disk/blog_preview_en.png
+
+  - name: Guo's Page
+    desc: Project documentation and study notes
+    logo: https://guoxicheng.top/logo.png
+    url: https://guoxicheng.top/en
+    repo: https://github.com/GuoXiCheng/guoxicheng.github.io
+    preview: /assets/image/guo-s-page-en.png
 ---
 
 ## Docs using VuePress Theme Hope
@@ -198,10 +239,18 @@ blog:
   v-bind="item"
 />
 
+## Portfolio using VuePress Theme Hope
+
+<SiteInfo
+  v-for="item in $frontmatter.portfolios"
+  :key="item.link"
+  v-bind="item"
+/>
+
 ## Blog using VuePress Theme Hope
 
 <SiteInfo
-  v-for="item in $frontmatter.blog"
+  v-for="item in $frontmatter.blogs"
   :key="item.link"
   v-bind="item"
 />

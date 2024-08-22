@@ -30,11 +30,7 @@ tag:
     | `http://${string}`
     | `https://${string}`;
 
-  type BuiltInFontIcon =
-    | "iconify"
-    | "iconfont"
-    | "fontawesome"
-    | "fontawesome-with-brands";
+  type BuiltInFontIcon = "iconify" | "fontawesome" | "fontawesome-with-brands";
 
   type FontIconAssets = BuiltInFontIcon | Link | (BuiltInFontIcon | Link)[];
   ```
@@ -42,7 +38,7 @@ tag:
 - 必填: 否
 - 详情: [界面 → 图标](../../guide/interface/icon.md)
 
-字体图标资源链接，支持 `'iconfont'` 和 `'fontawesome'` 关键字。
+字体图标资源链接，支持 `'iconify'` `'fontawesome'` 和 `'fontawesome-with-brands'` 关键字。
 
 ## darkmode <Badge text="默认启用" /> <Badge text="仅限 Root" type="warning" />
 
@@ -64,6 +60,13 @@ tag:
 
 :::
 
+## externalLinkIcon <Badge text="enabled by default" />
+
+- 类型: `boolean`
+- 默认值: `true`
+
+控制是否在外部链接上显示图标。
+
 ## fullscreen
 
 - 类型: `boolean`
@@ -71,32 +74,6 @@ tag:
 - 详情: [界面 → 全屏按钮](../../guide/interface/others.md#全屏按钮)
 
 是否显示全屏按钮。
-
-## backToTop <Badge text="仅限 Root" type="warning" />
-
-- 类型: `BackToTopOptions | boolean`
-
-  ```ts
-  interface BackToTopOptions {
-    /**
-     * 滚动距离阈值，用于显示返回顶部按钮 (单位: 像素)
-     *
-     * @default 100
-     */
-    threshold?: number;
-
-    /**
-     * 是否显示滚动进度
-     *
-     * @default true
-     */
-    progress?: boolean;
-  }
-  ```
-
-- 默认值: `true`
-
-自定义返回顶部按钮，将其设置为 `false` 会禁用该按钮。
 
 ## pure <Badge text="仅限 Root" type="warning" />
 

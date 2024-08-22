@@ -19,8 +19,7 @@ If you need to add global CSS and JS, please set `head` option in VuePress [conf
 
 ::: tip Example
 
-```ts
-// .vuepress/config.ts
+```ts title=".vuepress/config.ts"
 import { defineUserConfig } from "vuepress";
 
 export default defineUserConfig({
@@ -60,7 +59,7 @@ export default defineUserConfig({
 
 ## Per Page
 
-If you need to add page-level CSS and JS, please set `head` option in [Front Matter](../../cookbook/vuepress/page.md#frontmatter).
+If you need to add page-level CSS and JS, please set `head` option in [frontmatter](../../cookbook/vuepress/page.md#frontmatter).
 
 ```md
 ---

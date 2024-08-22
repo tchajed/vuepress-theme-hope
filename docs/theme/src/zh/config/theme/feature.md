@@ -15,7 +15,7 @@ tag:
 
 ## 博客选项
 
-主题通过使用 <ProjectLink name="blog2" path="/zh/">`vuepress-plugin-blog2`</ProjectLink> 提供博客功能，且该功能默认**禁用**。
+主题通过使用 [`@vuepress/plugin-blog`][blog] 提供博客功能，且该功能默认**禁用**。
 
 要启用博客插件并使用默认选项，你可以在主题选项中设置 `plugins.blog: true`。
 
@@ -63,15 +63,13 @@ tag:
 
 ### blog.medias
 
-- 类型: `Record<MediaType, string>`
+- 类型: `Record<string, string | { icon: string ; link: string }>`
 - 必填: 否
 
 博主的媒体链接配置。
 
 - 如果社交媒体已在下方列表中，你可以直接设置 `社交媒体名称: 社交媒体地址`。
-- 否则，你应该传入一个元组 `社交媒体名称: [社交媒体地址, 社交媒体 SVG 图标字符串或路径]`
-
-  元组的第二个元素应该是一个合法的 SVG 字符串或是一个完整的 SVG 文件路径。
+- 否则，你应该传入一个对象 `社交媒体名称: { icon: 社交媒体 SVG 图标字符串或社交媒体图标 URL, link: 社交媒体地址 }`
 
 :::: info 可用的社交媒体
 
@@ -158,7 +156,7 @@ tag:
 - `"HuYa"`: 虎牙
 - `"iQiYi"`: 爱奇艺
 - `"KuaiShou"`: 快手
-- `"Nico"`: NicoNico动画
+- `"Nico"`: NicoNico 动画
 - `"QQVideo"`: 腾讯视频
 - `"Twitch"`: Twitch
 - `"WechatCh"`: 微信视频号
@@ -169,7 +167,7 @@ tag:
 @tab 其他
 
 - `"115"`: 115 网盘
-- `"360Yun"`: 360云盘
+- `"360Yun"`: 360 云盘
 - `"AliDrive"`: 阿里云盘
 - `"AliPay"`: 支付宝
 - `"BaiduDisk"`: 百度网盘
@@ -184,13 +182,6 @@ tag:
 (请不要好奇为什么这里一定要加上特别奇怪的中文翻译)
 
 ::::
-
-### blog.roundAvatar
-
-- 类型: `boolean`
-- 默认值: `false`
-
-是否剪裁头像为圆形形状
 
 ### blog.sidebarDisplay
 
@@ -277,9 +268,11 @@ tag:
 {
   // 这会加密整个 guide 目录，并且两个密码都是可用的
   "/guide/": ["1234", "5678"],
-  // 这只会加密 config/page.html
+  // 这只会加密 c/onfig/page.html
   "/config/page.html": "1234"
 }
 ```
 
 :::
+
+[blog]: https://ecosystem.vuejs.press/zh/plugins/blog/blog/

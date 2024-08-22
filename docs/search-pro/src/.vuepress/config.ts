@@ -1,7 +1,9 @@
 import { config } from "docs-shared";
+import { path } from "vuepress/utils";
+
 import theme from "./theme.js";
 
-// the config wrapper is located in <root>/docs-shared/src/config-wrapper.ts
+// The config wrapper is located in <root>/docs-shared/src/config-wrapper.ts
 export default config("search-pro", {
   locales: {
     "/": {
@@ -17,4 +19,6 @@ export default config("search-pro", {
   },
 
   theme,
+
+  clientConfigFile: path.resolve(__dirname, "./client.ts"),
 });

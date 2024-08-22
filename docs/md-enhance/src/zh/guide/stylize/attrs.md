@@ -9,28 +9,7 @@ icon: code
 
 ## 配置
 
-::: code-tabs#language
-
-@tab TS
-
-```ts {8}
-// .vuepress/config.ts
-import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
-
-export default {
-  plugins: [
-    mdEnhancePlugin({
-      // 启用属性支持
-      attrs: true,
-    }),
-  ],
-};
-```
-
-@tab JS
-
-```js {8}
-// .vuepress/config.js
+```js {7} title=".vuepress/config.js"
 import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
 
 export default {
@@ -42,8 +21,6 @@ export default {
   ],
 };
 ```
-
-:::
 
 <!-- #region after -->
 

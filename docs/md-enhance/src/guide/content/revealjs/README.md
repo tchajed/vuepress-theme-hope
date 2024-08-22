@@ -39,12 +39,7 @@ Then enabling via:
 
 <!-- #endregion before -->
 
-::: code-tabs#language
-
-@tab TS
-
-```ts {8}
-// .vuepress/config.ts
+```js {7} title=".vuepress/config.js"
 import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
 
 export default {
@@ -56,24 +51,6 @@ export default {
   ],
 };
 ```
-
-@tab JS
-
-```js {8}
-// .vuepress/config.js
-import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
-
-export default {
-  plugins: [
-    mdEnhancePlugin({
-      // Enable reveal.js
-      revealJs: true,
-    }),
-  ],
-};
-```
-
-:::
 
 <!-- #region options -->
 
@@ -149,9 +126,8 @@ Please see [Slides Demo](demo.md)
 
 You can also import and call `defineRevealJsConfig` in [client config file][client-config] to customize reveal.js:
 
-```ts
-// .vuepress/client.ts
-import { defineClientConfig } from "@vuepress/client";
+```ts title=".vuepress/client.ts"
+import { defineClientConfig } from "vuepress/client";
 import { defineRevealJsConfig } from "vuepress-plugin-md-enhance/client";
 
 defineRevealJsConfig({

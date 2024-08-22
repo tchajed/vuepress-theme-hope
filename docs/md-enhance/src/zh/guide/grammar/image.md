@@ -9,12 +9,7 @@ icon: image
 
 ## 配置
 
-::: code-tabs#language
-
-@tab TS
-
-```ts {7-14}
-// .vuepress/config.ts
+```js {7,9,11,13} title=".vuepress/config.js"
 import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
 
 export default {
@@ -32,30 +27,6 @@ export default {
   ],
 };
 ```
-
-@tab JS
-
-```js {7-14}
-// .vuepress/config.js
-import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
-
-export default {
-  plugins: [
-    mdEnhancePlugin({
-      // 启用 figure
-      figure: true,
-      // 启用图片懒加载
-      imgLazyload: true,
-      // 启用图片标记
-      imgMark: true,
-      // 启用图片大小
-      imgSize: true,
-    }),
-  ],
-};
-```
-
-:::
 
 <!-- #region after -->
 
@@ -75,15 +46,10 @@ GFM 支持通过 ID 标记图片，使得图片只在特定的模式显示。我
 
 ::: md-demo ID 标记 案例
 
-<AppearanceSwitch /> (尝试切换主题)
-
-```md
-![GitHub Light](/assets/image/github-light.svg#gh-dark-mode-only)
-![GitHub Dark](/assets/image/github-dark.svg#gh-light-mode-only)
+<ColorModeSwitch /> (尝试切换主题)
 
 ![GitHub Light](/assets/image/github-light.svg#dark)
 ![GitHub Dark](/assets/image/github-dark.svg#light)
-```
 
 :::
 
@@ -144,7 +110,7 @@ interface ImageMarkOptions {
 <!-- markdownlint-enable MD034 -->
 
 <script setup lang="ts">
-import AppearanceSwitch from "@theme-hope/modules/outlook/components/AppearanceSwitch";
+import ColorModeSwitch from "@theme-hope/modules/outlook/components/ColorModeSwitch";
 </script>
 
 <!-- #endregion after -->

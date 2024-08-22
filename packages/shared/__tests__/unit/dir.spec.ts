@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-import { path } from "@vuepress/utils";
 import { expect, it } from "vitest";
+import { path } from "vuepress/utils";
 
 import { getDirContents } from "../../src/node/utils/dir.js";
 

@@ -50,59 +50,6 @@ The last 4 items conflict with default theme and will override its style.
 
 :::
 
-### checkLinks
-
-- Type: `LinksCheckOptions`
-
-  ```ts
-  type LinksCheckStatus = "always" | "dev" | "build" | "never";
-
-  interface LinksCheckOptions {
-    /**
-     * Whether check dead links in markdown
-     *
-     * @default "dev"
-     */
-    status?: LinksCheckStatus;
-
-    /**
-     * Dead links to ignore
-     */
-    ignore?: (string | RegExp)[] | ((link: string, isDev: boolean) => boolean);
-  }
-  ```
-
-- Default: `{ status: "dev" }`
-- Details:
-  - [Link Check](./guide/others.md#link-check)
-
-Whether to enable links check.
-
-### vPre
-
-- Type: `boolean`
-- Default: `false`
-- Details:
-  - [v-pre wrapper](./guide/others.md#v-pre)
-
-Whether to enable v-pre wrapper.
-
-### breaks
-
-- Type: `boolean`
-- Default: `false`
-- Enabled in GFM: Yes
-
-Whether convert `\n` in paragraphs into `<br>`s
-
-### linkify
-
-- Type: `boolean`
-- Default: `false`
-- Enabled in GFM: Yes
-
-Whether convert URL-like text into links
-
 ### alert
 
 - Type: `boolean`
@@ -375,7 +322,7 @@ Whether to enable chart support
 - Type: `boolean`
 - Default: `false`
 - Details:
-  - [Echarts](./guide/chart/echarts.md)
+  - [ECharts](./guide/chart/echarts.md)
 
 Whether to enable ECharts support
 
@@ -406,6 +353,24 @@ Whether to enable [Markmap](https://markmap.js.org/) support.
   - [Mermaid](./guide/chart/mermaid.md)
 
 Whether to enable [Mermaid](https://mermaid.js.org/) support.
+
+### plantuml
+
+- Type: `MarkdownItPlantumlOptions[] | boolean`
+- Default: `false`
+- Details:
+  - [Plantuml](./guide/chart/plantuml.md)
+
+Whether to enable [plantuml](https://plantuml.com/) support.
+
+### spoiler
+
+- Type: `boolean`
+- Default: `false`
+- Details:
+  - [Spoiler](./guide/stylize/spoiler.md)
+
+Whether to enable spoiler support.
 
 ### stylize
 
@@ -612,46 +577,46 @@ Whether to enable code demo support.
 - Type: `string[]`
 - Required: No
 
-CodePen, JsFiddle requires an external JS library for dating.
+External JS libraries for CodePen, JsFiddle only.
 
 #### demo.cssLib
 
 - Type: `string[]`
 - Required: No
 
-CodePen, JsFiddle need an external CSS library for dating.
+External JS libraries for CodePen, JsFiddle only.
 
 ::: warning
 
-The above two options are only used by third-party code demo service, you need to import these libraries in `head`.
+The above two options are only used by third-party code demo service, you need to import these libraries in `head` to get it work..
 
 :::
 
 #### demo.jsfiddle
 
 - Type: `boolean`
-- Default value: `true`
+- Default: `true`
 
 Whether to display the JSFiddle button
 
 #### demo.codepen
 
 - Type: `boolean`
-- Default value: `true`
+- Default: `true`
 
 Whether to display the CodePen button
 
 #### demo.codepenLayout
 
 - Type: `"top" | "left" | "correct"`
-- Default value: `"left"`
+- Default: `"left"`
 
 CodePen editor layout
 
 #### demo.codepenEditors
 
 - Type: `string`
-- Default value: `"101"`
+- Default: `"101"`
 
 CodePen editor status
 
@@ -728,6 +693,31 @@ Whether to enable slides support. You can pass an option to control plugins and 
 - Default: `false`
 
 Whether to enable sandpack playground support.
+
+### vPre
+
+- Type: `boolean`
+- Default: `false`
+- Details:
+  - [v-pre wrapper](./guide/others.md#v-pre)
+
+Whether to enable v-pre wrapper.
+
+### breaks
+
+- Type: `boolean`
+- Default: `false`
+- Enabled in GFM: Yes
+
+Whether convert `\n` in paragraphs into `<br>`s
+
+### linkify
+
+- Type: `boolean`
+- Default: `false`
+- Enabled in GFM: Yes
+
+Whether convert URL-like text into links
 
 ### delay
 
@@ -814,25 +804,25 @@ Locales config for Markdown Enhance Plugin.
 
 ## Client Config
 
-### defineEchartsConfig
+### defineEChartsConfig
 
 ```ts
-interface EchartsConfig {
+interface EChartsConfig {
   /**
-   * Echarts global options
+   * ECharts global options
    */
   option?: EChartsOption;
 
   /**
-   * Echarts setup function
+   * ECharts setup function
    */
   setup?: () => Promise<void>;
 }
 
-const defineEchartsConfig: (config: EchartsConfig) => void;
+const defineEChartsConfig: (config: EChartsConfig) => void;
 ```
 
-Define global options and setup for Echarts.
+Define global options and setup for ECharts.
 
 ### defineMermaidConfig
 
@@ -902,72 +892,33 @@ Define config which you want to pass to `sandpack-vue3`.
 ### defineVuePlaygroundConfig
 
 ```ts
-interface VuePlaygroundOptions {
+export interface VuePlaygroundOptions
+  extends Omit<ReplProps, "store" | "editor"> {
   /**
-   * specify the version of vue
+   * Specify the version of vue
    */
   vueVersion?: string;
 
   /**
-   * specify default URL to import Vue runtime from in the sandbox
+   * Specify default URL to import Vue dev runtime from in the sandbox
    *
    * @default "https://unpkg.com/@vue/runtime-dom@${version}/dist/runtime-dom.esm-browser.js"
    */
-  defaultVueRuntimeURL?: string;
+  vueRuntimeDevUrl?: string | (() => string);
+
+  /**
+   * Specify default URL to import Vue prod runtime from in the sandbox
+   *
+   * @default "https://unpkg.com/@vue/runtime-dom@${version}/dist/runtime-dom.esm-browser.prod.js"
+   */
+  vueRuntimeProdUrl?: string | (() => string);
 
   /**
    * Specify default URL to import Vue Server Renderer from in the sandbox
    *
    * @default "https://unpkg.com/@vue/server-renderer@${version}/dist/server-renderer.esm-browser.js"
    */
-  defaultVueServerRendererURL?: string;
-
-  /**
-   * Whether to enable repl's editor resizable
-   *
-   * @default true
-   */
-  autoResize?: boolean;
-
-  /**
-   * Whether to show JS, CSS, SSR panel
-   *
-   * @default false
-   */
-  showCompileOutput?: boolean;
-
-  /**
-   * Whether to show import map
-   *
-   * @default true
-   */
-  showImportMap?: boolean;
-
-  /**
-   * Whether to clear console
-   *
-   * @default false
-   */
-  clearConsole?: boolean;
-
-  /**
-   * Layout
-   *
-   * @default 'horizontal'
-   */
-  layout?: "horizontal" | "vertical";
-
-  /**
-   * Options to configure the `vue/compiler-sfc`
-   */
-  sfcOptions?: SFCOptions;
-
-  /**
-   * Whether to enable SSR
-   *
-   * @default true
-   */
-  ssr?: boolean;
+  vueServerRendererUrl?: string | (() => string);
 }
 
 const defineVuePlaygroundConfig: (options: VuePlaygroundOptions) => void;

@@ -1,8 +1,3 @@
-import {
-  usePageData,
-  usePageFrontmatter,
-  useRouteLocale,
-} from "@vuepress/client";
 import type { VNode } from "vue";
 import {
   computed,
@@ -12,15 +7,23 @@ import {
   shallowRef,
   watch,
 } from "vue";
-import { useRouter } from "vue-router";
-import { VPLink, resolveRouteWithRedirect } from "vuepress-shared/client";
+import {
+  RouteLink,
+  resolveRoute,
+  usePageData,
+  usePageFrontmatter,
+  useRouteLocale,
+} from "vuepress/client";
 
 import HopeIcon from "@theme-hope/components/HopeIcon";
 import { useThemeLocaleData } from "@theme-hope/composables/index";
 import { getAncestorLinks } from "@theme-hope/utils/index";
 
-import type { ThemeNormalPageFrontmatter } from "../../shared/index.js";
-import { ArticleInfoType } from "../../shared/index.js";
+import type {
+  PageInfoData,
+  ThemeNormalPageFrontmatter,
+} from "../../shared/index.js";
+import { PageInfo } from "../../shared/index.js";
 
 import "../styles/breadcrumb.scss";
 
@@ -34,7 +37,6 @@ export default defineComponent({
   name: "BreadCrumb",
 
   setup() {
-    const router = useRouter();
     const page = usePageData();
     const routeLocale = useRouteLocale();
     const frontmatter = usePageFrontmatter<ThemeNormalPageFrontmatter>();
@@ -44,43 +46,34 @@ export default defineComponent({
 
     const enable = computed(
       () =>
-        (frontmatter.value.breadcrumb ||
-          (frontmatter.value.breadcrumb !== false &&
-            themeLocale.value.breadcrumb !== false)) &&
+        (frontmatter.value.breadcrumb ??
+          themeLocale.value.breadcrumb ??
+          true) &&
         config.value.length > 1,
     );
 
-    const iconEnable = computed(
+    const enableIcon = computed(
       () =>
-        frontmatter.value.breadcrumbIcon ||
-        (frontmatter.value.breadcrumbIcon !== false &&
-          themeLocale.value.breadcrumbIcon !== false),
+        frontmatter.value.breadcrumbIcon ??
+        themeLocale.value.breadcrumbIcon ??
+        true,
     );
 
     const getBreadCrumbConfig = (): void => {
-      const routes = router.getRoutes();
-
       const breadcrumbConfig = getAncestorLinks(
         page.value.path,
         routeLocale.value,
       )
         .map<BreadCrumbConfig | null>(({ link, name }) => {
-          const route = routes.find((route) => route.path === link);
+          const { path, meta, notFound } = resolveRoute<PageInfoData>(link);
 
-          if (route) {
-            const { meta, path } = resolveRouteWithRedirect(router, route.path);
+          if (notFound || meta[PageInfo.breadcrumbExclude]) return null;
 
-            return {
-              title:
-                meta[ArticleInfoType.shortTitle] ||
-                meta[ArticleInfoType.title] ||
-                name,
-              icon: meta[ArticleInfoType.icon],
-              path,
-            };
-          }
-
-          return null;
+          return {
+            title: meta[PageInfo.shortTitle] || meta[PageInfo.title] || name,
+            icon: meta[PageInfo.icon],
+            path,
+          };
         })
         .filter((item): item is BreadCrumbConfig => item !== null);
 
@@ -112,18 +105,18 @@ export default defineComponent({
                   },
                   [
                     h(
-                      VPLink,
+                      RouteLink,
                       {
                         to: item.path,
                         property: "item",
                         typeof: "WebPage",
                       },
                       () => [
-                        // icon
-                        iconEnable.value
+                        // Icon
+                        enableIcon.value
                           ? h(HopeIcon, { icon: item.icon })
                           : null,
-                        // text
+                        // Text
                         h(
                           "span",
                           { property: "name" },
@@ -131,7 +124,7 @@ export default defineComponent({
                         ),
                       ],
                     ),
-                    // meta
+                    // Meta
                     h("meta", { property: "position", content: index + 1 }),
                   ],
                 ),

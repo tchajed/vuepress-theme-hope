@@ -1,6 +1,6 @@
+import { entries, keys } from "@vuepress/helper/client";
 import type { PropType, VNode } from "vue";
 import { defineComponent, h, onMounted } from "vue";
-import { entries, keys } from "vuepress-shared/client";
 
 import "../styles/theme-color-picker.scss";
 
@@ -48,7 +48,7 @@ export default defineComponent({
     });
 
     return (): VNode =>
-      h("ul", { id: "theme-color-picker" }, [
+      h("ul", { class: "vp-theme-color-picker", id: "theme-color-picker" }, [
         h(
           "li",
           h("span", {

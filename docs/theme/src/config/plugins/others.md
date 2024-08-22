@@ -9,13 +9,21 @@ tag:
   - Theme Config
 ---
 
-## autoCatalog <Badge text="enabled by default" />
+## catalog <Badge text="enabled by default" />
 
-Controls `vuepress-plugin-auto-catalog` which provides catalog pages generation.
+Controls `@vuepress/plugin-catalog` which provides catalog pages generation.
 
 No extra config is required by default. Se it to `false` if you don't need it.
 
-Check <ProjectLink name="auto-catalog" path="/config.html">auto catalog plugin docs</ProjectLink> for available plugin options.
+Check [catalog plugin docs][catalog-config] for available plugin options.
+
+## backToTop <Badge text="enabled by default" />
+
+Controls `@vuepress/plugin-back-to-top` which provides a back to top button.
+
+No extra config is required by default. Se it to `false` if you don't need it.
+
+Check [back-to-top plugin docs][back-to-top-config] for available plugin options.
 
 ## components
 
@@ -29,7 +37,6 @@ Available component which can be used in markdown files are:
 - `"CodePen"`
 - `"FontIcon"`
 - `"PDF"`
-- `"Replit"`
 - `"Share"`
 - `"StackBlitz"`
 - `"VPBanner"`
@@ -46,15 +53,11 @@ Check <ProjectLink name="components" path="/config.html">components plugin docs<
 
 ## copyCode <Badge text="enabled by default" />
 
-Controls `vuepress-plugin-copy-code2` which provides a code copy button on desktop.
+Controls `@vuepress/plugin-copy-code` which provides a code copy button on desktop.
 
 No extra config is required by default. Se it to `false` if you don't need it.
 
-Check <ProjectLink name="copy-code2" path="/config.html">copy-code2 plugin docs</ProjectLink> for available plugin options.
-
-## externalLinkIcon <Badge text="enabled by default" />
-
-Controls whether enable `@vuepress/external-link-icon` or not, only accept boolean value.
+Check [copy-code plugin docs][copy-code-config] for available plugin options.
 
 ## git <Badge text="enabled in production" />
 
@@ -64,45 +67,43 @@ The plugin is only enabled in build mode by default to improve devServer perform
 
 Check [git plugin docs][git-config] for available plugin options.
 
+## linksCheck <Badge text="enabled by default" />
+
+Controls `@vuepress/plugin-links-check` which provides markdown links check. You can manually set a boolean to control the plugin state, or provide plugin options.
+
+Check [links-check plugin docs][links-check-config] for available plugin options.
+
 ## nprogress <Badge text="enabled by default" />
 
 Controls `@vuepress/plugin-nprogress` which provides a progress bar through `nprogress` when switching pages .
 
 You can set `false` to disable it.
 
-## prismjs <Badge text="enabled by default" />
+## prismjs
 
 Controls `@vuepress/plugin-prismjs` which provides code block highlighting via `prismjs`.
 
-You can set `false` to disable it and highlight code blocks yourself or with other plugins.
-
-### prismjs.light
-
-- Type: `PrismjsTheme`
-- Default: `"one-light"`
-- Details: [Interface → Code Themes](../../guide/interface/code-theme.md)
-
-Prism.js theme used in lightmode.
-
-### prismjs.dark
-
-- Type: `PrismjsTheme`
-- Default: `"one-dark"`
-- Details: [Interface → Code Themes](../../guide/interface/code-theme.md)
-
-Prism.js theme used in darkmode.
+Check [prismjs plugin docs][prismjs-config] for available plugin options.
 
 ## photoSwipe <Badge text="enabled by default" />
 
-Controls `vuepress-plugin-photo-swipe` which provides picture browsing feature.
+Controls `@vuepress/plugin-photo-swipe` which provides picture browsing feature.
 
 No extra config is required by default. Se it to `false` if you don't need it.
 
-Check <ProjectLink name="photo-swipe" path="/config.html">photo-swipe plugin docs</ProjectLink> for available plugin options.
+Check [photo-swipe plugin docs][photo-swipe-config] for available plugin options.
+
+## pwa
+
+Controls `@vuepress/plugin-pwa` which provides PWA support.
+
+You can set `true` to directly enable it, or provide plugin options.
+
+Check [pwa plugin docs][pwa-config] for available plugin options.
 
 ## readingTime <Badge text="enabled by default" />
 
-Controls `vuepress-plugin-reading-time2` which generates words count and estimated reading time for pages.
+Controls `@vuepress/plugin-reading-time` which generates words count and estimated reading time for pages.
 
 ### readingTime.wordPerMinute
 
@@ -111,22 +112,39 @@ Controls `vuepress-plugin-reading-time2` which generates words count and estimat
 
 Reading speed (words per minute)
 
-Check <ProjectLink name="reading-time2" path="/config.html">reading-time2 plugin docs</ProjectLink> for available plugin options.
+Check [reading-time plugin docs][reading-time-config] for available plugin options.
 
 ## seo <Badge text="enabled by default" />
 
-Controls `vuepress-plugin-seo2` which provides search engine enhancements.
+Controls `@vuepress/plugin-seo` which provides search engine enhancements.
 
 No extra config is required by default. Se it to `false` if you don't need it.
 
-Check <ProjectLink name="seo2" path="/config.html">seo2 plugin docs</ProjectLink> for available plugin options.
+Check [seo plugin docs][seo-config] for available plugin options.
 
 ## sitemap <Badge text="enabled by default" />
 
-Controls `vuepress-plugin-seo2` which provides sitemap.
+Controls `@vuepress/plugin-sitemap` which provides sitemap.
 
 No extra config is required by default. Se it to `false` if you don't need it.
 
-Check <ProjectLink name="sitemap2" path="/config.html">sitemap2 plugin docs</ProjectLink> for available plugin options.
+Check [sitemap plugin docs][sitemap-config] for available plugin options.
 
-[git-config]: https://vuejs.press/reference/plugin/git.html
+## watermark
+
+Controls `@vuepress/plugin-watermark` which provides watermark.
+
+Check [watermark plugin docs][watermark-config] for available plugin options.
+
+[back-to-top-config]: https://ecosystem.vuejs.press/plugins/back-to-top.html#options
+[catalog-config]: https://ecosystem.vuejs.press/plugins/features/catalog.html#options
+[copy-code-config]: https://ecosystem.vuejs.press/plugins/features/copy-code.html#options
+[git-config]: https://ecosystem.vuejs.press/plugins/development/git.html#options
+[links-check-config]: https://ecosystem.vuejs.press/plugins/markdown/links-check.html#options
+[photo-swipe-config]: https://ecosystem.vuejs.press/plugins/features/photo-swipe.html#options
+[prismjs-config]: https://ecosystem.vuejs.press/plugins/markdown/prismjs.html#options
+[pwa-config]: https://ecosystem.vuejs.press/plugins/pwa/pwa/config.html#options
+[reading-time-config]: https://ecosystem.vuejs.press/plugins/development/reading-time.html#options
+[seo-config]: https://ecosystem.vuejs.press/plugins/seo/seo/config.html
+[sitemap-config]: https://ecosystem.vuejs.press/plugins/seo/sitemap/config.html
+[watermark-config]: https://ecosystem.vuejs.press/plugins/features/watermark.html

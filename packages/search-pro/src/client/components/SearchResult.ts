@@ -1,10 +1,12 @@
-import { useRouteLocale } from "@vuepress/client";
-import { isPlainObject, isString } from "@vuepress/shared";
+import {
+  isPlainObject,
+  isString,
+  useLocaleConfig,
+} from "@vuepress/helper/client";
 import { useEventListener } from "@vueuse/core";
-import type { VNode } from "vue";
-import { computed, defineComponent, h, ref, toRef, watch } from "vue";
-import { useRouter } from "vue-router";
-import { VPLink, useLocaleConfig } from "vuepress-shared/client";
+import type { PropType, VNode } from "vue";
+import { computed, defineComponent, h, reactive, ref, toRef, watch } from "vue";
+import { RouteLink, useRouteLocale, useRouter } from "vuepress/client";
 
 import { SearchLoading } from "./SearchLoading.js";
 import { HeadingIcon, HeartIcon, HistoryIcon, TitleIcon } from "./icons.js";
@@ -18,7 +20,7 @@ import {
   searchProLocales,
 } from "../define.js";
 import type { MatchedItem, Word } from "../typings/index.js";
-import { CLOSE_ICON } from "../utils/index.js";
+import { CLOSE_ICON, getPath } from "../utils/index.js";
 
 import "../styles/search-result.scss";
 
@@ -31,8 +33,8 @@ export default defineComponent({
      *
      * 查询字符串
      */
-    query: {
-      type: String,
+    queries: {
+      type: Array as PropType<string[]>,
       required: true,
     },
 
@@ -64,10 +66,10 @@ export default defineComponent({
     } = useSearchResultHistory();
     const enableHistory = enableQueryHistory || enableResultHistory;
 
-    const query = toRef(props, "query");
-    const { results, searching } = useSearchResult(query);
+    const queries = toRef(props, "queries");
+    const { results, isSearching } = useSearchResult(queries);
 
-    const activatedHistoryStatus = ref({ isQuery: true, index: 0 });
+    const activatedHistoryStatus = reactive({ isQuery: true, index: 0 });
     const activatedResultIndex = ref(0);
     const activatedResultContentIndex = ref(0);
 
@@ -81,47 +83,33 @@ export default defineComponent({
       () => results.value[activatedResultIndex.value] || null,
     );
 
-    const getRealPath = (item: MatchedItem): string =>
-      router.resolve({
-        name: item.key,
-        ...("anchor" in item ? { hash: `#${item.anchor}` } : {}),
-      }).fullPath;
-
     const activePreviousHistory = (): void => {
-      const { isQuery, index } = activatedHistoryStatus.value;
+      const { isQuery, index } = activatedHistoryStatus;
 
-      if (index === 0)
-        activatedHistoryStatus.value = {
-          isQuery: !isQuery,
-          index: isQuery
-            ? resultHistory.value.length - 1
-            : queryHistory.value.length - 1,
-        };
-      else
-        activatedHistoryStatus.value = {
-          isQuery,
-          index: index - 1,
-        };
+      if (index === 0) {
+        activatedHistoryStatus.isQuery = !isQuery;
+        activatedHistoryStatus.index = isQuery
+          ? resultHistory.value.length - 1
+          : queryHistory.value.length - 1;
+      } else {
+        activatedHistoryStatus.index = index - 1;
+      }
     };
 
     const activeNextHistory = (): void => {
-      const { isQuery, index } = activatedHistoryStatus.value;
+      const { isQuery, index } = activatedHistoryStatus;
 
       if (
         index ===
         (isQuery
           ? queryHistory.value.length - 1
           : resultHistory.value.length - 1)
-      )
-        activatedHistoryStatus.value = {
-          isQuery: !isQuery,
-          index: 0,
-        };
-      else
-        activatedHistoryStatus.value = {
-          isQuery,
-          index: index + 1,
-        };
+      ) {
+        activatedHistoryStatus.isQuery = !isQuery;
+        activatedHistoryStatus.index = 0;
+      } else {
+        activatedHistoryStatus.index = index + 1;
+      }
     };
 
     const activePreviousResult = (): void => {
@@ -146,15 +134,13 @@ export default defineComponent({
         activatedResultContentIndex.value <
         activatedResult.value.contents.length - 1
       )
-        activatedResultContentIndex.value =
-          activatedResultContentIndex.value + 1;
+        activatedResultContentIndex.value += 1;
       else activeNextResult();
     };
 
     const activePreviousResultContent = (): void => {
       if (activatedResultContentIndex.value > 0)
-        activatedResultContentIndex.value =
-          activatedResultContentIndex.value - 1;
+        activatedResultContentIndex.value -= 1;
       else activePreviousResult();
     };
 
@@ -185,6 +171,114 @@ export default defineComponent({
       emit("close");
     };
 
+    const renderSearchQueryHistory = (): VNode | null =>
+      enableQueryHistory
+        ? h(
+            "ul",
+            { class: "search-pro-result-list" },
+            h("li", { class: "search-pro-result-list-item" }, [
+              h(
+                "div",
+                { class: "search-pro-result-title" },
+                locale.value.queryHistory,
+              ),
+              queryHistory.value.map((item, historyIndex) =>
+                h(
+                  "div",
+                  {
+                    class: [
+                      "search-pro-result-item",
+                      {
+                        active:
+                          activatedHistoryStatus.isQuery &&
+                          activatedHistoryStatus.index === historyIndex,
+                      },
+                    ],
+                    onClick: () => {
+                      emit("updateQuery", item);
+                    },
+                  },
+                  [
+                    h(HistoryIcon, {
+                      class: "search-pro-result-type",
+                    }),
+                    h("div", { class: "search-pro-result-content" }, item),
+                    h("button", {
+                      class: "search-pro-remove-icon",
+                      innerHTML: CLOSE_ICON,
+                      onClick: (event: Event) => {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        removeQueryHistory(historyIndex);
+                      },
+                    }),
+                  ],
+                ),
+              ),
+            ]),
+          )
+        : null;
+
+    const renderSearchResultHistory = (): VNode | null =>
+      enableResultHistory
+        ? h(
+            "ul",
+            { class: "search-pro-result-list" },
+            h("li", { class: "search-pro-result-list-item" }, [
+              h(
+                "div",
+                { class: "search-pro-result-title" },
+                locale.value.resultHistory,
+              ),
+
+              resultHistory.value.map((item, historyIndex) =>
+                h(
+                  RouteLink,
+                  {
+                    to: item.link,
+                    class: [
+                      "search-pro-result-item",
+                      {
+                        active:
+                          !activatedHistoryStatus.isQuery &&
+                          activatedHistoryStatus.index === historyIndex,
+                      },
+                    ],
+                    onClick: () => {
+                      resetSearchResult();
+                    },
+                  },
+                  () => [
+                    h(HistoryIcon, {
+                      class: "search-pro-result-type",
+                    }),
+                    h("div", { class: "search-pro-result-content" }, [
+                      item.header
+                        ? h("div", { class: "content-header" }, item.header)
+                        : null,
+                      h(
+                        "div",
+                        item.display
+                          .map((display) => getVNodes(display))
+                          .flat(),
+                      ),
+                    ]),
+                    h("button", {
+                      class: "search-pro-remove-icon",
+                      innerHTML: CLOSE_ICON,
+                      onClick: (event: Event) => {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        removeResultHistory(historyIndex);
+                      },
+                    }),
+                  ],
+                ),
+              ),
+            ]),
+          )
+        : null;
+
     useEventListener("keydown", (event: KeyboardEvent) => {
       if (!props.isFocusing) return;
 
@@ -197,11 +291,9 @@ export default defineComponent({
           const item =
             activatedResult.value.contents[activatedResultContentIndex.value];
 
-          const path = getRealPath(item);
-
-          addQueryHistory(props.query);
+          addQueryHistory(props.queries.join(" "));
           addResultHistory(item);
-          void router.push(path);
+          void router.push(getPath(item));
           resetSearchResult();
         }
       } else if (enableResultHistory) {
@@ -210,9 +302,9 @@ export default defineComponent({
         } else if (event.key === "ArrowDown") {
           activeNextHistory();
         } else if (event.key === "Enter") {
-          const { index } = activatedHistoryStatus.value;
+          const { index } = activatedHistoryStatus;
 
-          if (activatedHistoryStatus.value.isQuery) {
+          if (activatedHistoryStatus.isQuery) {
             emit("updateQuery", queryHistory.value[index]);
             event.preventDefault();
           } else {
@@ -241,136 +333,16 @@ export default defineComponent({
         {
           class: [
             "search-pro-result-wrapper",
-            { empty: query.value ? !hasResults.value : !hasHistory.value },
+            {
+              empty: props.queries.length
+                ? !hasResults.value
+                : !hasHistory.value,
+            },
           ],
           id: "search-pro-results",
         },
-        query.value === ""
-          ? enableHistory
-            ? hasHistory.value
-              ? [
-                  enableQueryHistory
-                    ? h(
-                        "ul",
-                        { class: "search-pro-result-list" },
-                        h("li", { class: "search-pro-result-list-item" }, [
-                          h(
-                            "div",
-                            { class: "search-pro-result-title" },
-                            locale.value.queryHistory,
-                          ),
-                          queryHistory.value.map((item, historyIndex) =>
-                            h(
-                              "div",
-                              {
-                                class: [
-                                  "search-pro-result-item",
-                                  {
-                                    active:
-                                      activatedHistoryStatus.value.isQuery &&
-                                      activatedHistoryStatus.value.index ===
-                                        historyIndex,
-                                  },
-                                ],
-                                onClick: () => {
-                                  emit("updateQuery", item);
-                                },
-                              },
-                              [
-                                h(HistoryIcon, {
-                                  class: "search-pro-result-type",
-                                }),
-                                h(
-                                  "div",
-                                  { class: "search-pro-result-content" },
-                                  item,
-                                ),
-                                h("button", {
-                                  class: "search-pro-remove-icon",
-                                  innerHTML: CLOSE_ICON,
-                                  onClick: (event: Event) => {
-                                    event.preventDefault();
-                                    event.stopPropagation();
-                                    removeQueryHistory(historyIndex);
-                                  },
-                                }),
-                              ],
-                            ),
-                          ),
-                        ]),
-                      )
-                    : null,
-                  enableResultHistory
-                    ? h(
-                        "ul",
-                        { class: "search-pro-result-list" },
-                        h("li", { class: "search-pro-result-list-item" }, [
-                          h(
-                            "div",
-                            { class: "search-pro-result-title" },
-                            locale.value.resultHistory,
-                          ),
-
-                          resultHistory.value.map((item, historyIndex) =>
-                            h(
-                              VPLink,
-                              {
-                                to: item.link,
-                                class: [
-                                  "search-pro-result-item",
-                                  {
-                                    active:
-                                      !activatedHistoryStatus.value.isQuery &&
-                                      activatedHistoryStatus.value.index ===
-                                        historyIndex,
-                                  },
-                                ],
-                                onClick: () => {
-                                  resetSearchResult();
-                                },
-                              },
-                              () => [
-                                h(HistoryIcon, {
-                                  class: "search-pro-result-type",
-                                }),
-                                h(
-                                  "div",
-                                  { class: "search-pro-result-content" },
-                                  [
-                                    item.header
-                                      ? h(
-                                          "div",
-                                          { class: "content-header" },
-                                          item.header,
-                                        )
-                                      : null,
-                                    h(
-                                      "div",
-                                      item.display
-                                        .map((display) => getVNodes(display))
-                                        .flat(),
-                                    ),
-                                  ],
-                                ),
-                                h("button", {
-                                  class: "search-pro-remove-icon",
-                                  innerHTML: CLOSE_ICON,
-                                  onClick: (event: Event) => {
-                                    event.preventDefault();
-                                    event.stopPropagation();
-                                    removeResultHistory(historyIndex);
-                                  },
-                                }),
-                              ],
-                            ),
-                          ),
-                        ]),
-                      )
-                    : null,
-                ]
-              : locale.value.emptyHistory
-            : locale.value.emptyResult
-          : searching.value
+        props.queries.length
+          ? isSearching.value
             ? h(SearchLoading, { hint: locale.value.searching })
             : hasResults.value
               ? h(
@@ -400,9 +372,9 @@ export default defineComponent({
                             activatedResultContentIndex.value === contentIndex;
 
                           return h(
-                            VPLink,
+                            RouteLink,
                             {
-                              to: getRealPath(item),
+                              to: getPath(item),
                               class: [
                                 "search-pro-result-item",
                                 {
@@ -411,7 +383,7 @@ export default defineComponent({
                                 },
                               ],
                               onClick: () => {
-                                addQueryHistory(props.query);
+                                addQueryHistory(props.queries.join(" "));
                                 addResultHistory(item);
                                 resetSearchResult();
                               },
@@ -444,7 +416,12 @@ export default defineComponent({
                     );
                   }),
                 )
-              : locale.value.emptyResult,
+              : locale.value.emptyResult
+          : enableHistory
+            ? hasHistory.value
+              ? [renderSearchQueryHistory(), renderSearchResultHistory()]
+              : locale.value.emptyHistory
+            : locale.value.emptyResult,
       );
   },
 });

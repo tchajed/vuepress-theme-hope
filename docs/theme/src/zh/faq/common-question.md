@@ -1,23 +1,16 @@
 ---
 title: 普遍问题
-icon: triangle-exclamation
+icon: circle-question
 order: 1
 category:
   - FAQ
 ---
 
-## Adding Markdown Extensions
-
 ## 添加 Markdown 扩展
 
-你可以在 [配置文件](../cookbook/vuepress/config.md#config-file) 中使用 `extendsMarkdown` 钩子来添加 Markdown 扩展:
+你可以在 [配置文件](../cookbook/vuepress/config.md#配置文件) 中使用 `extendsMarkdown` 钩子来添加 Markdown 扩展:
 
-::: code-tabs#language
-
-@tab TS
-
-```ts
-// .vuepress/config.ts
+```ts {7-9} title=".vuepress/config.ts"
 import { defineUserConfig } from "vuepress";
 
 export default defineUserConfig({
@@ -29,24 +22,6 @@ export default defineUserConfig({
   },
 });
 ```
-
-@tab JS
-
-```js
-// .vuepress/config.js
-import { defineUserConfig } from "vuepress";
-
-export default defineUserConfig({
-  // 站点配置
-  // ...
-
-  extendsMarkdown: (md) => {
-    md.use(yourExtension, options);
-  },
-});
-```
-
-:::
 
 ## 如何让侧边栏可折叠 / 如何在移动端显示 TOC / 如何在 PC 上将侧边栏置于左侧
 
@@ -81,15 +56,13 @@ flowchart LR
 
 - 如果你不喜欢宽屏布局，你可以将 `$pc` 断点设置一个非常大的值:
 
-  ```scss
-  // .vuepress/config.scss
+  ```scss title=".vuepress/config.scss"
   $pc: 9999px;
   ```
 
 - 如果你不想要 Pad 布局，你可以将 `$tablet` 断点和 `$pad` 断点重合:
 
-  ```scss
-  // .vuepress/config.scss
+  ```scss title=".vuepress/config.scss"
   $tablet: 959px;
   ```
 
@@ -99,21 +72,22 @@ flowchart LR
 
 默认情况下，VuePress 只会从 Markdown 提取 h2 和 h3 标题，所以仅靠配置主题，你永远也看不见 h4 标题。
 
-你需要在 VuePress 配置文件中配置 [markdown.header.levels](https://vuejs.press/zh/reference/config.html#markdown-headers):
+你需要在 VuePress 配置文件中配置 [markdown.headers.level](https://vuejs.press/zh/reference/config.html#markdown-headers):
 
-```ts
-// .vuepress/config.ts
-export default {
+```ts {7-12} title=".vuepress/config.ts"
+import { defineUserConfig } from "vuepress";
+
+export default defineUserConfig({
+  // 其他站点配置
+  // ...
+
   markdown: {
-    header: {
+    headers: {
       // 用到哪一级就提取哪一级
-      levels: [2, 3, 4, 5, 6],
+      level: [2, 3, 4, 5, 6],
     },
   },
-
-  // 其他配置
-  // ...
-};
+});
 ```
 
 在上方提取更深层级的标题后，你就能在 [主题选项](../config/theme/layout.md#headerdepth) 或 [页面 Frontmatter](../config/frontmatter/layout.md#headerdepth) 中通过增加 `headerDepth` 的数值来展示更多标题了。

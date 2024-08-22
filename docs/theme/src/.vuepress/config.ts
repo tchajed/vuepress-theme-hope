@@ -1,9 +1,11 @@
-import { config, getDirname, path, pwaHead } from "docs-shared";
+import { config, pwaHead } from "docs-shared";
+import { getDirname, path } from "vuepress/utils";
+
 import theme from "./theme.js";
 
 const __dirname = getDirname(import.meta.url);
 
-// the config wrapper is located in <root>/docs-shared/src/config-wrapper.ts
+// The config wrapper is located in <root>/docs-shared/src/config-wrapper.ts
 export default config("", {
   head: [
     ...pwaHead,
@@ -37,10 +39,6 @@ export default config("", {
     "@FlowChartPlayground": path.resolve(
       __dirname,
       "../../../md-enhance/src/.vuepress/components/FlowChartPlayground.js",
-    ),
-    "@IconDisplay": path.resolve(
-      __dirname,
-      "../../../components/src/.vuepress/components/IconDisplay.js",
     ),
     "@KatexPlayground": path.resolve(
       __dirname,

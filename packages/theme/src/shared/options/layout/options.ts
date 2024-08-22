@@ -1,12 +1,10 @@
-import type { BackToTopOptions } from "vuepress-plugin-components";
-
 import type { FooterLocaleOptions } from "./footer.js";
 import type { DocsRepoLocaleOptions } from "./info.js";
 import type { MetaLocaleOptions, MetaLocateData } from "./meta.js";
 import type { NavbarLocaleData, NavbarLocaleOptions } from "./navbar.js";
 import type { RouteLocaleData } from "./route.js";
 import type { SidebarLocaleOptions, SidebarSorter } from "./sidebar.js";
-import type { PageInfo } from "../../info.js";
+import type { PageInfoType } from "../../info.js";
 
 export interface LayoutLocaleData {
   /**
@@ -81,12 +79,14 @@ export interface LayoutLocaleOptions
    *
    * @default ["Author", "Original", "Date", "PageView", "ReadingTime", "Category", "Tag"]
    */
-  pageInfo?: PageInfo[] | false;
+  pageInfo?: PageInfoType[] | false;
 
   /**
    * Whether show toc list in desktop mode
    *
    * 是否在桌面模式下展示标题列表
+   *
+   * @default true
    */
   toc?: boolean;
 
@@ -94,6 +94,8 @@ export interface LayoutLocaleOptions
    * Whether rtl layout should be used
    *
    * 是否使用 rtl 布局
+   *
+   * @default false
    */
   rtl?: boolean;
 
@@ -123,20 +125,11 @@ export type LayoutLocaleConfig = LayoutLocaleOptions;
  */
 export interface LayoutOptions {
   /**
-   * Wether display back to top button
-   *
-   * 是否显示返回顶部按钮
-   *
-   * @default true
-   */
-  backToTop?: BackToTopOptions | boolean;
-
-  /**
    * Sorter of structure sidebar
    *
    * 结构化侧边栏排序器
    *
-   * @default ["readme", "index", "title", "filename"]
+   * @default ["readme", "order", "title", "filename"]
    */
   sidebarSorter?: SidebarSorter;
 }

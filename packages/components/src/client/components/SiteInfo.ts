@@ -1,15 +1,8 @@
-import { withBase } from "@vuepress/client";
+import { useLocaleConfig } from "@vuepress/helper/client";
 import type { VNode } from "vue";
-import { computed, defineComponent, h, resolveComponent } from "vue";
-import {
-  BitbucketIcon,
-  GitHubIcon,
-  GitLabIcon,
-  GiteeIcon,
-  SourceIcon,
-  resolveRepoType,
-  useLocaleConfig,
-} from "vuepress-shared/client";
+import { defineComponent, h } from "vue";
+import { withBase } from "vuepress/client";
+import { RepoIcon } from "vuepress-shared/client";
 
 import type { SiteInfoLocaleConfig } from "../../shared/index.js";
 
@@ -20,14 +13,6 @@ declare const SITE_INFO_LOCALES: SiteInfoLocaleConfig;
 
 export default defineComponent({
   name: "SiteInfo",
-
-  components: {
-    BitbucketIcon,
-    GiteeIcon,
-    GitHubIcon,
-    GitLabIcon,
-    SourceIcon,
-  },
 
   props: {
     /**
@@ -93,14 +78,11 @@ export default defineComponent({
 
   setup(props) {
     const locale = useLocaleConfig(SITE_INFO_LOCALES);
-    const repoType = computed(() =>
-      props.repo ? resolveRepoType(props.repo) : null,
-    );
 
     return (): VNode =>
       h("div", { class: "vp-site-info", "data-name": props.name }, [
         h("a", {
-          class: "vp-site-info-navigator",
+          class: ["vp-site-info-navigator", "no-external-link-icon"],
           title: props.name,
           href: props.url,
           target: "_blank",
@@ -135,13 +117,13 @@ export default defineComponent({
                 {
                   class: "vp-site-info-source",
                   href: props.repo,
-                  // hint text
+                  // Hint text
                   "aria-label": locale.value.source,
                   "data-balloon-pos": "left",
                   title: locale.value.source,
                   target: "_blank",
                 },
-                h(resolveComponent(`${repoType.value!}Icon`)),
+                h(RepoIcon, { link: props.repo }),
               ),
             )
           : null,

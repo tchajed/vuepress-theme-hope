@@ -14,7 +14,7 @@ actions:
     icon: tools
     link: ./config.html
 
-footer: 使用 <a href="https://theme-hope.vuejs.press/zh/" target="_blank">VuePress Theme Hope</a> 主题 | MIT 协议, 版权所有 © 2019-present Mr.Hope
+footer: 使用 <a href="https://theme-hope.vuejs.press/zh/" target="_blank">VuePress Theme Hope</a> 主题 | MIT 协议, 版权所有 © 2019-至今 Mr.Hope
 
 copyright: false
 ---
@@ -51,8 +51,7 @@ npm i -D vuepress-plugin-lightgallery
 
 @tab TS
 
-```ts
-// .vuepress/config.ts
+```ts title=".vuepress/config.ts"
 import { lightgalleryPlugin } from "vuepress-plugin-lightgallery";
 
 export default {
@@ -66,8 +65,7 @@ export default {
 
 @tab JS
 
-```js
-// .vuepress/config.js
+```js title=".vuepress/config.js"
 import { lightgalleryPlugin } from "vuepress-plugin-lightgallery";
 
 export default {
@@ -91,6 +89,8 @@ export default {
 
 你被警告了！
 
-如果你对此表示担忧，你可以考虑使用 <ProjectLink name="photo-swipe" path="/zh/">vuepress-plugin-photo-swipe</ProjectLink>。
+如果你对此表示担忧，你可以考虑使用 [@vuepress/plugin-photo-swipe][photo-swipe]。
 
 :::
+
+[photo-swipe]: https://ecosystem.vuejs.press/zh/plugins/features/photo-swipe.html

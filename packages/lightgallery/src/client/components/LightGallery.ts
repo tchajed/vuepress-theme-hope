@@ -1,4 +1,3 @@
-import { usePageData } from "@vuepress/client";
 import type { GalleryItem } from "lightgallery/lg-utils.js";
 import lightGallery from "lightgallery/lightgallery.es5.js";
 import type { LightGallery } from "lightgallery/lightgallery.js";
@@ -12,6 +11,7 @@ import {
   shallowRef,
   watch,
 } from "vue";
+import { usePageData } from "vuepress/client";
 
 import { useLightGalleryPlugins } from "@temp/lightgallery/plugins.js";
 
@@ -19,19 +19,19 @@ import { useLightGalleryOptions } from "../helpers/index.js";
 
 import "lightgallery/scss/lightgallery.scss";
 
-declare const IMAGE_SELECTOR: string;
-declare const LIGHT_GALLERY_DELAY: number;
+declare const __LG_SELECTOR__: string;
+declare const __LG_DELAY__: number;
 
 const getImages = (images: HTMLImageElement[]): GalleryItem[] =>
   images.map(
     ({ alt, srcset, src }) =>
-      <GalleryItem>{
+      ({
         src,
-        srcset: srcset,
+        srcset,
         thumb: src || srcset,
         alt,
         subHtml: alt,
-      },
+      }) as GalleryItem,
   );
 
 export default defineComponent({
@@ -53,9 +53,7 @@ export default defineComponent({
         useLightGalleryPlugins(),
         nextTick().then(
           () =>
-            new Promise<void>((resolve) =>
-              setTimeout(resolve, LIGHT_GALLERY_DELAY),
-            ),
+            new Promise<void>((resolve) => setTimeout(resolve, __LG_DELAY__)),
         ),
       ]);
 
@@ -63,14 +61,14 @@ export default defineComponent({
         instance?.destroy();
 
         const images = Array.from(
-          document.querySelectorAll<HTMLImageElement>(IMAGE_SELECTOR),
+          document.querySelectorAll<HTMLImageElement>(__LG_SELECTOR__),
         );
 
         instance = new lightGallery(container.value!, {
           ...lightGalleryOptions,
           dynamic: true,
           dynamicEl: getImages(images),
-          // this is a licenseKey to make this project under MIT, special thanks to @Sachin
+          // This is a licenseKey to make this project under MIT, special thanks to @Sachin
           licenseKey: "VSY7R-J@WED-CJY76-UMDXQ",
           plugins: lightGalleryPlugins.map(({ default: plugin }) => plugin),
         });

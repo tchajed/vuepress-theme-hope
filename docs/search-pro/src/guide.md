@@ -17,6 +17,8 @@ If you want only some of the pages to be indexed, set `filter` options in plugin
 
 When indexing languages that is not word based, like Chinese, Japanese or Korean, you should set `indexOptions` and `indexLocaleOptions` to perform correct word-splitting, see [Customize Index Generation](#customize-index-generation).
 
+Meanwhile, for better client search experience, you should customize the `splitWord` option to split the input query through `defineSearchConfig`.
+
 :::
 
 ### Ultra Fast
@@ -260,9 +262,8 @@ export default defineUserConfig({
 
 You can customize search options by importing and calling `defineSearchConfig` in [client config file][client-config]:
 
-```ts
-// .vuepress/client.ts
-import { defineClientConfig } from "@vuepress/client";
+```ts title=".vuepress/client.ts"
+import { defineClientConfig } from "vuepress/client";
 import { defineSearchConfig } from "vuepress-plugin-search-pro/client";
 
 defineSearchConfig({
@@ -276,7 +277,9 @@ export default defineClientConfig({
 
 ::: note
 
-Since searching is done in a Web Worker, setting options to function-typed value is not supported.
+Since searching is done in a Web Worker, setting function-typed options for `slimsearch` is not supported.
+
+For filtering suggestions and search results, we provide `suggestFilter` and `searchFilter` for you.
 
 :::
 
@@ -285,14 +288,24 @@ Since searching is done in a Web Worker, setting options to function-typed value
 If you want to use the search API, you need to import the `createSearchWorker` function from `vuepress-plugin-search-pro/client`:
 
 ```ts
-import { defineClientConfig } from "@vuepress/client";
+import { defineClientConfig } from "vuepress/client";
 import { createSearchWorker } from "vuepress-plugin-search-pro/client";
 
-const { search, terminate } = createSearchWorker();
+const { all, suggest, search, terminate } = createSearchWorker();
 
-// use search API
+// suggest something
+suggest("key").then((suggestions) => {
+  // display search suggestions
+});
+
+// search something
 search("keyword").then((results) => {
-  // use search results
+  // display search results
+});
+
+// return both suggestions and results
+all("key").then(({ suggestions, results }) => {
+  // display search suggestions and results
 });
 
 // terminate the worker when you don't need it
@@ -303,7 +316,7 @@ terminate();
 
 The search service is powered by a worker, and in dev mode we cannot bundle the worker file.
 
-In order to load search indexes in dev mode, we are using a modern service worker with `type: "module"`, however currently this feature is not available in Firefox and Safari. So if you want to try searching in devServer, you should use a supported browser, see [CanIUse](https://caniuse.com/mdn-api_worker_worker_options_type_parameter) for support details.
+In order to load search indexes in dev mode, we are using a modern service worker with `type: "module"`, however currently this feature is not available in Safari. So if you want to try searching in devServer, you should use a supported browser, see [CanIUse](https://caniuse.com/mdn-api_worker_worker_options_type_parameter) for support details.
 
 For better performance, adding/editing/deleting markdown contents will not trigger update for search index in dev mode. If you are proofreading or refining your search results, you can enable hot reloading by setting the `hotReload: true` option, see [Config → Hot Reload](./config.md#hotreload).
 
@@ -322,6 +335,6 @@ Client-side search has advantages, like no backend services and easy to add, but
 
 In most cases, if you are building a large site, you should choose a service provider to provide search services for your site if possible, such as [Algolia](https://www.algolia.com/), or choose an open source search crawler tool and host it on your own server to provide a search service and regularly craw your site. This is necessary for large sites because users send search terms to the search API via network requests and get search results directly.
 
-In particular, [DocSearch](https://docsearch.algolia.com/) is a free search service provided by Algolia for open source projects. If you are creating open source project documentation or an open source technical blog, you can [apply for it](https://docsearch.algolia.com/apply/), and use [`@vuepress/plugin-docsearch`](https://vuejs.press/reference/plugin/docsearch.html) plugin to provide search features.
+In particular, [DocSearch](https://docsearch.algolia.com/) is a free search service provided by Algolia for open source projects. If you are creating open source project documentation or an open source technical blog, you can [apply for it](https://docsearch.algolia.com/apply/), and use [`@vuepress/plugin-docsearch`](https://ecosystem.vuejs.press/plugins/search/docsearch.html) plugin to provide search features.
 
 [client-config]: https://vuejs.press/guide/configuration.html#client-config-file

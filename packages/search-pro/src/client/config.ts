@@ -1,4 +1,4 @@
-import { defineClientConfig } from "@vuepress/client";
+import { defineClientConfig } from "vuepress/client";
 
 import SearchBox from "./components/SearchBox.js";
 import SearchModal from "./components/SearchModal.js";

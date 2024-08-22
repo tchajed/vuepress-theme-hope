@@ -49,34 +49,6 @@ order: 2
 
 :::
 
-### checkLinks
-
-- 类型: `LinksCheckOptions`
-
-  ```ts
-  type LinksCheckStatus = "always" | "dev" | "build" | "never";
-
-  interface LinksCheckOptions {
-    /**
-     * 是否检查 Markdown 中的死链
-     *
-     * @default "dev"
-     */
-    status?: LinksCheckStatus;
-
-    /**
-     * 忽略的死链
-     */
-    ignore?: (string | RegExp)[] | ((link: string, isDev: boolean) => boolean);
-  }
-  ```
-
-- 默认值: `{ status: "dev" }`
-- 详情:
-  - [链接检查](./guide/others.md#链接检查)
-
-是否启用链接检查。
-
 ### vPre
 
 - 类型: `boolean`
@@ -175,6 +147,15 @@ order: 2
   - [定义属性](./guide/stylize/attrs.md)
 
 是否启用自定义属性支持。
+
+## spoiler
+
+- 类型: `boolean`
+- 默认值: `false`
+- 详情:
+  - [剧透](./guide/stylize/spoiler.md)
+
+是否启用剧透支持。
 
 ### sup
 
@@ -374,7 +355,7 @@ order: 2
 - 类型: `boolean`
 - 默认值: `false`
 - 详情:
-  - [Echarts](./guide/chart/echarts.md)
+  - [ECharts](./guide/chart/echarts.md)
 
 是否启用 ECharts 图表支持。
 
@@ -405,6 +386,15 @@ order: 2
   - [Mermaid](./guide/chart/mermaid.md)
 
 是否启用 [Mermaid](https://mermaid.js.org/) 支持。
+
+### plantuml
+
+- 类型: `MarkdownItPlantumlOptions[] | boolean`
+- 默认值: `false`
+- 详情:
+  - [Plantuml](./guide/chart/plantuml.md)
+
+是否启用 [plantuml](https://plantuml.com/zh/) 支持。
 
 ### stylize
 
@@ -822,25 +812,25 @@ Markdown 增强插件的国际化配置。
 
 ## 客户端配置
 
-### defineEchartsConfig
+### defineEChartsConfig
 
 ```ts
-interface EchartsConfig {
+interface EChartsConfig {
   /**
-   * Echarts 全局选项
+   * ECharts 全局选项
    */
   option?: EChartsOption;
 
   /**
-   * Echarts 初始化函数
+   * ECharts 初始化函数
    */
   setup?: () => Promise<void>;
 }
 
-const defineEchartsConfig: (config: EchartsConfig) => void;
+const defineEChartsConfig: (config: EChartsConfig) => void;
 ```
 
-定义需要传递给 Echarts 的全局配置选项和设置函数。
+定义需要传递给 ECharts 的全局配置选项和设置函数。
 
 ### defineMermaidConfig
 
@@ -910,72 +900,33 @@ const defineSandpackConfig = (config: SandpackConfig)=> void
 ### defineVuePlaygroundConfig
 
 ```ts
-interface VuePlaygroundOptions {
+export interface VuePlaygroundOptions
+  extends Omit<ReplProps, "store" | "editor"> {
   /**
-   * specify the version of vue
+   * 指定 vue 版本
    */
   vueVersion?: string;
 
   /**
-   * specify default URL to import Vue runtime from in the sandbox
+   * 指定默认的 Vue 开发运行时
    *
    * @default "https://unpkg.com/@vue/runtime-dom@${version}/dist/runtime-dom.esm-browser.js"
    */
-  defaultVueRuntimeURL?: string;
+  vueRuntimeDevUrl?: string | (() => string);
 
   /**
-   * Specify default URL to import Vue Server Renderer from in the sandbox
+   * 指定默认的 Vue 生产运行时
+   *
+   * @default "https://unpkg.com/@vue/runtime-dom@${version}/dist/runtime-dom.esm-browser.prod.js"
+   */
+  vueRuntimeProdUrl?: string | (() => string);
+
+  /**
+   * 指定默认的 Vue 服务端渲染器
    *
    * @default "https://unpkg.com/@vue/server-renderer@${version}/dist/server-renderer.esm-browser.js"
    */
-  defaultVueServerRendererURL?: string;
-
-  /**
-   * Whether to enable repl's editor resizable
-   *
-   * @default true
-   */
-  autoResize?: boolean;
-
-  /**
-   * Whether to show JS, CSS, SSR panel
-   *
-   * @default false
-   */
-  showCompileOutput?: boolean;
-
-  /**
-   * Whether to show import map
-   *
-   * @default true
-   */
-  showImportMap?: boolean;
-
-  /**
-   * Whether to clear console
-   *
-   * @default false
-   */
-  clearConsole?: boolean;
-
-  /**
-   * Layout
-   *
-   * @default 'horizontal'
-   */
-  layout?: "horizontal" | "vertical";
-
-  /**
-   * Options to configure the `vue/compiler-sfc`
-   */
-  sfcOptions?: SFCOptions;
-
-  /**
-   * Whether to enable SSR
-   *
-   * @default true
-   */
-  ssr?: boolean;
+  vueServerRendererUrl?: string | (() => string);
 }
 
 const defineVuePlaygroundConfig: (options: VuePlaygroundOptions) => void;

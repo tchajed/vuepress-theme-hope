@@ -1,6 +1,6 @@
-import { usePageFrontmatter } from "@vuepress/client";
 import type { VNode } from "vue";
 import { computed, defineComponent, h, nextTick, ref } from "vue";
+import { usePageFrontmatter } from "vuepress/client";
 
 import { useThemeLocaleData } from "@theme-hope/composables/index";
 
@@ -34,7 +34,7 @@ export default defineComponent({
     let hintHandler: number | null = null;
 
     const verify = (): void => {
-      // clear previous handler
+      // Clear previous handler
       if (hintHandler) clearTimeout(hintHandler);
       hasTried.value = false;
 
@@ -72,7 +72,7 @@ export default defineComponent({
               value: password.value,
               placeholder: locale.value.placeholder,
               onInput: ({ target }: InputEvent) => {
-                password.value = (<HTMLInputElement>target).value;
+                password.value = (target as HTMLInputElement).value;
               },
               onKeydown: ({ key }: KeyboardEvent) => {
                 if (key === "Enter") verify();
@@ -81,11 +81,12 @@ export default defineComponent({
           ]),
           h("div", { class: "vp-remember-password" }, [
             h("input", {
+              id: "remember-password",
               type: "checkbox",
               value: remember.value,
               onChange: () => (remember.value = !remember.value),
             }),
-            locale.value.remember,
+            h("label", { for: "remember-password" }, locale.value.remember),
           ]),
           h(
             "button",

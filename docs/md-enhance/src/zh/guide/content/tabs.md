@@ -9,12 +9,7 @@ icon: table-columns
 
 ## 配置
 
-::: code-tabs#language
-
-@tab TS
-
-```ts {8}
-// .vuepress/config.ts
+```js {7} title=".vuepress/config.js"
 import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
 
 export default {
@@ -26,24 +21,6 @@ export default {
   ],
 };
 ```
-
-@tab JS
-
-```js {8}
-// .vuepress/config.js
-import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
-
-export default {
-  plugins: [
-    mdEnhancePlugin({
-      // 添加选项卡支持
-      tabs: true,
-    }),
-  ],
-};
-```
-
-:::
 
 <!-- #region after -->
 
@@ -128,7 +105,8 @@ npm 应该与 Node.js 被一同安装。
 @tab pnpm
 
 ```bash
-corepack prepare pnpm@latest --activated
+corepack enable
+corepack use pnpm@latest
 ```
 
 :::

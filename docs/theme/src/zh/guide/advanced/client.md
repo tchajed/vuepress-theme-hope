@@ -15,15 +15,14 @@ tag:
 
 ::: info
 
-了解更多客户端配置文件的信息，请参考 [高级 > 教程 > 客户端配置的使用](https://vuepress.vuejs.org/zh/advanced/cookbook/usage-of-client-config.html)
+了解更多客户端配置文件的信息，请参考 [高级 > 教程 > 客户端配置的使用](https://vuejs.press/zh/advanced/cookbook/usage-of-client-config.html)
 
 :::
 
 ## 例子
 
-```ts
-// .vuepress/client.ts
-import { defineClientConfig } from "@vuepress/client";
+```ts title=".vuepress/client.ts"
+import { defineClientConfig } from "vuepress/client";
 import ExampleGlobalComponent from "./components/ExampleGlobalComponent.vue";
 import ExampleRootComponent from "./components/ExampleRootComponent.vue";
 import { setupExampleCompositionAPI } from "./composables/exampleCompositionAPI";

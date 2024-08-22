@@ -15,7 +15,7 @@ The following options control features provided by theme.
 
 ## Blog Options
 
-The theme adds blog feature using <ProjectLink name="blog2">`vuepress-plugin-blog2`</ProjectLink>, and the feature is **disabled** by default.
+The theme adds blog feature using [`@vuepress/plugin-blog`][blog], and the feature is **disabled** by default.
 
 To enable blog plugin and use default options, you can set `plugins.blog` to `true` in theme options.
 
@@ -63,15 +63,13 @@ Visitors can click on the avatar or name in "Blogger Information" to enter the p
 
 ### blog.medias
 
-- Type: `Record<string, string | [string, string]>`
+- Type: `Record<string, string | { icon: string ; link: string }>`
 - Required: No
 
 Set social links.
 
 - If the social media icon is available below, you can set `MediaName: MediaLink` directly.
-- Otherwise, you should pass in a tuple `MediaName: [MediaLink , MediaSvgIconString or MediaSvgIconPath]`,
-
-  The second element in the tuple must be a valid SVG string or a full path of an existing SVG file.
+- Otherwise, you should pass in a object `MediaName: { icon: MediaSvgIconString or MediaUrl MediaLink, link: MediaLink }`,
 
 :::: info Available Social Media
 
@@ -183,13 +181,6 @@ The following social medias has built-in icons:
 
 ::::
 
-### blog.roundAvatar
-
-- Type: `boolean`
-- Default: `false`
-
-Whether clipping the avatar with round shape
-
 ### blog.sidebarDisplay
 
 - Type: `"mobile" | "none" | "always"`
@@ -275,9 +266,11 @@ The encryption configuration is an object with a key name matching the path and 
 {
   // This will encrypt the entire guide directory and both passwords will be available
   "/guide/": ["1234", "5678"],
-  // this will only encrypt config/page.html
+  // this will only encrypt /config/page.html
   "/config/page.html": "1234"
 }
 ```
 
 :::
+
+[blog]: https://ecosystem.vuejs.press/plugins/blog/blog/

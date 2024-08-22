@@ -1,7 +1,7 @@
-import type { Plugin } from "@vuepress/core";
-import type { ComponentOptions } from "vuepress-plugin-components";
+import { isString } from "@vuepress/helper";
+import type { Plugin } from "vuepress/core";
+import type { ComponentPluginOptions } from "vuepress-plugin-components";
 import { componentsPlugin } from "vuepress-plugin-components";
-import { isString } from "vuepress-shared/node";
 
 import type { ThemeOptions } from "../../shared/index.js";
 
@@ -13,13 +13,13 @@ import type { ThemeOptions } from "../../shared/index.js";
 export const getComponentsPlugin = (
   options: Pick<
     ThemeOptions,
-    "backToTop" | "hostname" | "hotReload" | "iconAssets" | "iconPrefix"
+    "hostname" | "hotReload" | "iconAssets" | "iconPrefix"
   >,
   {
     components = ["Badge", "FontIcon"],
     componentOptions = {},
     rootComponents = {},
-  }: ComponentOptions = {},
+  }: ComponentPluginOptions = {},
   legacy = false,
 ): Plugin =>
   componentsPlugin(
@@ -37,10 +37,7 @@ export const getComponentsPlugin = (
         },
         ...componentOptions,
       },
-      rootComponents: {
-        backToTop: options.backToTop ?? true,
-        ...rootComponents,
-      },
+      rootComponents,
     },
     legacy,
   );

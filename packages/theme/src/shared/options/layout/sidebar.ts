@@ -24,6 +24,7 @@ export interface SidebarDirInfo {
 
   groupInfo: {
     icon?: string;
+    expanded?: boolean;
     collapsible?: boolean;
     link?: string;
   };
@@ -55,7 +56,7 @@ export type SidebarSorter =
 
 export interface SidebarLocaleOptions {
   /**
-   * sidebar config
+   * Sidebar config
    *
    * @description Set to `false` to disable sidebar in current locale
    * @see https://theme-hope.vuejs.press/guide/layout/sidebar.html
@@ -66,15 +67,6 @@ export interface SidebarLocaleOptions {
    * @see https://theme-hope.vuejs.press/zh/guide/layout/sidebar.html
    */
   sidebar?: SidebarOptions;
-
-  /**
-   * Whether show icons in the sidebar
-   *
-   * 是否在侧边栏显示图标
-   *
-   * @default true
-   */
-  sidebarIcon?: boolean;
 
   /**
    * Heading depth for sidebar and toc

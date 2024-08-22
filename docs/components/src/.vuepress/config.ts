@@ -1,9 +1,8 @@
-import { addViteSsrNoExternal, config, getDirname, path } from "docs-shared";
+import { addViteSsrNoExternal, config } from "docs-shared";
+
 import theme from "./theme.js";
 
-const __dirname = getDirname(import.meta.url);
-
-// the config wrapper is located in <root>/docs-shared/src/config-wrapper.ts
+// The config wrapper is located in <root>/docs-shared/src/config-wrapper.ts
 export default config("components", {
   locales: {
     "/": {
@@ -20,10 +19,6 @@ export default config("components", {
 
   extendsBundlerOptions: (bundlerOptions, app) => {
     addViteSsrNoExternal(bundlerOptions, app, "artplayer-plugin-danmuku");
-  },
-
-  alias: {
-    "@IconDisplay": path.resolve(__dirname, "./components/IconDisplay.js"),
   },
 
   theme,

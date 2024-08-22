@@ -15,7 +15,7 @@ icon: fab fa-vuejs
 
 :::
 
-<!-- #region before -->
+<!-- #region settings -->
 
 ## 配置
 
@@ -45,14 +45,9 @@ npm i -D @vue/repl
 
 之后启用它:
 
-<!-- #endregion before -->
+<!-- #endregion settings -->
 
-::: code-tabs#language
-
-@tab TS
-
-```ts {8}
-// .vuepress/config.ts
+```js {7} title=".vuepress/config.js"
 import { mdEnhance } from "vuepress-plugin-md-enhance";
 
 export default {
@@ -64,24 +59,6 @@ export default {
   ],
 };
 ```
-
-@tab JS
-
-```js {8}
-// .vuepress/config.js
-import { mdEnhance } from "vuepress-plugin-md-enhance";
-
-export default {
-  plugins: [
-    mdEnhance({
-      // 启用 vue 交互演示
-      vuePlayground: true,
-    }),
-  ],
-};
-```
-
-:::
 
 <!-- #region after -->
 
@@ -101,9 +78,8 @@ export default {
 
 你可以在[客户端配置文件][client-config]中导入并使用 `defineVuePlaygroundConfig` 来自定义 Vue Playground 的默认配置:
 
-```ts
-// .vuepress/client.ts
-import { defineClientConfig } from "@vuepress/client";
+```ts title=".vuepress/client.ts"
+import { defineClientConfig } from "vuepress/client";
 import { defineVuePlaygroundConfig } from "vuepress-plugin-md-enhance/client";
 
 defineVuePlaygroundConfig({

@@ -14,7 +14,7 @@ You can configure page layout by setting the following frontmatter options.
 ## pageInfo
 
 - Type: `PageInfo[] | false`
-- Default value: value in theme options
+- Default: value in theme options
 
 | Item            | Corresponding Content | Page frontmatter Value                  |
 | --------------- | --------------------- | --------------------------------------- |
@@ -31,7 +31,7 @@ Set whether to show page details on the current page
 ## pageview
 
 - Type: `boolean`
-- Default value: value in theme options
+- Default: value in theme options
 
 Whether display page views.
 
@@ -44,35 +44,42 @@ The pageview feature requires you to have a valid Waline Comment Service config.
 ## breadcrumb
 
 - Type: `boolean`
-- Default value: value in theme options
+- Default: value in theme options
 
 Whether path navigation is enabled on the current page.
 
 ## breadcrumbIcon
 
 - Type: `boolean`
-- Default value: value in theme options
+- Default: value in theme options
 
 Whether path navigation icon is enabled on the current page.
+
+## breadcrumbExclude
+
+- Type: `boolean`
+- Default: `false`
+
+Whether to exclude the current page from the breadcrumb.
 
 ## navbar
 
 - Type: `boolean`
 
-The navbar configuration of the page, filling in `false` will disable the navbar
+Setting it to `false` will disable navbar
 
 ## sidebar
 
-- Type: `"heading" | false`
+- Type: `boolean`
 
-Page sidebar configuration options. Supports `"heading"` or `false`.
+Setting it to `false` will disable sidebar
 
 ## headerDepth
 
 - Type: `number`
 - Default: `2`
 
-The page's sidebar heading rendering depth.
+Heading rendering depth.
 
 ## index
 
@@ -147,37 +154,37 @@ Group order in sidebar.
 ## comment
 
 - Type: `boolean`
-- Default value: value in theme options
+- Default: value in theme options
 
 Whether to enable comments on the current page.
 
 ## lastUpdated
 
 - Type: `boolean`
-- Default value: value in theme options
+- Default: value in theme options
 
 Whether display lastUpdated time.
 
 ## editLink
 
 - Type: `boolean`
-- Default value: value in theme options
+- Default: value in theme options
 
 Whether to show edit link.
 
 ## contributors
 
 - Type: `boolean`
-- Default value: value in theme options
+- Default: value in theme options
 
 Whether to show contributors.
 
 ## prev
 
-- Type: `AutoLinkOptions | string | false`
+- Type: `AutoLinkConfig | string | false`
 
   ```ts
-  interface AutoLinkOptions {
+  interface AutoLinkConfig {
     text: string;
     icon: string;
     link: string;
@@ -188,10 +195,10 @@ Previous article link.
 
 ## next
 
-- Type: `AutoLinkOptions |string | false`
+- Type: `AutoLinkConfig |string | false`
 
   ```ts
-  interface AutoLinkOptions {
+  interface AutoLinkConfig {
     text: string;
     icon: string;
     link: string;
@@ -203,7 +210,7 @@ Next article link.
 ## footer
 
 - Type: `boolean | string | HTMLString`
-- Default value: the value configured globally
+- Default: the value configured globally
 
 Footer content.
 
@@ -216,7 +223,7 @@ For more details, please see [Page → Footer Support](../../guide/layout/footer
 ## copyright
 
 - Type: `string | false`
-- Default value: value in theme options
+- Default: value in theme options
 
 Copyright information
 
@@ -225,16 +232,16 @@ For more details, please see [Page → Footer Support](../../guide/layout/footer
 ## backToTop
 
 - Type: `boolean`
-- Default value: `true`
+- Default: `true`
 
 Whether display the back to top button.
 
 ## toc {#toc-heading}
 
 - Type: `boolean`
-- Default value: value in theme options
+- Default: value in theme options
 
-Whether display toc in desktop mode.
+Whether display toc
 
 ## containerClass
 

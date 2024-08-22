@@ -45,12 +45,7 @@ Then enabling via:
 
 <!-- #endregion before -->
 
-::: code-tabs#config
-
-@tab TS
-
-```ts {8}
-// .vuepress/config.ts
+```js {7} title=".vuepress/config.js"
 import { mdEnhance } from "vuepress-plugin-md-enhance";
 
 export default {
@@ -62,24 +57,6 @@ export default {
   ],
 };
 ```
-
-@tab JS
-
-```js {8}
-// .vuepress/config.js
-import { mdEnhance } from "vuepress-plugin-md-enhance";
-
-export default {
-  plugins: [
-    mdEnhance({
-      // enable sandpack playground
-      sandpack: true,
-    }),
-  ],
-};
-```
-
-:::
 
 <!-- #region after -->
 
@@ -97,9 +74,8 @@ You can see the below demos to see more details.
 
 You can import and call `defineSandpackConfig` in client config file to customize `sandpack-vue3`:
 
-```ts
-// .vuepress/client.ts
-import { defineClientConfig } from "@vuepress/client";
+```ts title=".vuepress/client.ts"
+import { defineClientConfig } from "vuepress/client";
 import { defineSandpackConfig } from "vuepress-plugin-md-enhance/client";
 
 defineSandpackConfig({

@@ -39,12 +39,7 @@ Then enabling via:
 
 <!-- #endregion before -->
 
-::: code-tabs#language
-
-@tab TS
-
-```ts {8}
-// .vuepress/config.ts
+```js {7} title=".vuepress/config.js"
 import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
 
 export default {
@@ -56,24 +51,6 @@ export default {
   ],
 };
 ```
-
-@tab JS
-
-```js {8}
-// .vuepress/config.js
-import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
-
-export default {
-  plugins: [
-    mdEnhancePlugin({
-      // Enable flowchart
-      flowchart: true,
-    }),
-  ],
-};
-```
-
-:::
 
 <!-- #region after -->
 

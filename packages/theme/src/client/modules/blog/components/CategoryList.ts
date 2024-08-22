@@ -1,9 +1,12 @@
-import { usePageData } from "@vuepress/client";
+import { entries } from "@vuepress/helper/client";
 import type { VNode } from "vue";
 import { defineComponent, h } from "vue";
-import { VPLink, entries, generateIndexFromHash } from "vuepress-shared/client";
+import { RouteLink, usePageData } from "vuepress/client";
+import { generateIndexFromHash } from "vuepress-shared/client";
 
 import { useCategoryMap } from "@theme-hope/modules/blog/composables/index";
+
+import cssVariables from "../../../styles/variables.module.scss";
 
 import "../styles/category-list.scss";
 
@@ -19,7 +22,7 @@ export default defineComponent({
         "ul",
         { class: "vp-category-list" },
         entries(categoryMap.value.map)
-          // sort from more to less
+          // Sort from more to less
           .sort(([, a], [, b]) => b.items.length - a.items.length)
           .map(([category, { path, items }]) =>
             h(
@@ -27,12 +30,11 @@ export default defineComponent({
               {
                 class: [
                   "vp-category",
-                  // TODO: magic number 9 is tricky here
-                  `vp-category${generateIndexFromHash(category, 9)}`,
+                  `color${generateIndexFromHash(category, Number(cssVariables["colorNumber"]))}`,
                   { active: path === page.value.path },
                 ],
               },
-              h(VPLink, { to: path }, () => [
+              h(RouteLink, { to: path }, () => [
                 category,
                 h("span", { class: "count" }, items.length),
               ]),

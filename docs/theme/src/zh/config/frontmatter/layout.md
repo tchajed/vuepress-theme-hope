@@ -58,17 +58,24 @@ tag:
 
 是否开启路径导航图标。
 
+## breadcrumbExclude
+
+- 类型: `boolean`
+- 默认值: `false`
+
+当前页面是否被路径导航排除。
+
 ## navbar
 
 - 类型: `boolean`
 
-导航栏配置，填入 `false` 会禁用导航栏
+填入 `false` 会禁用导航栏
 
 ## sidebar
 
-- 类型: `"heading" | false`
+- 类型: `boolean`
 
-侧边栏配置选项。支持 `"heading"` 或 `false`。
+填入 `false` 会禁用侧边栏
 
 ## headerDepth
 
@@ -177,10 +184,10 @@ tag:
 
 ## prev
 
-- 类型: `AutoLinkOptions | string | false`
+- 类型: `AutoLinkConfig | string | false`
 
   ```ts
-  interface AutoLinkOptions {
+  interface AutoLinkConfig {
     text: string;
     icon: string;
     link: string;
@@ -191,10 +198,10 @@ tag:
 
 ## next
 
-- 类型: `AutoLinkOptions | string | false`
+- 类型: `AutoLinkConfig | string | false`
 
   ```ts
-  interface AutoLinkOptions {
+  interface AutoLinkConfig {
     text: string;
     icon: string;
     link: string;
@@ -236,7 +243,7 @@ tag:
 - 类型: `boolean`
 - 默认值: 主题选项中的值
 
-在桌面模式下是否在右侧显示标题列表。
+是否显示标题列表。
 
 ## containerClass
 

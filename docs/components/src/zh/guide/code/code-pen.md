@@ -2,9 +2,7 @@
 title: CodePen
 ---
 
-CodePen 演示组件。
-
-你可以使用它在 Markdown 嵌入 Demo。
+在 Markdown 嵌入 CodePen 示例。
 
 <!-- more -->
 
@@ -35,7 +33,7 @@ CodePen 演示组件。
 
 :::
 
-::: md-demo 一个加载运行的案例
+::: md-demo 一个点击运行的案例
 
 <CodePen
   link="https://codepen.io/kowlor/pen/ZYYQoy"

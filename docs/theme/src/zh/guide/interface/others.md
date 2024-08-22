@@ -16,75 +16,33 @@ tag:
 
 要隐藏打印按钮，你应该在主题选项中设置 `print: false`。
 
-::: code-tabs#language
-
-@tab TS
-
-```ts {7}
-// .vuepress/config.ts
-import { defineUserConfig } from "vuepress";
+```js {5} title=".vuepress/config.js"
 import { hopeTheme } from "vuepress-theme-hope";
 
-export default defineUserConfig({
+export default {
   theme: hopeTheme({
     print: false,
   }),
-});
+};
 ```
-
-@tab JS
-
-```js {7}
-// .vuepress/config.js
-import { defineUserConfig } from "vuepress";
-import { hopeTheme } from "vuepress-theme-hope";
-
-export default defineUserConfig({
-  theme: hopeTheme({
-    print: false,
-  }),
-});
-```
-
-:::
 
 ## 全屏按钮
+
+试一试:
 
 <ToggleFullScreenButton />
 
 如果你需要这个功能，你可以在主题选项中设置 `fullscreen: true`。
 
-::: code-tabs#language
-
-@tab TS
-
-```ts {7}
-// .vuepress/config.ts
-import { defineUserConfig } from "vuepress";
+```js {5} title=".vuepress/config.js"
 import { hopeTheme } from "vuepress-theme-hope";
 
-export default defineUserConfig({
+export default {
   theme: hopeTheme({
     fullscreen: true,
   }),
-});
+};
 ```
-
-@tab JS
-
-```js {7}
-// .vuepress/config.js
-import { defineUserConfig } from "vuepress";
-import { hopeTheme } from "vuepress-theme-hope";
-
-export default defineUserConfig({
-  theme: hopeTheme({
-    fullscreen: true,
-  }),
-});
-```
-
-:::
 
 ::: tip
 
@@ -94,79 +52,41 @@ export default defineUserConfig({
 
 ## 返回顶部按钮
 
-`vuepress-theme-hope` 添加了一个带进度条的返回顶部按钮，默认向下滚动 100px 后显示。
+`vuepress-theme-hope` 通过 [`@vuepress/plugin-back-to-top`][back-to-top] 添加了一个带进度条的返回顶部按钮，默认向下滚动 100px 后显示。
 
-你可以在主题选项中设置 `backToTop: false` 来禁用它，或者用一个对象来设置它来自定义它的阈值距离和进度条显示：
+你可以在主题选项中设置 `plugins.backToTop: false` 来禁用它，或者用一个对象来设置它来自定义它的阈值距离和进度条显示：
 
-::: code-tabs#language
-
-@tab TS
-
-```ts {7-8,12-26}
-// .vuepress/config.ts
+```js {8,13-26} title=".vuepress/config.js"
 import { defineUserConfig } from "vuepress";
 import { hopeTheme } from "vuepress-theme-hope";
 
 export default defineUserConfig({
   theme: hopeTheme({
-    // 禁用返回顶部安妮
-    backToTop: false,
+    plugins: {
+      // 禁用返回顶部按钮
+      backToTop: false,
 
-    // 或
+      // 或
 
-    // 自定义返回顶部按钮
-    backToTop: {
-      /**
-       * 显示返回顶部按钮的滚动阈值距离（以像素为单位）
-       *
-       * @default 100
-       */
-      threshold: 500,
-      /**
-       * 是否显示滚动进度
-       *
-       * @default true
-       */
-      progress: false,
+      // 自定义返回顶部按钮
+      backToTop: {
+        /**
+         * 显示返回顶部按钮的滚动阈值距离（以像素为单位）
+         *
+         * @default 100
+         */
+        threshold: 500,
+        /**
+         * 是否显示滚动进度
+         *
+         * @default true
+         */
+        progress: false,
+      },
     },
   }),
 });
 ```
-
-@tab JS
-
-```js {7-8,12-26}
-// .vuepress/config.js
-import { defineUserConfig } from "vuepress";
-import { hopeTheme } from "vuepress-theme-hope";
-
-export default defineUserConfig({
-  theme: hopeTheme({
-    // 禁用返回顶部安妮
-    backToTop: false,
-
-    // 或
-
-    // 自定义返回顶部按钮
-    backToTop: {
-      /**
-       * 显示返回顶部按钮的滚动阈值距离（以像素为单位）
-       *
-       * @default 100
-       */
-      threshold: 500,
-      /**
-       * 是否显示滚动进度
-       *
-       * @default true
-       */
-      progress: false,
-    },
-  }),
-});
-```
-
-:::
 
 ## RTL 布局
 
@@ -174,52 +94,26 @@ export default defineUserConfig({
 
 试一试: <ToggleRTLButton />
 
-::: code-tabs#language
-
-@tab TS
-
-```ts {10,11}
-// .vuepress/config.ts
-import { defineUserConfig } from "vuepress";
+```js {9} title=".vuepress/config.js"
 import { hopeTheme } from "vuepress-theme-hope";
 
-export default defineUserConfig({
+export default {
   theme: hopeTheme({
     locales: {
       // ...
       "/ar/": {
-        // 启用 RTL 布局
+        // enable RTL layout
         rtl: true,
       },
     },
   }),
-});
+};
 ```
-
-@tab JS
-
-```js {10,11}
-// .vuepress/config.js
-import { defineUserConfig } from "vuepress";
-import { hopeTheme } from "vuepress-theme-hope";
-
-export default defineUserConfig({
-  theme: hopeTheme({
-    locales: {
-      // ...
-      "/ar/": {
-        // 启用 RTL 布局
-        rtl: true,
-      },
-    },
-  }),
-});
-```
-
-:::
 
 <script setup lang="ts">
 import ToggleFullScreenButton from "@theme-hope/modules/outlook/components/ToggleFullScreenButton";
 import PrintButton from "@theme-hope/modules/info/components/PrintButton";
 import ToggleRTLButton from "@ToggleRTLButton";
 </script>
+
+[back-to-top]: https://ecosystem.vuejs.press/zh/plugins/features/back-to-top.html

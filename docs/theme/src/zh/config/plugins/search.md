@@ -10,7 +10,7 @@ tag:
   - 主题配置
 ---
 
-## I介绍
+## 介绍
 
 主题内置支持以下三个插件:
 
@@ -54,5 +54,5 @@ tag:
 
 :::
 
-[docsearch]: https://vuejs.press/zh/reference/plugin/docsearch.html
-[search]: https://vuejs.press/zh/reference/plugin/search.html
+[docsearch]: https://ecosystem.vuejs.press/zh/plugins/search/docsearch.html
+[search]: https://ecosystem.vuejs.press/zh/plugins/search/search.html

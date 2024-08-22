@@ -48,7 +48,7 @@ tag:
 - 类型: `boolean`
 - 默认值: `true`
 - 详情:
-  - [提示容器](../../guide/markdown/hint.md)
+  - [提示容器](../../guide/markdown/stylize/hint.md)
 
 是否启用提示容器支持:
 
@@ -58,32 +58,6 @@ tag:
 - warning
 - caution
 - details
-
-### checkLinks
-
-- 类型: `LinksCheckOptions`
-
-  ```ts
-  type LinksCheckStatus = "always" | "dev" | "build" | "never";
-
-  interface LinksCheckOptions {
-    /**
-     * 是否检查 Markdown 中的死链
-     *
-     * @default "dev"
-     */
-    status?: LinksCheckStatus;
-
-    /**
-     * 忽略的死链
-     */
-    ignore?: (string | RegExp)[] | ((link: string, isDev: boolean) => boolean);
-  }
-  ```
-
-- 默认值: `{ status: "dev" }`
-
-是否启用链接检查。
 
 ### vPre
 
@@ -115,7 +89,7 @@ tag:
 - 类型: `boolean`
 - 默认值: `false`
 - 详情:
-  - [GFM 警告](../../guide/markdown/alert.md)
+  - [GFM 警告](../../guide/markdown/stylize/alert.md)
 
 是否启用 GFM 警告。
 
@@ -124,7 +98,7 @@ tag:
 - 类型: `boolean`
 - 默认值: `false`
 - 详情:
-  - [选项卡](../../guide/markdown/tabs.md)
+  - [选项卡](../../guide/markdown/content/tabs.md)
 
 是否启用选项卡。
 
@@ -133,7 +107,7 @@ tag:
 - 类型: `boolean`
 - 默认值: `false`
 - 详情:
-  - [代码组](../../guide/markdown/code-tabs.md)
+  - [代码组](../../guide/markdown/code/code-tabs.md)
 
 是否启用代码组。
 
@@ -142,7 +116,7 @@ tag:
 - 类型: `boolean`
 - 默认值: `false`
 - 详情:
-  - [自定义对齐](../../guide/markdown/align.md)
+  - [自定义对齐](../../guide/markdown/stylize/align.md)
 
 是否启用自定义对齐格式支持。
 
@@ -179,7 +153,7 @@ tag:
 
 - 默认值: `false`
 - 详情:
-  - [定义属性](../../guide/markdown/attrs.md)
+  - [定义属性](../../guide/markdown/stylize/attrs.md)
 
 是否启用自定义属性支持。
 
@@ -187,6 +161,8 @@ tag:
 
 - 类型: `boolean`
 - 默认值: `false`
+- 详情:
+  - [上标](../../guide/markdown/grammar/sup-sub.md)
 
 是否启用上角标格式支持。
 
@@ -194,6 +170,8 @@ tag:
 
 - 类型: `boolean`
 - 默认值: `false`
+- 详情:
+  - [下标](../../guide/markdown/grammar/sup-sub.md)
 
 是否启用下角标格式支持。
 
@@ -201,6 +179,8 @@ tag:
 
 - 类型: `boolean`
 - 默认值: `false`
+- 详情:
+  - [脚注](../../guide/markdown/content/footnote.md)
 
 是否启用脚注格式支持。
 
@@ -208,6 +188,8 @@ tag:
 
 - 类型: `boolean`
 - 默认值: `false`
+- 详情:
+  - [标记](../../guide/markdown/stylize/mark.md)
 
 是否启用标记格式支持。
 
@@ -360,6 +342,20 @@ interface TaskListOptions {
 - 默认值: `false`
 
 是否启用 [Mermaid](https://mermaid.js.org/) 支持，你可以传入一个对象作为 Mermaid 的配置选项。
+
+### plantuml
+
+- 类型: `MarkdownItPlantumlOptions[] | boolean`
+- 默认值: `false`
+
+是否启用 [plantuml](https://plantuml.com/zh/) 支持。
+
+## spoiler
+
+- 类型: `boolean`
+- 默认值: `false`
+
+是否启用剧透支持。
 
 ### stylize
 
@@ -534,78 +530,7 @@ interface TaskListOptions {
 
 ### vuePlayground
 
-- 类型: `VuePlaygroundOptions | boolean`
-
-  ```ts
-  interface VuePlaygroundOptions {
-    /**
-     * 指定 vue 版本
-     */
-    vueVersion?: string;
-
-    /**
-     * 指定默认的 Vue 运行时
-     *
-     * @default "https://unpkg.com/@vue/runtime-dom@${version}/dist/runtime-dom.esm-browser.js"
-     */
-    defaultVueRuntimeURL?: string;
-
-    /**
-     * 指定默认的 Vue 服务端渲染器
-     *
-     * @default "https://unpkg.com/@vue/server-renderer@${version}/dist/server-renderer.esm-browser.js"
-     */
-    defaultVueServerRendererURL?: string;
-
-    /**
-     * 是否启用自动调整大小
-     *
-     * @default true
-     */
-    autoResize?: boolean;
-
-    /**
-     * 是否显示 JS, CSS, SSR 面板
-     *
-     * @default false
-     */
-    showCompileOutput?: boolean;
-
-    /**
-     * 是否显示 import map
-     *
-     * @default true
-     */
-    showImportMap?: boolean;
-
-    /**
-     * 是否清空控制台
-     *
-     * @default false
-     */
-    clearConsole?: boolean;
-
-    /**
-     * 布局
-     *
-     * @default 'horizontal'
-     */
-    layout?: "horizontal" | "vertical";
-
-    /**
-     * `vue/compiler-sfc` 配置项
-     */
-    sfcOptions?: SFCOptions;
-
-    /**
-     * 是否启用 SSR
-     *
-     * @default true
-     */
-    ssr?: boolean;
-  }
-  ```
-
+- 类型: `boolean`
 - 默认值: `false`
 
 是否启用 Vue 交互演示支持。

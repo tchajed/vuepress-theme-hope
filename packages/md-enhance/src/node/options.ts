@@ -1,4 +1,5 @@
-import type { LocaleConfig } from "@vuepress/core";
+import type { MarkdownItPlantumlOptions } from "@mdit/plugin-plantuml";
+import type { LocaleConfig } from "vuepress/shared";
 
 import type {
   AttrsOptions,
@@ -12,40 +13,14 @@ import type {
   RevealJsOptions,
   StylizeOptions,
   TasklistOptions,
+  VuePlaygroundOptions,
 } from "./typings/index.js";
 import type { CodeDemoOptions } from "../shared/index.js";
-
-export type LinksCheckStatus = "always" | "dev" | "build" | "never";
-
-export interface LinksCheckOptions {
-  /**
-   * Whether check dead links in markdown
-   *
-   * 是否检查 Markdown 中的死链
-   *
-   * @default "dev"
-   */
-  status?: LinksCheckStatus;
-
-  /**
-   * Dead links to ignore
-   *
-   * 忽略的死链
-   */
-  ignore?: (string | RegExp)[] | ((link: string, isDev: boolean) => boolean);
-}
 
 /**
  * md-enhance plugin configuration
  */
-export interface MarkdownEnhanceOptions {
-  /**
-   * Whether check dead links in markdown
-   *
-   * @default { status: "dev"}
-   */
-  checkLinks?: LinksCheckOptions;
-
+export interface MarkdownEnhancePluginOptions {
   /**
    * Whether enable standard GFM support
    *
@@ -242,6 +217,15 @@ export interface MarkdownEnhanceOptions {
   mark?: boolean;
 
   /**
+   * Whether to enable spoiler support
+   *
+   * 是否启用剧透支持
+   *
+   * @default false
+   */
+  spoiler?: boolean;
+
+  /**
    * Whether to enable tasklist format support
    *
    * 是否启用任务列表支持
@@ -273,7 +257,7 @@ export interface MarkdownEnhanceOptions {
   katex?:
     | (KatexOptions & {
         /**
-         * whether enable copy plugin
+         * Whether enable copy plugin
          *
          * @default false
          */
@@ -349,6 +333,15 @@ export interface MarkdownEnhanceOptions {
   mermaid?: boolean;
 
   /**
+   * Whether enable plantuml support
+   *
+   * 是否启用 plantuml 支持
+   *
+   * @default false
+   */
+  plantuml?: MarkdownItPlantumlOptions[] | boolean;
+
+  /**
    * Whether to enable code-demo support
    *
    * 是否启用代码示例功能
@@ -396,7 +389,7 @@ export interface MarkdownEnhanceOptions {
    *
    * @default false
    */
-  vuePlayground?: boolean;
+  vuePlayground?: VuePlaygroundOptions | boolean;
 
   /**
    * Whether to enable sandpack support

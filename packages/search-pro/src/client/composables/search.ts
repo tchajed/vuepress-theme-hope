@@ -1,54 +1,63 @@
-import { useRouteLocale } from "@vuepress/client";
 import { useDebounceFn } from "@vueuse/core";
 import type { Ref } from "vue";
-import { onMounted, onUnmounted, ref, shallowRef, watch } from "vue";
+import { computed, onMounted, onUnmounted, ref, shallowRef, watch } from "vue";
+import { usePageData, useRouteLocale } from "vuepress/client";
 
+import { createSearchWorker } from "../createSearchWorker.js";
 import { searchProOptions } from "../define.js";
 import { useSearchOptions } from "../helpers/index.js";
 import type { SearchResult } from "../typings/index.js";
-import { createSearchWorker } from "../utils/index.js";
 
 export interface SearchRef {
-  searching: Ref<boolean>;
+  isSearching: Ref<boolean>;
   results: Ref<SearchResult[]>;
 }
 
-export const useSearchResult = (query: Ref<string>): SearchRef => {
+export const useSearchResult = (queries: Ref<string[]>): SearchRef => {
   const searchOptions = useSearchOptions();
   const routeLocale = useRouteLocale();
-  const { search, terminate } = createSearchWorker();
+  const pageData = usePageData();
 
-  const searching = ref(false);
+  const searchingProcessNumber = ref(0);
+  const isSearching = computed(() => searchingProcessNumber.value > 0);
   const results = shallowRef<SearchResult[]>([]);
 
   onMounted(() => {
-    const endSearch = (): void => {
-      results.value = [];
-      searching.value = false;
-    };
+    const { search, terminate } = createSearchWorker();
 
-    const performSearch = useDebounceFn((queryString: string): void => {
-      searching.value = true;
+    const performSearch = useDebounceFn((queries: string[]): void => {
+      const query = queries.join(" ");
+      const {
+        searchFilter = (results): SearchResult[] => results,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        splitWord,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        suggestionsFilter,
+        ...options
+      } = searchOptions.value;
 
-      if (queryString)
-        void search({
-          type: "search",
-          query: queryString,
-          locale: routeLocale.value,
-          options: searchOptions,
-        })
-          .then((searchResults) => {
-            results.value = searchResults;
-            searching.value = false;
+      if (query) {
+        searchingProcessNumber.value += 1;
+
+        search(queries.join(" "), routeLocale.value, options)
+          .then((results) =>
+            searchFilter(results, query, routeLocale.value, pageData.value),
+          )
+          .then((_results) => {
+            searchingProcessNumber.value -= 1;
+            results.value = _results;
           })
           .catch((err) => {
-            console.error(err);
-            endSearch();
+            console.warn(err);
+            searchingProcessNumber.value -= 1;
+            if (!searchingProcessNumber.value) results.value = [];
           });
-      else endSearch();
-    }, searchProOptions.searchDelay);
+      } else {
+        results.value = [];
+      }
+    }, searchProOptions.searchDelay - searchProOptions.suggestDelay);
 
-    watch([query, routeLocale], () => performSearch(query.value), {
+    watch([queries, routeLocale], ([queries]) => performSearch(queries), {
       immediate: true,
     });
 
@@ -58,7 +67,7 @@ export const useSearchResult = (query: Ref<string>): SearchRef => {
   });
 
   return {
-    searching,
+    isSearching,
     results,
   };
 };

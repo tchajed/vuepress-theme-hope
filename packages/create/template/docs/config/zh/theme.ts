@@ -1,4 +1,5 @@
 import { hopeTheme } from "vuepress-theme-hope";
+
 import navbar from "./navbar.js";
 import sidebar from "./sidebar.js";
 
@@ -45,7 +46,7 @@ export default hopeTheme({
 
   // 在这里配置主题提供的插件
   plugins: {
-    // 你应该自行生成自己的评论服务
+    // 注意: 仅用于测试! 你必须自行生成并在生产环境中使用自己的评论服务
     comment: {
       provider: "Giscus",
       repo: "vuepress-theme-hope/giscus-discussions",
@@ -70,6 +71,8 @@ export default hopeTheme({
       imgSize: true,
       include: true,
       mark: true,
+      plantuml: true,
+      spoiler: true,
       stylize: [
         {
           matcher: "Recommended",
@@ -86,6 +89,7 @@ export default hopeTheme({
       sub: true,
       sup: true,
       tabs: true,
+      tasklist: true,
       vPre: true,
 
       // 在启用之前安装 chart.js
@@ -127,11 +131,11 @@ export default hopeTheme({
       // sandpack: true,
     },
 
-    // 如果你需要 PWA。安装 vuepress-plugin-pwa2 并取消下方注释
+    // 如果你需要 PWA。安装 @vuepress/plugin-pwa 并取消下方注释
     // pwa: {
     //   favicon: "/favicon.ico",
     //   cacheHTML: true,
-    //   cachePic: true,
+    //   cacheImage: true,
     //   appendBase: true,
     //   apple: {
     //     icon: "/assets/icon/apple-icon-152.png",

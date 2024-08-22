@@ -72,8 +72,7 @@ font-family: "Lora", serif;
 
 Then all you need to do is import and use them by adding the following code in the VuePress configuration file:
 
-```ts
-// .vuepress/config.ts
+```ts title=".vuepress/config.ts"
 import { defineUserConfig } from "vuepress";
 
 export default defineUserConfig({
@@ -103,9 +102,7 @@ export default defineUserConfig({
 
 Also modify the `$font-family` variable in the palette file:
 
-```scss
-// .vuepress/styles/palette.scss
-
+```scss title=".vuepress/styles/palette.scss"
 // apply font
 $font-family: "Lora, serif";
 ```
@@ -127,7 +124,9 @@ No one shall be subjected to arbitrary interference with his privacy, family, ho
 :::
 
 [^serif]: Related introduction: <https://www.zhihu.com/topic/19559432/intro>
+
 [^sans-serif]: Related introduction: <https://www.zhihu.com/topic/19559433/intro>
+
 [^fallback-font]: From Wikipedia
 
     Fallback fonts are fonts that are used to display missing characters when the displayed font lacks certain characters. Because it serves as the last line of defense for display, fallback fonts should contain all Unicode characters where possible.

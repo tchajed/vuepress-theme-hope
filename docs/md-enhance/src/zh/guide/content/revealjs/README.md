@@ -39,12 +39,7 @@ npm i -D reveal.js
 
 <!-- #endregion before -->
 
-::: code-tabs#language
-
-@tab TS
-
-```ts {8}
-// .vuepress/config.ts
+```js {7} title=".vuepress/config.js"
 import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
 
 export default {
@@ -56,24 +51,6 @@ export default {
   ],
 };
 ```
-
-@tab JS
-
-```js {8}
-// .vuepress/config.js
-import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
-
-export default {
-  plugins: [
-    mdEnhancePlugin({
-      // 启用幻灯片
-      revealJs: true,
-    }),
-  ],
-};
-```
-
-:::
 
 <!-- #region options -->
 
@@ -149,9 +126,8 @@ export default {
 
 你也可以在[客户端配置文件][client-config]中导入并调用 `defineRevealJsConfig` 来自定义 reveal.js:
 
-```ts
-// .vuepress/client.ts
-import { defineClientConfig } from "@vuepress/client";
+```ts title=".vuepress/client.ts"
+import { defineClientConfig } from "vuepress/client";
 import { defineRevealJsConfig } from "vuepress-plugin-md-enhance/client";
 
 defineRevealJsConfig({

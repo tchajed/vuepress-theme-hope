@@ -30,11 +30,7 @@ These options are only valid when setting directly under the theme options, sett
     | `http://${string}`
     | `https://${string}`;
 
-  type BuiltInFontIcon =
-    | "iconify"
-    | "iconfont"
-    | "fontawesome"
-    | "fontawesome-with-brands";
+  type BuiltInFontIcon = "iconify" | "fontawesome" | "fontawesome-with-brands";
 
   type FontIconAssets = BuiltInFontIcon | Link | (BuiltInFontIcon | Link)[];
   ```
@@ -42,7 +38,7 @@ These options are only valid when setting directly under the theme options, sett
 - Required: No
 - Details: [Interface → Icon](../../guide/interface/icon.md)
 
-Link of font icon asset, `'iconfont'` and `'fontawesome'` keywords are supported.
+Link of font icon asset, `'iconify'` `'fontawesome'` and `'fontawesome-with-brands'` keywords are supported.
 
 ## darkmode <Badge text="Enabled by default" /> <Badge text="Root only" type="warning" />
 
@@ -64,6 +60,13 @@ If you don't need this feature, set `darkmode: "disable"` to disable it.
 
 :::
 
+## externalLinkIcon <Badge text="enabled by default" />
+
+- Type: `boolean`
+- Default: `true`
+
+Controls whether an icon is displayed on external links.
+
 ## fullscreen <Badge text="Root only" type="warning" />
 
 - Type: `boolean`
@@ -71,33 +74,6 @@ If you don't need this feature, set `darkmode: "disable"` to disable it.
 - Details: [Interface → FullScreen](../../guide/interface/others.md#fullscreen-button)
 
 Whether show the "full screen" button.
-
-## backToTop <Badge text="Root only" type="warning" />
-
-- Type: `BackToTopOptions | boolean`
-
-  ```ts
-  interface BackToTopOptions {
-    /**
-     * Scroll threshold distance to display back to top button (in pixels)
-     *
-     * @default 100
-     */
-    threshold?: number;
-
-    /**
-     * Whether display scroll progress
-     *
-     * @default true
-     */
-    progress?: boolean;
-  }
-  ```
-
-- Default: `true`
-- Details: [Interface → Back to top button](../../guide/interface/others.md#back-to-top-button)
-
-Back to top button customization, setting it to `false` disables the button.
 
 ## pure <Badge text="Root only" type="warning" />
 
