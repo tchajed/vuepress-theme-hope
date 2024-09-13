@@ -10,12 +10,12 @@ body {
   color-scheme: light;
 }
 
-#{hope-config.$dark-selector} {
+[data-theme="dark"] {
   color-scheme: dark;
 }
 
 body {
-  color: var(--text-color);
+  color: var(--vp-c-text);
   font-family: var(--font-family);
 
   @media (min-width: hope-config.$pc) {
@@ -24,11 +24,11 @@ body {
 }
 
 a {
-  color: var(--theme-color);
+  color: var(--vp-c-accent);
 }
 
 kbd {
-  border-color: var(--border-color-dark);
+  border-color: var(--vp-c-border-hard);
   background: var(--bg-color-secondary);
   font-family: var(--font-family-mono);
 }
@@ -36,12 +36,12 @@ kbd {
 code {
   font-family: var(--font-family-mono);
 
-  #{hope-config.$dark-selector} & {
+  [data-theme="dark"] & {
     background: #333;
   }
 
   p a & {
-    color: var(--theme-color);
+    color: var(--vp-c-accent);
   }
 }
 
@@ -49,7 +49,7 @@ blockquote {
   border-color: #eee;
   color: #666;
 
-  #{hope-config.$dark-selector} & {
+  [data-theme="dark"] & {
     border-color: #333;
   }
 }
@@ -71,11 +71,11 @@ h1 {
 }
 
 h2 {
-  border-color: var(--border-color);
+  border-color: var(--vp-c-border);
 }
 
 hr {
-  border-color: var(--border-color);
+  border-color: var(--vp-c-border);
 }
 
 tr:nth-child(odd) {
@@ -84,7 +84,7 @@ tr:nth-child(odd) {
 
 th,
 td {
-  border-color: var(--border-color-dark);
+  border-color: var(--vp-c-border-hard);
 }
 
 @media print {

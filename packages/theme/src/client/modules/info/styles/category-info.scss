@@ -20,8 +20,8 @@
   line-height: 2;
 
   transition:
-    background var(--color-transition),
-    color var(--color-transition);
+    background var(--vp-t-color),
+    color var(--vp-t-color);
 
   @media print {
     padding: 0;
@@ -40,7 +40,7 @@
     cursor: pointer;
 
     &:not([class*="color"]):hover {
-      color: var(--theme-color);
+      color: var(--vp-c-accent);
     }
   }
 
@@ -51,7 +51,7 @@
       background: color.scale($color, $lightness: 90%);
       color: color.scale($color, $lightness: 20%);
 
-      #{hope-config.$dark-selector} & {
+      [data-theme="dark"] & {
         background: color.scale($color, $lightness: -75%);
         color: color.scale($color, $lightness: -10%);
       }
@@ -59,7 +59,7 @@
       &.clickable:hover {
         background: color.scale($color, $lightness: 75%);
 
-        #{hope-config.$dark-selector} & {
+        [data-theme="dark"] & {
           background: color.scale($color, $lightness: -60%);
         }
       }

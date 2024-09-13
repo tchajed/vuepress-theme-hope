@@ -61,7 +61,7 @@
       0.05em 0 var(--bg-color),
       -0.05em 0 var(--bg-color);
 
-    #{hope-config.$dark-selector} & {
+    [data-theme="dark"] & {
       --underline: #{color.change(
           helper.get-dark-color(hope-config.$theme-color),
           $alpha: 0.4

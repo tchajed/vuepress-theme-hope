@@ -1,11 +1,11 @@
 @use "vuepress-shared/styles/reset";
 
 :root {
-  --playground-header-bg-color: #eee;
+  --vue-playground-c-bg-header: #eee;
 }
 
-#{hope-config.$dark-selector} {
-  --playground-header-bg-color: #333;
+[data-theme="dark"] {
+  --vue-playground-c-bg-header: #333;
 
   // vue-repl dark mode
 
@@ -58,25 +58,25 @@
 
   margin-top: 1rem;
   margin-bottom: 1rem;
-  border: 1px solid var(--vp-brc);
+  border: 1px solid var(--vp-c-border);
   border-radius: 6px;
 
   .header {
     padding: 0.5rem 0.75rem;
-    border-bottom: 1px solid var(--vp-brc);
+    border-bottom: 1px solid var(--vp-c-border);
 
-    background: var(--playground-header-bg-color, #eee);
+    background: var(--vue-playground-c-bg-header);
 
     font-weight: 500;
     font-size: 1.1rem;
     line-height: 1.5;
     overflow-wrap: break-word;
 
-    transition: background var(--vp-ct) border-color var(--vp-ct);
+    transition: background var(--vp-t-color) border-color var(--vp-t-color);
   }
 
   .preview-loading {
-    color: var(--vp-tc);
+    color: var(--vp-c-accent);
   }
 
   .source-container {
@@ -95,9 +95,9 @@
 
     height: auto;
 
-    background: var(--vp-bg);
+    background: var(--vp-c-bg);
 
-    transition: background var(--vp-ct);
+    transition: background var(--vp-t-color);
 
     @media print {
       page-break-inside: avoid;
@@ -108,7 +108,7 @@
     }
 
     // reset pre
-    #{hope-config.$content-class} & {
+    [vp-content] & {
       pre,
       pre[class*="language-"] {
         margin: 0;

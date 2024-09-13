@@ -10,10 +10,10 @@
 
   cursor: pointer;
 
-  transition: color var(--color-transition);
+  transition: color var(--vp-t-color);
 
   &:hover {
-    color: var(--theme-color);
+    color: var(--vp-c-accent);
   }
 
   .icon {

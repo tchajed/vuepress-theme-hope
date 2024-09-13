@@ -22,7 +22,7 @@
 
   height: 30px;
   margin: 0 0.5rem;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--vp-c-border);
   border-radius: 0.25rem;
 
   div {
@@ -31,7 +31,7 @@
     padding: 0 0.5rem;
 
     background: var(--bg-color);
-    color: var(--theme-color);
+    color: var(--vp-c-accent);
 
     cursor: pointer;
 
@@ -45,7 +45,7 @@
 
       width: 1px;
 
-      background: var(--border-color);
+      background: var(--vp-c-border);
     }
 
     &:first-child::before {
@@ -57,16 +57,16 @@
     }
 
     &.active {
-      background: var(--theme-color);
-      color: var(--white);
+      background: var(--vp-c-accent);
+      color: var(--vp-c-white);
 
       &::before {
-        background: var(--theme-color);
+        background: var(--vp-c-accent);
       }
     }
 
     &.active + div::before {
-      background: var(--theme-color);
+      background: var(--vp-c-accent);
     }
 
     &.prev,
@@ -91,11 +91,11 @@
   input {
     width: 3.5rem;
     margin: 6px 5px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--vp-c-border);
     border-radius: 0.25em;
 
     background: var(--bg-color);
-    color: var(--text-color);
+    color: var(--vp-c-text);
     outline: none;
 
     line-height: 2;
@@ -107,11 +107,11 @@
   overflow: hidden;
 
   padding: 0 0.75em;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--vp-c-border);
   border-radius: 0.25em;
 
   background: var(--bg-color);
-  color: var(--theme-color);
+  color: var(--vp-c-accent);
   outline: none;
 
   font-weight: 600;

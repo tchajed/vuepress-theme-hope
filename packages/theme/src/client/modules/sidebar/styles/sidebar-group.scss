@@ -32,7 +32,7 @@
   border-radius: 0.375rem;
 
   background: transparent;
-  color: var(--text-color);
+  color: var(--vp-c-text);
 
   font-size: 1.1em;
   line-height: 1.5;
@@ -57,8 +57,8 @@
     }
 
     &.exact {
-      border-inline-start-color: var(--theme-color);
-      color: var(--theme-color);
+      border-inline-start-color: var(--vp-c-accent);
+      color: var(--vp-c-accent);
 
       a {
         color: inherit;

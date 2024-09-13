@@ -34,7 +34,8 @@ $enable-theme-color: map.has-key(
       &.theme-color {
         background: helper.get-color(hope-config.$theme-color);
 
-        #{hope-config.$dark-selector} {
+        /* stylelint-disable-next-line max-nesting-depth */
+        [data-theme="dark"] {
           background: helper.get-dark-color(hope-config.$theme-color);
         }
       }
@@ -45,10 +46,10 @@ $enable-theme-color: map.has-key(
 @if $enable-theme-color {
   @each $color in hope-config.$theme-colors {
     :root.theme-#{list.index(hope-config.$theme-colors, $color)} {
-      --theme-color: #{$color};
+      --vp-c-accent: #{$color};
       --theme-color-light: #{color.scale($color, $lightness: 10%)};
       --theme-color-dark: #{color.scale($color, $lightness: -10%)};
-      --theme-color-mask: #{color.change($color, $alpha: 0.15)};
+      --vp-c-accent-soft: #{color.change($color, $alpha: 0.15)};
     }
   }
 }

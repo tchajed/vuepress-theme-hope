@@ -6,12 +6,12 @@
 
   .vp-page & {
     border-radius: 6px;
-    background: var(--bg-color-float);
-    box-shadow: 0 1px 3px 1px var(--card-shadow);
-    transition: box-shadow var(--color-transition);
+    background: var(--vp-c-bg-elv);
+    box-shadow: 0 1px 3px 1px var(--vp-c-shadow);
+    transition: box-shadow var(--vp-t-color);
 
     &:hover {
-      box-shadow: 0 2px 6px 2px var(--card-shadow);
+      box-shadow: 0 2px 6px 2px var(--vp-c-shadow);
     }
   }
 
@@ -49,9 +49,9 @@
 
     background: rgb(127 127 127 / 15%);
 
-    transition: background var(--color-transition);
+    transition: background var(--vp-t-color);
 
-    #{hope-config.$dark-selector} & {
+    [data-theme="dark"] & {
       background: rgb(255 255 255 / 15%);
     }
 
@@ -62,7 +62,7 @@
     &.active {
       background: var(--theme-color-light);
 
-      #{hope-config.$dark-selector} & {
+      [data-theme="dark"] & {
         background: var(--theme-color-dark);
       }
     }
@@ -111,8 +111,8 @@
   padding: 12px 8px 4px;
   border-bottom: 1px dashed var(--grey);
   transition:
-    border-color var(--color-transition),
-    color var(--color-transition);
+    border-color var(--vp-t-color),
+    color var(--vp-t-color);
 
   a {
     color: inherit;
@@ -122,7 +122,7 @@
     cursor: pointer;
 
     a {
-      color: var(--theme-color);
+      color: var(--vp-c-accent);
     }
   }
 }

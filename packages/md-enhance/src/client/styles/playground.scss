@@ -1,11 +1,11 @@
 @use "vuepress-shared/styles/reset";
 
 :root {
-  --playground-header-bg-color: #eee;
+  --playground-c-bg-header: #eee;
 }
 
-#{hope-config.$dark-selector} {
-  --playground-header-bg-color: #333;
+[data-theme="dark"] {
+  --playground-c-bg-header: #333;
 }
 
 .vp-playground {
@@ -13,7 +13,7 @@
 
   margin-top: 1rem;
   margin-bottom: 1rem;
-  border: 1px solid var(--vp-brc);
+  border: 1px solid var(--vp-c-border);
   border-radius: 6px;
 
   @media print {
@@ -26,15 +26,15 @@
   flex-flow: row wrap;
 
   padding: 8px 10px;
-  border-bottom: 1px solid var(--vp-brc);
+  border-bottom: 1px solid var(--vp-c-border);
 
-  background: var(--playground-header-bg-color, #eee);
+  background: var(--playground-c-bg-header);
 
   font-weight: 500;
 
   transition:
-    background var(--vp-ct),
-    border-color var(--vp-ct);
+    background var(--vp-t-color),
+    border-color var(--vp-t-color);
 }
 
 .vp-playground-title {
@@ -63,15 +63,15 @@
   }
 
   &:hover .icon {
-    fill: var(--vp-tc);
+    fill: var(--vp-c-accent-bg);
   }
 }
 
 .vp-playground-container {
   position: relative;
   overflow: hidden;
-  background: var(--vp-bg);
-  transition: background var(--vp-ct);
+  background: var(--vp-c-bg);
+  transition: background var(--vp-t-color);
 
   @media print {
     page-break-inside: avoid;

@@ -1,11 +1,6 @@
 @use "sass:list";
 @use "sass:map";
 
-$theme-color: #3eaf7c !default;
-$text-color: (
-  light: #2c3e50,
-  dark: #9e9e9e,
-) !default;
 $bg-color: (
   light: #fff,
   dark: #0d1117,
@@ -18,20 +13,41 @@ $bg-color-tertiary: (
   light: #efeef4,
   dark: #21262c,
 ) !default;
-$border-color: (
+
+// border
+$vp-c-border: (
   light: #eaecef,
   dark: #30363d,
 ) !default;
 
-// shadow
-$box-shadow: (
-  light: #f0f1f2,
-  dark: #282a32,
+// text
+$vp-c-text: (
+  light: #2c3e50,
+  dark: #9e9e9e,
 ) !default;
-$card-shadow: (
+$vp-c-text-muted: (
+  light: rgb(60 60 67 / 78%),
+  dark: rgb(235 235 245 / 60%),
+) !default;
+$vp-c-text-subtle: (
+  light: rgb(60 60 67 / 56%),
+  dark: rgb(235 235 245 / 38%),
+) !default;
+
+// shadow
+$vp-c-shadow: (
   light: rgb(0 0 0 / 15%),
   dark: rgb(0 0 0 / 30%),
 ) !default;
+
+// control
+$vp-c-control: #f8f9fa !default;
+$vp-c-control-hover: #f1f3f5 !default;
+$vp-c-control-active: #e9ecef !default;
+$vp-c-control-disabled: #ccc !default;
+
+// accent color
+$vp-c-accent: #3eaf7c !default;
 
 // constants
 $black: (

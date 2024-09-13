@@ -2,21 +2,21 @@
 @use "vuepress-shared/styles/reset";
 
 :root {
-  --code-demo-header-bg-color: #eee;
+  --code-demo-c-bg-header: #eee;
 }
 
-#{hope-config.$dark-selector} {
-  --code-demo-header-bg-color: #333;
+[data-theme="dark"] {
+  --code-demo-c-bg-header: #333;
 }
 
 .vp-code-demo {
   margin: 8px 0;
-  border: 1px solid var(--vp-brc);
+  border: 1px solid var(--vp-c-border);
   border-radius: 8px;
   transition: all 0.2s;
 
   &:hover {
-    box-shadow: 0 2px 12px var(--card-shadow);
+    box-shadow: 0 2px 12px var(--vp-c-shadow);
   }
 }
 
@@ -30,7 +30,7 @@
   padding: 8px 12px;
   border-radius: 8px 8px 0 0;
 
-  background: var(--code-demo-header-bg-color);
+  background: var(--code-demo-c-bg-header);
 
   text-align: start;
 
@@ -53,7 +53,7 @@
       display: none;
     }
 
-    #{hope-config.$dark-selector} & {
+    [data-theme="dark"] & {
       background: #555;
     }
 
@@ -62,7 +62,7 @@
       height: 1.25rem;
       fill: #777;
 
-      #{hope-config.$dark-selector} & {
+      [data-theme="dark"] & {
         fill: #aaa;
       }
     }
@@ -70,14 +70,15 @@
     &:hover {
       background: #aaa;
 
-      #{hope-config.$dark-selector} & {
+      [data-theme="dark"] & {
         background: #777;
       }
 
       svg {
         fill: #333;
 
-        #{hope-config.$dark-selector} & {
+        /* stylelint-disable-next-line max-nesting-depth */
+        [data-theme="dark"] & {
           fill: #fff;
         }
       }
@@ -107,14 +108,14 @@
     display: none;
   }
 
-  #{hope-config.$dark-selector} & {
+  [data-theme="dark"] & {
     background-color: #555;
   }
 
   &:hover {
     background-color: #aaa;
 
-    #{hope-config.$dark-selector} & {
+    [data-theme="dark"] & {
       background-color: #777;
     }
   }
@@ -135,7 +136,7 @@
 }
 
 .vp-code-demo-loading {
-  color: var(--vp-tc);
+  color: var(--vp-c-accent);
 }
 
 .vp-code-demo-display {
@@ -145,7 +146,7 @@
 
   max-height: 400px;
   padding: 20px;
-  border-bottom: 1px solid var(--vp-brc);
+  border-bottom: 1px solid var(--vp-c-border);
 
   @media print {
     page-break-inside: avoid;

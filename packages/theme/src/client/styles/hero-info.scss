@@ -54,7 +54,7 @@
     &.light {
       display: block;
 
-      #{hope-config.$dark-selector} & {
+      [data-theme="dark"] & {
         display: none;
       }
     }
@@ -62,7 +62,7 @@
     &.dark {
       display: none;
 
-      #{hope-config.$dark-selector} & {
+      [data-theme="dark"] & {
         display: block;
       }
     }
@@ -95,7 +95,7 @@
     &.light {
       display: block;
 
-      #{hope-config.$dark-selector} & {
+      [data-theme="dark"] & {
         display: none;
       }
     }
@@ -103,7 +103,7 @@
     &.dark {
       display: none;
 
-      #{hope-config.$dark-selector} & {
+      [data-theme="dark"] & {
         display: block;
       }
     }
@@ -115,7 +115,7 @@
     background: linear-gradient(
       120deg,
       var(--theme-color-light),
-      var(--theme-color) 30%,
+      var(--vp-c-accent) 30%,
       color.adjust(hope-config.$theme-color, $hue: 60deg) 100%
     );
     -webkit-background-clip: text;
@@ -196,15 +196,15 @@
   border-radius: 2rem;
 
   background: var(--bg-color-secondary);
-  color: var(--text-color);
+  color: var(--vp-c-text);
 
   font-size: 1.2rem;
   text-align: center;
 
   transition:
-    color var(--color-transition),
-    color var(--color-transition),
-    transform var(--transform-transition);
+    color var(--vp-t-color),
+    color var(--vp-t-color),
+    transform var(--vp-t-transform);
 
   @media (max-width: hope-config.$tablet) {
     padding: 0.5rem 1rem;
@@ -224,9 +224,9 @@
   }
 
   &.primary {
-    border-color: var(--theme-color);
-    background: var(--theme-color);
-    color: var(--white);
+    border-color: var(--vp-c-accent);
+    background: var(--vp-c-accent);
+    color: var(--vp-c-white);
 
     &:hover {
       border-color: var(--theme-color-light);

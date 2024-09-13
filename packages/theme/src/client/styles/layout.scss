@@ -22,7 +22,7 @@
 ::-webkit-scrollbar-thumb {
   -webkit-border-radius: 6px;
   border-radius: 6px;
-  background: var(--theme-color);
+  background: var(--vp-c-accent);
 
   &:active {
     background: var(--theme-color-light);

@@ -12,7 +12,7 @@
     display: block;
 
     padding: 12px 4px 11px 0;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--vp-c-border);
 
     font-size: 16px;
     line-height: 1.5rem;
@@ -25,11 +25,11 @@
     font-weight: normal;
 
     &:hover {
-      color: var(--text-color);
+      color: var(--vp-c-text);
     }
 
     &.route-link-active {
-      color: var(--theme-color);
+      color: var(--vp-c-accent);
     }
   }
 }

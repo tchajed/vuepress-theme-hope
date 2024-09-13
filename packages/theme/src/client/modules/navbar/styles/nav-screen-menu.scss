@@ -22,7 +22,7 @@
 
   &:hover,
   &.active {
-    color: var(--text-color);
+    color: var(--vp-c-text);
   }
 
   .text {
@@ -64,11 +64,11 @@
     line-height: 2;
 
     &:hover {
-      color: var(--theme-color);
+      color: var(--vp-c-accent);
     }
 
     &.route-link-active {
-      color: var(--theme-color);
+      color: var(--vp-c-accent);
     }
 
     .icon {

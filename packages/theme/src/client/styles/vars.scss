@@ -1,15 +1,79 @@
 @use "@sass-palette/hope-config";
 
 :root {
+  // accent colors
+  --vp-c-accent: #299764;
+  --vp-c-accent-bg: #3eaf7c;
+  --vp-c-accent-hover: #4abf8a;
+  --vp-c-accent-text: var(--vp-c-white);
+  --vp-c-accent-soft: rgb(16 185 129 / 14%);
+
+  // background colors
+  --vp-c-bg: #fff;
+  --vp-c-bg-alt: #f6f6f7;
+  --vp-c-bg-elv: #fff;
+
+  // text colors
+  --vp-c-text: rgb(60 60 67);
+  --vp-c-text-mute: rgb(60 60 67 / 78%);
+  --vp-c-text-subtle: rgb(60 60 67 / 56%);
+
+  // border colors
+  --vp-c-gutter: #eaecef;
+  --vp-c-border: #d7d9da;
+  --vp-c-border-hard: #d1d4d7;
+
+  // shadow colors
+  --vp-c-shadow: rgb(0 0 0 / 15%);
+
+  // control colors
+  --vp-c-control: #f9fafb;
+  --vp-c-control-hover: #f1f3f5;
+  --vp-c-control-disabled: #eaeaea;
+
+  // transition vars
+  --vp-t-color: 0.3s ease;
+  --vp-t-transform: 0.3s ease;
+
   // layout
   --navbar-bg-color: var(--bg-color-float-blur);
   --sidebar-bg-color: var(--bg-color-blur);
 
   // external-link-icon
   --external-link-icon: url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' %3E%3Cpath d='M0 0h24v24H0V0z' fill='none' /%3E%3Cpath d='M9 5v2h6.59L4 18.59 5.41 20 17 8.41V15h2V5H9z' /%3E%3C/svg%3E");
+  --external-link-c-icon: var(--vp-c-text-mute);
 }
 
-#{hope-config.$dark-selector} {
+[data-theme="dark"] {
+  // brand colors
+  --vp-c-accent: #3dd68c;
+  --vp-c-accent-bg: #3aa675;
+  --vp-c-accent-hover: #349469;
+  --vp-c-accent-soft: rgb(16 185 129 / 16%);
+
+  // background colors
+  --vp-c-bg: #1b1b1f;
+  --vp-c-bg-alt: #161618;
+  --vp-c-bg-elv: #202127;
+
+  // text colors
+  --vp-c-text: rgb(235 235 245 / 86%);
+  --vp-c-text-mute: rgb(235 235 245 / 60%);
+  --vp-c-text-subtle: rgb(235 235 245 / 38%);
+
+  // border colors
+  --vp-c-gutter: #373f4c;
+  --vp-c-border: #3e4c5a;
+  --vp-c-border-hard: #405064;
+
+  // shadow color
+  --vp-c-shadow: rgb(0 0 0 / 30%);
+
+  // control colors
+  --vp-c-control: #2d3135;
+  --vp-c-control-hover: #303640;
+  --vp-c-control-disabled: #363636;
+
   // layout
   --navbar-bg-color: var(--bg-color-blur);
   --sidebar-bg-color: var(--bg-color-blur);
@@ -18,9 +82,6 @@
 #app {
   // sidebar space
   --sidebar-space: var(--sidebar-width);
-
-  // external-link-icon
-  --external-link-icon-color: var(--grey-light);
 
   // override mobile variables
   @media (max-width: hope-config.$pad) {
@@ -37,116 +98,4 @@
       100vw
     );
   }
-}
-
-// plugin-docsearch
-// stylelint-disable selector-class-pattern
-.DocSearch-Button,
-.DocSearch {
-  --docsearch-primary-color: var(--theme-color);
-  --docsearch-text-color: var(--text-color);
-  --docsearch-highlight-color: var(--theme-color);
-  --docsearch-muted-color: var(--grey-light);
-  --docsearch-container-background: rgb(9 10 17 / 80%);
-  --docsearch-modal-background: var(--bg-color-float);
-  --docsearch-searchbox-background: var(--bg-color-secondary);
-  --docsearch-searchbox-focus-background: var(--bg-color);
-  --docsearch-searchbox-shadow: inset 0 0 0 2px var(--theme-color);
-  --docsearch-hit-color: var(--text-color-light);
-  --docsearch-hit-active-color: var(--bg-color);
-  --docsearch-hit-background: var(--bg-color);
-  --docsearch-hit-shadow: 0 1px 3px 0 var(--border-color);
-  --docsearch-footer-background: var(--bg-color);
-
-  #{hope-config.$dark-selector} & {
-    --docsearch-logo-color: var(--text-color);
-    --docsearch-modal-shadow: inset 1px 1px 0 0 #2c2e40, 0 3px 8px 0 #000309;
-    --docsearch-key-shadow: inset 0 -2px 0 0 #282d55, inset 0 0 1px 1px #51577d,
-      0 2px 2px 0 rgb(3 4 9 / 30%);
-    --docsearch-key-gradient: linear-gradient(-225deg, #444950, #1c1e21);
-    --docsearch-footer-shadow: inset 0 1px 0 0 rgb(73 76 106 / 50%),
-      0 -4px 8px 0 rgb(0 0 0 / 20%);
-  }
-}
-// stylelint-enable selector-class-pattern
-
-// plugin-back-to-top
-.vp-back-to-top-button {
-  --back-to-top-color: var(--theme-color);
-  --back-to-top-color-hover: var(--theme-color-light);
-  --back-to-top-bg-color: var(--bg-color);
-}
-
-// plugin-catalog
-.vp-catalog-wrapper {
-  --catalog-bg-color: var(--bg-color);
-  --catalog-bg-secondary-color: var(--bg-color-secondary);
-  --catalog-border-color: var(--border-color);
-  --catalog-active-color: var(--theme-color);
-  --catalog-hover-color: var(--theme-color-light);
-}
-
-// plugin-nprogress
-#nprogress {
-  --nprogress-color: var(--theme-color);
-}
-
-body {
-  // plugin-photo-swipe
-  --photo-swipe-bullet: var(--white);
-  --photo-swipe-bullet-active: var(--theme-color);
-
-  // plugin-pwa
-  --pwa-text-color: var(--text-color);
-  --pwa-bg-color: var(--bg-color);
-  --pwa-border-color: var(--border-color);
-  --pwa-btn-text-color: var(--bg-color);
-  --pwa-btn-bg-color: var(--theme-color);
-  --pwa-btn-hover-bg-color: var(--theme-color-light);
-  --pwa-shadow-color: var(--card-shadow);
-  --pwa-content-color: var(--grey-darker);
-  --pwa-content-light-color: var(--grey-dark);
-}
-
-// plugin-notice
-.vp-notice-wrapper {
-  --notice-color: var(--text-color);
-  --notice-bg-color: var(--bg-color);
-  --notice-primary-color: var(--theme-color);
-  --notice-primary-text-color: var(--white);
-  --notice-primary-hover-color: var(--theme-color-light);
-  --notice-button-color: var(--bg-color-tertiary);
-  --notice-button-hover-color: var(--bg-color-secondary);
-}
-
-// plugin-redirect
-.redirect-modal-mask {
-  --redirect-bg-color: var(--bg-color);
-  --redirect-bg-color-light: var(--bg-color-secondary);
-  --redirect-bg-color-lighter: var(--bg-color-tertiary);
-  --redirect-text-color: var(--text-color);
-  --redirect-primary-color: var(--theme-color);
-  --redirect-primary-hover-color: var(--theme-color-light);
-  --redirect-primary-text-color: var(--white);
-}
-
-// plugin-search
-.search-box {
-  --search-bg-color: var(--bg-color);
-  --search-accent-color: var(--theme-color);
-  --search-text-color: var(--text-color);
-  --search-border-color: var(--border-color);
-  --search-item-text-color: var(--text-color-lighter);
-  --search-item-focus-bg-color: var(--bg-color-secondary);
-}
-
-// plugin-comment
-.waline-wrapper {
-  --waline-bg-color: var(--bg-color);
-  --waline-bg-color-light: var(--bg-color-secondary);
-  --waline-text-color: var(--text-color);
-  --waline-border: 1px solid var(--border-color);
-  --waline-border-color: var(--border-color);
-  --waline-theme-color: var(--theme-color);
-  --waline-active-color: var(--theme-color-light);
 }

@@ -31,7 +31,7 @@
     text-align: center;
   }
 
-  #{hope-config.$dark-selector} & {
+  [data-theme="dark"] & {
     color: #eee;
   }
 }
@@ -53,7 +53,7 @@
     display: none;
   }
 
-  #{hope-config.$dark-selector} & {
+  [data-theme="dark"] & {
     &.light {
       display: none;
     }
@@ -85,7 +85,7 @@
     display: none;
   }
 
-  #{hope-config.$dark-selector} & {
+  [data-theme="dark"] & {
     &.light {
       display: none;
     }
@@ -152,7 +152,7 @@
 
   &.link {
     cursor: pointer;
-    transition: transform var(--transform-transition);
+    transition: transform var(--vp-t-transform);
 
     &:hover {
       background-color: var(--bg-color-secondary);

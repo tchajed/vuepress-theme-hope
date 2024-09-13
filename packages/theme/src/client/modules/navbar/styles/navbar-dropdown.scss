@@ -24,14 +24,14 @@
     font-size: 0.875rem;
     line-height: 1.7rem;
 
-    transition: color var(--color-transition);
+    transition: color var(--vp-t-color);
 
     &:hover {
-      color: var(--theme-color);
+      color: var(--vp-c-accent);
     }
 
     &.route-link-active {
-      color: var(--theme-color);
+      color: var(--vp-c-accent);
     }
   }
 }
@@ -81,7 +81,7 @@
   border-radius: 0.5rem;
 
   background: var(--bg-color);
-  box-shadow: 2px 2px 10px var(--card-shadow);
+  box-shadow: 2px 2px 10px var(--vp-c-shadow);
   list-style-type: none;
 
   text-align: start;
