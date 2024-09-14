@@ -60,9 +60,9 @@
 
     height: auto;
 
-    background: var(--vp-bg);
+    background: var(--vp-c-bg);
 
-    transition: background var(--vp-ct);
+    transition: background var(--vp-t-color);
 
     @media print {
       page-break-inside: avoid;

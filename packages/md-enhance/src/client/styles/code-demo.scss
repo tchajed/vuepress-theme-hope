@@ -34,41 +34,24 @@
   padding: 4px;
   border-radius: 50%;
 
-  background: #ccc;
+  background: var(--vp-c-control);
   outline: none;
+
+  transition: background var(--vp-t-color);
 
   @media print {
     display: none;
   }
 
-  [data-theme="dark"] & {
-    background: #555;
-  }
-
   svg {
     width: 1.25rem;
     height: 1.25rem;
-    fill: #777;
-
-    [data-theme="dark"] & {
-      fill: #aaa;
-    }
+    transition: fill var(--vp-t-color);
+    fill: var(--vp-c-text-mute);
   }
 
   &:hover {
-    background: #aaa;
-
-    [data-theme="dark"] & {
-      background: #777;
-    }
-
-    svg {
-      fill: #333;
-
-      [data-theme="dark"] & {
-        fill: #fff;
-      }
-    }
+    background: var(--vp-c-control-hover);
   }
 }
 
