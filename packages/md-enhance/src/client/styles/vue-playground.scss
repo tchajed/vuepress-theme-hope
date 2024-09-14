@@ -1,12 +1,6 @@
 @use "vuepress-shared/styles/reset";
 
-:root {
-  --vue-playground-c-bg-header: #eee;
-}
-
 [data-theme="dark"] {
-  --vue-playground-c-bg-header: #333;
-
   // vue-repl dark mode
 
   /**
@@ -54,37 +48,8 @@
 }
 
 .vue-playground-wrapper {
-  overflow: hidden;
-
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  border: 1px solid var(--vp-c-border);
-  border-radius: 6px;
-
-  .header {
-    padding: 0.5rem 0.75rem;
-    border-bottom: 1px solid var(--vp-c-border);
-
-    background: var(--vue-playground-c-bg-header);
-
-    font-weight: 500;
-    font-size: 1.1rem;
-    line-height: 1.5;
-    overflow-wrap: break-word;
-
-    transition: background var(--vp-t-color) border-color var(--vp-t-color);
-  }
-
-  .preview-loading {
-    color: var(--vp-c-accent);
-  }
-
-  .source-container {
-    display: none;
-
-    &.show {
-      display: block;
-    }
+  .vue-preview-loading {
+    color: var(--vp-c-accent-bg);
   }
 
   // internal styles
@@ -95,9 +60,9 @@
 
     height: auto;
 
-    background: var(--vp-c-bg);
+    background: var(--vp-bg);
 
-    transition: background var(--vp-t-color);
+    transition: background var(--vp-ct);
 
     @media print {
       page-break-inside: avoid;

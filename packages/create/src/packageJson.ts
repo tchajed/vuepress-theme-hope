@@ -57,7 +57,7 @@ export const createPackageJson = async ({
   const devDependencies = {
     [`@vuepress/bundler-${bundler}`]: "2.0.0-rc.15",
     "sass-embedded": "^1.78.0",
-    vue: "^3.4.38",
+    vue: "^3.5.5",
     vuepress: "2.0.0-rc.15",
     "vuepress-theme-hope": version,
   };

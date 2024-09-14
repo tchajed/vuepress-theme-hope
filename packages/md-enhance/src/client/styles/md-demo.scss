@@ -1,37 +1,14 @@
 @use "vuepress-shared/styles/arrow";
 @use "vuepress-shared/styles/reset";
-
-:root {
-  --md-demo-c-bg-header: #eee;
-}
-
-[data-theme="dark"] {
-  --md-demo-c-bg-header: #333;
-}
+@use "container-common";
 
 .vp-md-demo {
-  margin: 8px -8px;
-  border: 1px solid var(--vp-c-border);
-  border-radius: 8px;
+  margin: 0.75rem -0.5rem;
   transition: all 0.2s;
 
   &:hover {
     box-shadow: 0 2px 12px var(--vp-c-shadow);
   }
-}
-
-.vp-md-demo-header {
-  position: relative;
-
-  padding: 8px 12px;
-  border-radius: 8px 8px 0 0;
-
-  background: var(--code-demo-c-bg-header);
-
-  font-weight: 500;
-  font-size: 1.25rem;
-  line-height: 2.5rem;
-  text-align: start;
 }
 
 .vp-md-demo-toggle-button {
@@ -40,9 +17,8 @@
 
   position: relative;
 
-  margin: 8px 12px 8px 8px;
+  margin: 0.5rem 0.75rem 0.5rem 0.5rem;
   padding: 0;
-  border-color: transparent;
   border-radius: 50%;
 
   background-color: #ccc;
